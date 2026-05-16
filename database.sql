@@ -118,15 +118,15 @@ DROP TABLE IF EXISTS `Smena`;
 
 CREATE TABLE `Smena` (
   `idSmena` bigint(20) NOT NULL AUTO_INCREMENT,
-  `vremePocetka` datetime NOT NULL CHECK (`vremePocetka` < `vremeKraja`),
-  `vremeKraja` datetime NOT NULL CHECK (`vremeKraja` > `vremePocetka`),
+  `vremePocetka` time NOT NULL CHECK (`vremePocetka` < `vremeKraja`),
+  `vremeKraja` time NOT NULL CHECK (`vremeKraja` > `vremePocetka`),
   PRIMARY KEY (`idSmena`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Smena` */
 
 insert  into `Smena`(`idSmena`,`vremePocetka`,`vremeKraja`) values 
-(1,'2026-05-16 08:00:00','2026-05-16 16:00:00');
+(1,'08:00:00','16:00:00');
 
 /*Table structure for table `SmenaZaposlenog` */
 
