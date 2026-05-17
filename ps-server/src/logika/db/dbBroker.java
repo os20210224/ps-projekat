@@ -3,16 +3,24 @@ package logika.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import main.Server;
 
 public class dbBroker {
     
     private static Connection conn = null;
+    private static String url = "";
+    private static String user = "";
+    private static String pass = "";
+    
+    public static void setCredentials(String address, String port, String name, String username, String password) {
+        url = "jdbc:mysql://"+ address + ":" + port + "/" + name;
+        user = username;
+        pass = password;
+        Server.logDB("> credentials set:\n      url: " + url + "\n      username: " + user);
+    }
     
     private static void connect() {
         try {
-            String url = "jdbc:mysql://localhost:3306/ps-projekat";
-            String user = "root";
-            String pass = "";
             conn = DriverManager.getConnection(url, user, pass);
             System.out.println("> konekcija uspesna");
         } catch (SQLException e) {
