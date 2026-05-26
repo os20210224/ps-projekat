@@ -6,20 +6,25 @@ import java.sql.SQLException;
 import main.Server;
 
 public class dbBroker {
-    
+	
+    Server srv;
     private static Connection conn = null;
     private static String url = "";
     private static String user = "";
     private static String pass = "";
+	
+	public dbBroker(Server srv) {
+		this.srv = srv;
+	}
     
-    public static void setCredentials(String address, String port, String name, String username, String password) {
+    public void setCredentials(String address, String port, String name, String username, String password) {
         url = "jdbc:mysql://"+ address + ":" + port + "/" + name;
         user = username;
         pass = password;
-        Server.logDB("> credentials set:\n      url: " + url + "\n      username: " + user);
+        srv.logDB("> credentials set:\n      url: " + url + "\n      username: " + user);
     }
     
-    private static void connect() {
+    private void connect() {
         try {
             conn = DriverManager.getConnection(url, user, pass);
             System.out.println("> konekcija uspesna");
@@ -28,7 +33,7 @@ public class dbBroker {
         }
     }
     
-    private static void disconnect() {
+    private void disconnect() {
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.close();

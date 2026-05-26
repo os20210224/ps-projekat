@@ -1,18 +1,23 @@
 package gui;
 
+import java.awt.Color;
 import main.Server;
 
 public class FrmServer extends javax.swing.JFrame {
     
-    public FrmServer() {
+	Server srv;
+	
+    public FrmServer(Server srv) {
+		this.srv = srv;
         initComponents();
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         
         btnStop.setEnabled(false);
+		lblStatus.setForeground(Color.RED);
         
         btnDbSubmit.addActionListener((e) -> {
-            Server.setDbCredentials(
+            srv.setDbCredentials(
                 txtDbAdress.getText(),
                 txtDbPort.getText(),
                 txtDbName.getText(),
@@ -20,8 +25,26 @@ public class FrmServer extends javax.swing.JFrame {
                 String.valueOf(pswDbPassword.getPassword())
             );
         });
-        
+	
+		btnStart.addActionListener((e) -> {
+			cycleButtons();
+			srv.start();
+			lblStatus.setText("ONLINE");
+			lblStatus.setForeground(new Color(24, 150, 50));
+		});
+		
+		btnStop.addActionListener((e) -> {
+			cycleButtons();
+			srv.stop();
+			lblStatus.setText("OFFLINE");
+			lblStatus.setForeground(Color.RED);
+		});
     }
+	
+	private void cycleButtons() {
+		btnStart.setEnabled(!btnStart.isEnabled());
+        btnStop.setEnabled(!btnStop.isEnabled());
+	}
     
     public void logDB(String log) {
         logDatabase.setText(logDatabase.getText() + log + "\n");
@@ -30,7 +53,7 @@ public class FrmServer extends javax.swing.JFrame {
     public void log(String log) {
         logServer.setText(logServer.getText() + log + "\n");
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -75,7 +98,7 @@ public class FrmServer extends javax.swing.JFrame {
         status.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         status.setText("Status:");
 
-        lblStatus.setText("offline");
+        lblStatus.setText("OFFLINE");
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel1.setText("Server log:");
