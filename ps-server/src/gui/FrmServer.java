@@ -12,6 +12,7 @@ public class FrmServer extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
+		setTitle("Server");
         
         btnStop.setEnabled(false);
 		lblStatus.setForeground(Color.RED);
