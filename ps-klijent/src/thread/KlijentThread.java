@@ -1,6 +1,6 @@
-package Thread;
+package thread;
 
-import domain.Zaposleni;
+import domain.OpstiDomenskiObjekat;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
@@ -55,12 +55,13 @@ public class KlijentThread extends Thread {
 		return "";
 	}
 	
-	public String login(String username, String password) {
-		Zaposleni zaposleni = new Zaposleni(0, null, null, username, password);
+	public String send(OpstiDomenskiObjekat obj, Operation operation) {
 		Response res;
 		try {
-			sender.send(new Request(zaposleni, Operation.LOGIN));
-			res = (Response)rec.recieve();
+			sender.send(new Request(obj, operation));
+			System.out.println("zahtev poslat " +  operation);
+			res = (Response) rec.recieve();
+			System.out.println("odgovor primljen" + res.getStatus());
 			if (res.getStatus() == Status.FAILURE) {
 				return (String) res.getObject();
 			}

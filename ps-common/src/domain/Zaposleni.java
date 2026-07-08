@@ -55,5 +55,24 @@ public class Zaposleni extends OpstiDomenskiObjekat {
     public void setUsername(String username) {
         this.username = username;
     }
+
+	@Override
+	public String getTableName() {
+		return "Zaposleni";
+	}
+
+	@Override
+	public String getColumns() {
+		return "(ime,prezime,username,password)";
+	}
+
+	@Override
+	public String getValues() {
+		return
+			"VALUES("	+ "'" + ime		+ "'" +
+			","			+ "'" + prezime	+ "'" +
+			","			+ "'" + username+ "'" +
+			","			+ "'" + password+ "'" + ")";
+	}
     
 }

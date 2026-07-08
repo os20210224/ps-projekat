@@ -1,16 +1,16 @@
-package logika.db.so.kupac;
+package logika.db.so.knjiga;
 
 import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
 import logika.db.dbBroker;
 import logika.db.so.OpstaSO;
 
-public class kreirajKnjigu extends OpstaSO {
+public class KreirajKnjiga extends OpstaSO {
 
 	@Override
 	protected void preduslov(OpstiDomenskiObjekat obj) throws Exception {
 		if (obj == null || !(obj instanceof Knjiga)) {
-			throw new Exception("Prosledjeni objekat nije Kupac");
+			throw new Exception("Prosledjeni objekat nije Knjiga");
 		}
 	}
 

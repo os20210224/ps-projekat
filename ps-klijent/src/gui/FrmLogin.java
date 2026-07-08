@@ -1,5 +1,6 @@
 package gui;
 
+import domain.Zaposleni;
 import javax.swing.JOptionPane;
 import main.Klijent;
 
@@ -47,12 +48,16 @@ public class FrmLogin extends javax.swing.JFrame {
 			return;
 		}
 		
-		res = klijent.login(username, password);
+		Zaposleni z = new Zaposleni(0, null, null, username, password);
+		
+		res = Klijent.PrijaviZaposleni(z);
 		
 		if (!res.equals("")) {
 			JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		
+		klijent.login();
 		
 	}
 
@@ -79,9 +84,13 @@ public class FrmLogin extends javax.swing.JFrame {
 
         lblPassword.setText("Password:");
 
+        pswPassword.setText("mornarmore");
+
         btnLogIn.setText("Log In");
 
         lblUsername.setText("Username:");
+
+        txtUsername.setText("jk17");
 
         lblPort.setText("Server Port:");
 

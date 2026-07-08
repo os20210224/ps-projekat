@@ -1,8 +1,11 @@
 package main;
 
-import Thread.KlijentThread;
+import domain.Knjiga;
+import domain.Zaposleni;
+import thread.KlijentThread;
 import gui.FrmKlijent;
 import gui.FrmLogin;
+import transfer.enums.Operation;
 
 
 public class Klijent {
@@ -26,14 +29,17 @@ public class Klijent {
 		return kt.connect(address, port);
 	}
 	
-	public String login(String username, String password) {
-		String res = kt.login(username, password);
-		if (!res.equals("")) {
-			return res;
-		}
+	public void login() {
 		fl.dispose();
 		f.setVisible(true);
-		return "";
+	}
+	
+	public static String KreirajKnjiga(Knjiga k) {
+		return kt.send(k, Operation.KREIRAJ_KNJIGA);
+	}
+	
+	public static String PrijaviZaposleni(Zaposleni z) {
+		return kt.send(z, Operation.PRIJAVI_ZAPOSLENI);
 	}
 	
 	public static void main(String[] args) {

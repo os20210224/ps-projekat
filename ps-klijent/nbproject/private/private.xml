@@ -4,8 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="ps-projekat">
             <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/main/Klijent.java</file>
-            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/gui/FrmLogin.java</file>
-            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/Thread/KlijentThread.java</file>
+            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/thread/KlijentThread.java</file>
         </group>
     </open-files>
 </project-private>
