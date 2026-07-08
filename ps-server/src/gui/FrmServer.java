@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import main.Server;
 
 public class FrmServer extends javax.swing.JFrame {
@@ -15,16 +16,38 @@ public class FrmServer extends javax.swing.JFrame {
 		setTitle("Server");
         
         btnStop.setEnabled(false);
+		btnStart.setEnabled(false);
 		lblStatus.setForeground(Color.RED);
         
         btnDbSubmit.addActionListener((e) -> {
-            srv.setDbCredentials(
-                txtDbAdress.getText(),
-                txtDbPort.getText(),
-                txtDbName.getText(),
-                txtDbUser.getText(),
-                String.valueOf(pswDbPassword.getPassword())
-            );
+			String addr		= txtDbAdress.getText();
+			String port_str = txtDbPort.getText();
+			String name		= txtDbName.getText();
+			String user		= txtDbUser.getText();
+			String pass		= String.valueOf(pswDbPassword.getPassword());
+            
+			if ("".equals(addr)		||
+				"".equals(port_str) ||
+				"".equals(name)		||
+				"".equals(user)
+				) {
+				JOptionPane.showMessageDialog(this, "Sva polja osim sifre moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			int port;
+			try {
+				port = Integer.parseInt(port_str);
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "Port mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if (!srv.setDbCredentials(addr, port, name, user, pass)) {
+				return;
+			}
+			
+			btnStart.setEnabled(true);
         });
 	
 		btnStart.addActionListener((e) -> {

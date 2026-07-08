@@ -11,21 +11,31 @@ public class Knjiga extends OpstiDomenskiObjekat {
     private Povez povez;
     private double cenaStranica;
     private double cenaPoveza;
-    private double cena;
     private String naziv;
     private String autor;
-
-    public Knjiga(long idKnjiga, Format format, int brStranica, Povez povez, double cenaStranica, double cenaPoveza, double cena, String naziv, String autor) {
-        this.idKnjiga = idKnjiga;
+    private double cena;
+	
+	public Knjiga(Format format, int brStranica, Povez povez, double cenaStranica, double cenaPoveza, String naziv, String autor) {
         this.format = format;
         this.brStranica = brStranica;
         this.povez = povez;
         this.cenaStranica = cenaStranica;
         this.cenaPoveza = cenaPoveza;
-        this.cena = cena;
         this.naziv = naziv;
         this.autor = autor;
     }
+
+	public Knjiga(long idKnjiga, Format format, int brStranica, Povez povez, double cenaStranica, double cenaPoveza, String naziv, String autor, double cena) {
+		this.idKnjiga = idKnjiga;
+		this.format = format;
+		this.brStranica = brStranica;
+		this.povez = povez;
+		this.cenaStranica = cenaStranica;
+		this.cenaPoveza = cenaPoveza;
+		this.naziv = naziv;
+		this.autor = autor;
+		this.cena = cena;
+	}
 
     public String getAutor() {
         return autor;
@@ -98,5 +108,27 @@ public class Knjiga extends OpstiDomenskiObjekat {
     public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
+
+	@Override
+	public String getTableName() {
+		return "Knjiga";
+	}
+
+	@Override
+	public String getColumns() {
+		return "(format,brStranica,povez,cenaStranica,cenaPoveza,naziv,autor)";
+	}
+
+	@Override
+	public String getValues() {
+		return 
+			"VALUES("	+ "'" + format.toString()	+ "'"	+ 
+			","			+		brStranica					+ 
+			","			+ "'" +	povez.toString()	+ "'"	+ 
+			","			+		cenaStranica				+ 
+			","			+		cenaPoveza					+
+			","			+ "'" +	naziv				+ "'"	+
+			","			+ "'" +	autor				+ "'"	+ ")" ;
+	}
     
 }

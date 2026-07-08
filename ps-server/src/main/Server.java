@@ -40,8 +40,8 @@ public class Server {
         f.log(log);
     }
     
-    public void setDbCredentials(String address, String port, String name, String username, String password) {
-        dbBroker.setCredentials(address, port, name, username, password);
+    public boolean setDbCredentials(String address, int port, String name, String username, String password) {
+        return dbBroker.setCredentials(address, port, name, username, password);
     }
 
     public void start() {

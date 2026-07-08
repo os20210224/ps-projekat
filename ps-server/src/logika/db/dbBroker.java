@@ -1,13 +1,15 @@
 package logika.db;
 
+import domain.OpstiDomenskiObjekat;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import main.Server;
 
 public class dbBroker {
 	
-    Server srv;
+    private static Server srv;
     private static Connection conn = null;
     private static String url = "";
     private static String user = "";
@@ -17,31 +19,81 @@ public class dbBroker {
 		this.srv = srv;
 	}
     
-    public void setCredentials(String address, String port, String name, String username, String password) {
+    public boolean setCredentials(String address, int port, String name, String username, String password) {
         url = "jdbc:mysql://"+ address + ":" + port + "/" + name;
         user = username;
         pass = password;
-        srv.logDB("> credentials set:\n      url: " + url + "\n      username: " + user);
+        srv.logDB("> credentials set:\n      url: " + url + "\n      username: " + user + "\n");
+		if (!connect()) {
+			return false;
+		}
+		disconnect();
+		return true;
     }
     
-    private void connect() {
+    private static boolean connect() {
         try {
             conn = DriverManager.getConnection(url, user, pass);
-            System.out.println("> konekcija uspesna");
+			conn.setAutoCommit(false);
+            srv.logDB("> konekcija uspesna");
         } catch (SQLException e) {
-            System.out.println("> connection error" + e);
+            srv.logDB("> connection error" + e);
+			return false;
         }
+		return true;
     }
     
-    private void disconnect() {
+    private static boolean disconnect() {
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.close();
-                System.out.println("> diskonekcija uspesna");
+                srv.logDB("> diskonekcija uspesna");
             }
         } catch (SQLException e) {
-            System.out.println("> disconnection error" + e);
+            srv.logDB("> disconnection error" + e);
+			return false;
         }
+		return true;
     }
+	
+	public static void commit() {
+		try {
+			conn.commit();
+			srv.logDB("> commit uspesan");
+		} catch (SQLException e) {
+			srv.logDB("> commit error" + e);
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public static void rollback() {
+		try {
+			conn.rollback();
+			srv.logDB("> rollback uspesan");
+		} catch (SQLException e) {
+			srv.logDB("> rollback error" + e);
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public static void kreiraj(OpstiDomenskiObjekat obj) throws Exception {
+		if (!connect()) {
+			throw new Exception("Greska pri konekciji sa bazom podataka");
+		}
+		try {
+			String q = 
+				"INSERT INTO "		+ obj.getTableName()	+
+				" "					+ obj.getColumns()		+
+				" "					+ obj.getValues()		;
+			Statement s = conn.createStatement();
+			s.executeUpdate(q);
+			srv.logDB("> Objekat " + obj + "uspesno sacuvan");
+		} catch (SQLException e) {
+			srv.logDB("> greska pri kreiranju sloga" + e);
+			throw e;
+		}
+	}
     
 }
