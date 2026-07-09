@@ -2,7 +2,7 @@ package gui;
 
 import javax.swing.JPanel;
 
-public class KlijentPanel extends JPanel {
+public abstract class KlijentPanel extends JPanel {
 	
 	public String title;
 
@@ -10,5 +10,7 @@ public class KlijentPanel extends JPanel {
 		this.title = title;
 		setMinimumSize(getPreferredSize());
 	}
+	
+	protected abstract void updateTable();
 	
 }

@@ -5,7 +5,7 @@ import domain.OpstiDomenskiObjekat;
 import logika.db.dbBroker;
 import logika.db.so.OpstaSO;
 
-public class KreirajKnjiga extends OpstaSO {
+public class KreirajKnjiga extends OpstaSO<Void> {
 
 	@Override
 	protected void preduslov(OpstiDomenskiObjekat obj) throws Exception {
@@ -15,8 +15,8 @@ public class KreirajKnjiga extends OpstaSO {
 	}
 
 	@Override
-	protected void transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		dbBroker.kreiraj((Knjiga)obj);
+	protected Void transakcija(OpstiDomenskiObjekat obj) throws Exception {
+		return dbBroker.kreiraj((Knjiga)obj);
 	}
 	
 }

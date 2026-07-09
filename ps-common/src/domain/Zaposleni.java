@@ -2,11 +2,11 @@ package domain;
 
 public class Zaposleni extends OpstiDomenskiObjekat {
     
-    private long idZaposleni;
-    private String ime;
-    private String prezime;
-    private String username;
-    private String password;
+    private long idZaposleni = 0;
+    private String ime = null;
+    private String prezime = null;
+    private String username = null;
+    private String password = null;
 
     public Zaposleni(long idZaposleni, String ime, String prezime, String username, String password) {
         this.idZaposleni = idZaposleni;
@@ -73,6 +73,27 @@ public class Zaposleni extends OpstiDomenskiObjekat {
 			","			+ "'" + prezime	+ "'" +
 			","			+ "'" + username+ "'" +
 			","			+ "'" + password+ "'" + ")";
+	}
+
+	@Override
+	public String getCondition() {
+		String condition = "1=1 ";
+		if (idZaposleni != 0) {
+			condition += "idZaposleni=" + idZaposleni + " ";
+		}
+		if (ime != null) {
+			condition += "ime='" + ime + "' ";
+		}
+		if (prezime != null) {
+			condition += "prezime=" + prezime + " ";
+		}
+		if (username != null) {
+			condition += "username=" + username + " ";
+		}
+		if (password != null) {
+			condition += "password=" + password + " ";
+		}
+		return condition;
 	}
     
 }

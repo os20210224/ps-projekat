@@ -5,6 +5,7 @@ import domain.Zaposleni;
 import thread.KlijentThread;
 import gui.FrmKlijent;
 import gui.FrmLogin;
+import java.util.List;
 import transfer.enums.Operation;
 
 
@@ -35,11 +36,15 @@ public class Klijent {
 	}
 	
 	public static String KreirajKnjiga(Knjiga k) {
-		return kt.send(k, Operation.KREIRAJ_KNJIGA);
+		return (String) kt.send(k, Operation.KREIRAJ_KNJIGA);
+	}
+	
+	public static List<Knjiga> vratiListuKnjiga() {
+		return (List<Knjiga>) kt.send(new Knjiga(), Operation.VRATI_LISTU_KNJIGA);
 	}
 	
 	public static String PrijaviZaposleni(Zaposleni z) {
-		return kt.send(z, Operation.PRIJAVI_ZAPOSLENI);
+		return (String) kt.send(z, Operation.PRIJAVI_ZAPOSLENI);
 	}
 	
 	public static void main(String[] args) {

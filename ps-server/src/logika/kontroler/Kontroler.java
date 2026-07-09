@@ -1,14 +1,22 @@
 package logika.kontroler;
 
+import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
+import java.util.List;
 import logika.db.so.OpstaSO;
 import logika.db.so.knjiga.KreirajKnjiga;
+import logika.db.so.knjiga.vratiListuKnjiga;
 
 public class Kontroler {
 
-	public static void kreirajKnjiga(OpstiDomenskiObjekat obj) throws Exception {
+	public static Void kreirajKnjiga(OpstiDomenskiObjekat obj) throws Exception {
 		OpstaSO so = new KreirajKnjiga();
-		so.izvrsiTransakciju(obj);
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static List<Knjiga> vratiListuKnjiga(OpstiDomenskiObjekat obj) throws Exception {
+		OpstaSO so = new vratiListuKnjiga();
+		return (List<Knjiga>) so.izvrsiTransakciju(obj);
 	}
 	
 }

@@ -12,12 +12,15 @@ public class pnlKnjiga extends KlijentPanel {
 		super(title);
 		initComponents();
 		
-		tblKnjiga.setModel(new KnjigaTableModel());
-		
 		btnDodaj.addActionListener((e) -> {
 			Knjiga k = new Knjiga(Format.A4, 7, Povez.MEK, 6, 120, "test naslov", "test autor");
 			Klijent.KreirajKnjiga(k);
 		});
+	}
+	
+	@Override
+	public void updateTable() {
+		tblKnjiga.setModel(new KnjigaTableModel(Klijent.vratiListuKnjiga()));
 	}
 	
 	@SuppressWarnings("unchecked")

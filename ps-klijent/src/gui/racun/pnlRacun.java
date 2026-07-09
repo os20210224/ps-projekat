@@ -1,4 +1,4 @@
-package gui.knjiga.racun;
+package gui.racun;
 
 import gui.KlijentPanel;
 
@@ -37,4 +37,9 @@ public class pnlRacun extends KlijentPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+	@Override
+	protected void updateTable() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

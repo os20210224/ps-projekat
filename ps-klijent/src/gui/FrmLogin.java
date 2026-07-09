@@ -42,7 +42,7 @@ public class FrmLogin extends javax.swing.JFrame {
 			return;
 		}
 		
-		String res = klijent.connect(address, port);
+		Object res = klijent.connect(address, port);
 		if (!res.equals("")) {
 			JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -52,7 +52,7 @@ public class FrmLogin extends javax.swing.JFrame {
 		
 		res = Klijent.PrijaviZaposleni(z);
 		
-		if (!res.equals("")) {
+		if (res != null) {
 			JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}

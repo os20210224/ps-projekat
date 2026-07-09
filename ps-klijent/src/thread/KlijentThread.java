@@ -55,16 +55,14 @@ public class KlijentThread extends Thread {
 		return "";
 	}
 	
-	public String send(OpstiDomenskiObjekat obj, Operation operation) {
+	public Object send(OpstiDomenskiObjekat obj, Operation operation) {
 		Response res;
 		try {
 			sender.send(new Request(obj, operation));
 			System.out.println("zahtev poslat " +  operation);
 			res = (Response) rec.recieve();
 			System.out.println("odgovor primljen" + res.getStatus());
-			if (res.getStatus() == Status.FAILURE) {
-				return (String) res.getObject();
-			}
+			return res.getObject();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

@@ -1,7 +1,7 @@
 package gui;
 
 import gui.knjiga.pnlKnjiga;
-import gui.knjiga.racun.pnlRacun;
+import gui.racun.pnlRacun;
 import java.awt.Point;
 import java.awt.Rectangle;
 import javax.swing.event.MenuEvent;
@@ -98,6 +98,7 @@ public class FrmKlijent extends javax.swing.JFrame {
 		setLocation(location);
 		setTitle(current.title);
 		add(current);
+		current.updateTable();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -5,15 +5,15 @@ import domain.enums.Povez;
 
 public class Knjiga extends OpstiDomenskiObjekat {
     
-    private long idKnjiga;
-    private Format format;
-    private int brStranica;
-    private Povez povez;
-    private double cenaStranica;
-    private double cenaPoveza;
-    private String naziv;
-    private String autor;
-    private double cena;
+    private long idKnjiga = 0;
+    private Format format = null;
+    private int brStranica = 0;
+    private Povez povez = null;
+    private double cenaStranica = 0;
+    private double cenaPoveza = 0;
+    private String naziv = null;
+    private String autor = null;
+    private double cena = 0;
 	
 	public Knjiga(Format format, int brStranica, Povez povez, double cenaStranica, double cenaPoveza, String naziv, String autor) {
         this.format = format;
@@ -35,6 +35,9 @@ public class Knjiga extends OpstiDomenskiObjekat {
 		this.naziv = naziv;
 		this.autor = autor;
 		this.cena = cena;
+	}
+
+	public Knjiga() {
 	}
 
     public String getAutor() {
@@ -129,6 +132,39 @@ public class Knjiga extends OpstiDomenskiObjekat {
 			","			+		cenaPoveza					+
 			","			+ "'" +	naziv				+ "'"	+
 			","			+ "'" +	autor				+ "'"	+ ")" ;
+	}
+
+	@Override
+	public String getCondition() {
+		String condition = "1=1 ";
+		if (idKnjiga != 0) {
+			condition += "idKnjiga=" + idKnjiga + " ";
+		}
+		if (format != null) {
+			condition += "format='" + format.toString() + "' ";
+		}
+		if (brStranica != 0) {
+			condition += "brStranica=" + brStranica + " ";
+		}
+		if (povez != null) {
+			condition += "povez='" + povez.toString() + "' ";
+		}
+		if (cenaStranica != 0) {
+			condition += "cenaStranica=" + cenaStranica + " ";
+		}
+		if (cenaPoveza != 0) {
+			condition += "cenaPoveza=" + cenaPoveza + " ";
+		}
+		if (naziv != null) {
+			condition += "naziv='" + naziv + "' ";
+		}
+		if (autor != null) {
+			condition += "autor='" + autor + "' ";
+		}
+		if (cena != 0) {
+			condition += "cena=" + cena + " ";
+		}
+		return condition;
 	}
     
 }

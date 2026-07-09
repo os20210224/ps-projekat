@@ -1,7 +1,6 @@
 package gui.knjiga;
 
 import domain.Knjiga;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -19,7 +18,11 @@ public class KnjigaTableModel extends AbstractTableModel {
 		"Cena"
 	};
 	
-	List<Knjiga> knjige = new ArrayList<>();
+	List<Knjiga> knjige;
+
+	public KnjigaTableModel(List<Knjiga> knjige) {
+		this.knjige = knjige;
+	}
 	
 	@Override
 	public int getRowCount() {

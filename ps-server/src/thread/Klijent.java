@@ -1,8 +1,10 @@
 package thread;
 
+import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
 import domain.Zaposleni;
 import java.net.Socket;
+import java.util.List;
 import logika.db.so.SOException;
 import logika.kontroler.Kontroler;
 import main.Server;
@@ -53,12 +55,23 @@ public class Klijent extends Thread {
 						srv.log("> Obrada zahteva " + op);
 						try {
 							Kontroler.kreirajKnjiga((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
 						} catch (SOException e) {
 							srv.log("> SOException: " + e);
 							sender.send(new Response(e.getMessage(), Status.FAILURE));
 						}
-						sender.send(new Response(null, Status.SUCCESS));
-						srv.log("> Odgovor poslat\n");
+						break;
+					case VRATI_LISTU_KNJIGA:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<Knjiga> knjige = Kontroler.vratiListuKnjiga((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(knjige, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
 						break;
 				}
 			} catch (Exception ex) {
