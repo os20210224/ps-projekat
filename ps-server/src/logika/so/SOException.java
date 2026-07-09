@@ -1,4 +1,4 @@
-package logika.db.so;
+package logika.so;
 
 public class SOException extends Exception {
 	

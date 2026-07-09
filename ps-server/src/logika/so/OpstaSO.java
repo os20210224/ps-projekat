@@ -1,4 +1,4 @@
-package logika.db.so;
+package logika.so;
 
 import domain.OpstiDomenskiObjekat;
 import logika.db.dbBroker;

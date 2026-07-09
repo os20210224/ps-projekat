@@ -3,9 +3,9 @@ package logika.kontroler;
 import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
 import java.util.List;
-import logika.db.so.OpstaSO;
-import logika.db.so.knjiga.KreirajKnjiga;
-import logika.db.so.knjiga.vratiListuKnjiga;
+import logika.so.OpstaSO;
+import logika.so.knjiga.KreirajKnjiga;
+import logika.so.knjiga.vratiListuKnjiga;
 
 public class Kontroler {
 

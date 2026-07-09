@@ -1,4 +1,4 @@
-package logika.db.so.knjiga;
+package logika.so.knjiga;
 
 import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
@@ -6,7 +6,7 @@ import domain.enums.Format;
 import domain.enums.Povez;
 import java.util.List;
 import logika.db.dbBroker;
-import logika.db.so.OpstaSO;
+import logika.so.OpstaSO;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 

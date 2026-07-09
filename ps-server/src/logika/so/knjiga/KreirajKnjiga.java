@@ -1,9 +1,9 @@
-package logika.db.so.knjiga;
+package logika.so.knjiga;
 
 import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
 import logika.db.dbBroker;
-import logika.db.so.OpstaSO;
+import logika.so.OpstaSO;
 
 public class KreirajKnjiga extends OpstaSO<Void> {
 

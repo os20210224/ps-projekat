@@ -5,7 +5,7 @@ import domain.OpstiDomenskiObjekat;
 import domain.Zaposleni;
 import java.net.Socket;
 import java.util.List;
-import logika.db.so.SOException;
+import logika.so.SOException;
 import logika.kontroler.Kontroler;
 import main.Server;
 import transfer.Reciever;
