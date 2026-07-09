@@ -4,7 +4,7 @@ import gui.FrmServer;
 import java.util.ArrayList;
 import java.util.List;
 import logika.db.dbBroker;
-import thread.Klijent;
+import thread.KlijentHandler;
 import thread.Lobby;
 
 public class Server {
@@ -14,7 +14,7 @@ public class Server {
 	static dbBroker dbBroker;
 	Lobby lobby;
 	
-	List<Klijent> klijenti = new ArrayList<>();
+	List<KlijentHandler> klijenti = new ArrayList<>();
 	
 	public Server() {
 		srv = this;
@@ -24,11 +24,11 @@ public class Server {
 		f.setVisible(true);
 	}
 	
-	public void addKlijent(Klijent klijent) {
+	public void addKlijent(KlijentHandler klijent) {
 		klijenti.add(klijent);
 	}
 	
-	public void removeKlijent(Klijent klijent) {
+	public void removeKlijent(KlijentHandler klijent) {
 		klijenti.remove(klijent);
 	}
     
@@ -51,12 +51,13 @@ public class Server {
 	public void stop() {
 		try {
             lobby.serverSocket.close();
-            for (Klijent k : klijenti) {
-                k.likvidiraj();
-            }
+			for (KlijentHandler k : klijenti) {
+				k.likvidiraj();
+			}
+			klijenti = new ArrayList<>();
             log("> Server offline.");
         } catch (Exception e) {
-            log("> Server stop error:\n" + e.getMessage());
+            log("> Server stop error:\n" + e);
         }
 	}
     

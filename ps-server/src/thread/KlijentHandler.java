@@ -17,14 +17,14 @@ import static transfer.enums.Operation.KREIRAJ_KNJIGA;
 import static transfer.enums.Operation.PRIJAVI_ZAPOSLENI;
 import transfer.enums.Status;
 
-public class Klijent extends Thread {
+public class KlijentHandler extends Thread {
 
     Server srv;
     Socket s;
 	Sender sender;
 	Reciever rec;
 
-    public Klijent(Server srv, Socket s) {
+    public KlijentHandler(Server srv, Socket s) {
         this.srv = srv;
         this.s = s;
 		srv.addKlijent(this);
@@ -36,7 +36,7 @@ public class Klijent extends Thread {
     
     @Override
     public void run() {
-		while (s.isConnected()) {
+		while (!s.isClosed()) {
 			try {
 				Request req = (Request) rec.recieve();
 				Operation op = req.getOperation();
@@ -75,6 +75,9 @@ public class Klijent extends Thread {
 						break;
 				}
 			} catch (Exception ex) {
+				if (ex.getMessage().equals("Socket closed")) {
+					return;
+				}
 				srv.log("> Reciever error: " + ex);
 			}
 		}
@@ -83,8 +86,7 @@ public class Klijent extends Thread {
 	public void likvidiraj() {
 		try {
             s.close();
-            srv.removeKlijent(this);
-			// log
+			srv.log("> Thread ugasen");
         } catch (Exception e) {
             if (e.getMessage().equals("Socket closed")){
                 return;

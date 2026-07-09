@@ -12,7 +12,6 @@ import transfer.Request;
 import transfer.Response;
 import transfer.Sender;
 import transfer.enums.Operation;
-import transfer.enums.Status;
 
 public class KlijentThread extends Thread {
 	Klijent klijent;

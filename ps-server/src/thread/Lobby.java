@@ -20,7 +20,7 @@ public class Lobby extends Thread {
 			serverSocket = new ServerSocket(7259);
 			srv.log("> Server online.");
 			while (true) {
-				new Klijent(srv, serverSocket.accept());
+				new KlijentHandler(srv, serverSocket.accept());
 			}
 		} catch (IOException ex) {
 			if (ex.getMessage().equals("Socket closed")) {
