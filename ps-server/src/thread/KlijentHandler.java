@@ -44,12 +44,18 @@ public class KlijentHandler extends Thread {
 				switch (op) {
 					case PRIJAVI_ZAPOSLENI:
 						srv.log("> Obrada zahteva " + op);
-						Zaposleni zap = (Zaposleni) req.getObject();
-						// db provera TODO
-						sender.send(new Response(null, Status.SUCCESS));
-						srv.log("> Odgovor poslat\n");
-						// sender.send(new Response("Pogresni kredencijali", Status.FAILURE));
-						// srv.log()
+						try {
+							List<Zaposleni> zaposleni = Kontroler.vratiListuZaposleni((OpstiDomenskiObjekat) req.getObject());
+							if (zaposleni.size() == 1) { 
+								sender.send(new Response(null, Status.SUCCESS));
+								srv.log("> Odgovor poslat\n");
+							} else {
+								sender.send(new Response("Pogresni podaci", Status.FAILURE));
+							}
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
 						break;
 					case KREIRAJ_KNJIGA:
 						srv.log("> Obrada zahteva " + op);

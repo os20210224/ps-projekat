@@ -48,9 +48,7 @@ public class FrmLogin extends javax.swing.JFrame {
 			return;
 		}
 		
-		Zaposleni z = new Zaposleni(0, null, null, username, password);
-		
-		res = Klijent.PrijaviZaposleni(z);
+		res = Klijent.PrijaviZaposleni(new Zaposleni(username, password));
 		
 		if (res != null) {
 			JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);

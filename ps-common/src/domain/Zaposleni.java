@@ -15,6 +15,13 @@ public class Zaposleni extends OpstiDomenskiObjekat {
         this.username = username;
         this.password = password;
     }
+	
+	public Zaposleni(String username, String password) {
+        this.username = username;
+        this.password = password;
+	}
+	
+	public Zaposleni() {}
 
     public String getPassword() {
         return password;
@@ -79,19 +86,19 @@ public class Zaposleni extends OpstiDomenskiObjekat {
 	public String getCondition() {
 		String condition = "1=1 ";
 		if (idZaposleni != 0) {
-			condition += "idZaposleni=" + idZaposleni + " ";
+			condition += "AND idZaposleni=" + idZaposleni + " ";
 		}
 		if (ime != null) {
-			condition += "ime='" + ime + "' ";
+			condition += "AND ime='" + ime + "' ";
 		}
 		if (prezime != null) {
-			condition += "prezime=" + prezime + " ";
+			condition += "AND prezime='" + prezime + "' ";
 		}
 		if (username != null) {
-			condition += "username=" + username + " ";
+			condition += "AND username='" + username + "' ";
 		}
 		if (password != null) {
-			condition += "password=" + password + " ";
+			condition += "AND password='" + password + "' ";
 		}
 		return condition;
 	}

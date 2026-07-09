@@ -138,31 +138,31 @@ public class Knjiga extends OpstiDomenskiObjekat {
 	public String getCondition() {
 		String condition = "1=1 ";
 		if (idKnjiga != 0) {
-			condition += "idKnjiga=" + idKnjiga + " ";
+			condition += "AND idKnjiga=" + idKnjiga + " ";
 		}
 		if (format != null) {
-			condition += "format='" + format.toString() + "' ";
+			condition += "AND format='" + format.toString() + "' ";
 		}
 		if (brStranica != 0) {
-			condition += "brStranica=" + brStranica + " ";
+			condition += "AND brStranica=" + brStranica + " ";
 		}
 		if (povez != null) {
-			condition += "povez='" + povez.toString() + "' ";
+			condition += "AND povez='" + povez.toString() + "' ";
 		}
 		if (cenaStranica != 0) {
-			condition += "cenaStranica=" + cenaStranica + " ";
+			condition += "AND cenaStranica=" + cenaStranica + " ";
 		}
 		if (cenaPoveza != 0) {
-			condition += "cenaPoveza=" + cenaPoveza + " ";
+			condition += "AND cenaPoveza=" + cenaPoveza + " ";
 		}
 		if (naziv != null) {
-			condition += "naziv='" + naziv + "' ";
+			condition += "AND naziv='" + naziv + "' ";
 		}
 		if (autor != null) {
-			condition += "autor='" + autor + "' ";
+			condition += "AND autor='" + autor + "' ";
 		}
 		if (cena != 0) {
-			condition += "cena=" + cena + " ";
+			condition += "AND cena=" + cena + " ";
 		}
 		return condition;
 	}
