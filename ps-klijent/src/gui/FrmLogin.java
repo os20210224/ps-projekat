@@ -27,10 +27,10 @@ public class FrmLogin extends javax.swing.JFrame {
 		String password = String.valueOf(pswPassword.getPassword());
 		int port;
 		
-		if ("".equals(address)	||
-			"".equals(port_str)	||
-			"".equals(username) ||
-			"".equals(password)) {
+		if ("".equals(address.trim())	||
+			"".equals(port_str.trim())	||
+			"".equals(username.trim())	||
+			"".equals(password.trim())) {
 			JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}

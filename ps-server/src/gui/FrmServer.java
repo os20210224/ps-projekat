@@ -26,10 +26,10 @@ public class FrmServer extends javax.swing.JFrame {
 			String user		= txtDbUser.getText();
 			String pass		= String.valueOf(pswDbPassword.getPassword());
             
-			if ("".equals(addr)		||
-				"".equals(port_str) ||
-				"".equals(name)		||
-				"".equals(user)
+			if ("".equals(addr.trim())		||
+				"".equals(port_str.trim())	||
+				"".equals(name.trim())		||
+				"".equals(user.trim())
 				) {
 				JOptionPane.showMessageDialog(this, "Sva polja osim sifre moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
