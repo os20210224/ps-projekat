@@ -48,12 +48,13 @@ CREATE TABLE `Knjiga` (
   `autor` varchar(255) NOT NULL,
   `cena` double GENERATED ALWAYS AS (`cenaPoveza` + `cenaStranica` * `brStranica`) STORED,
   PRIMARY KEY (`idKnjiga`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Knjiga` */
 
 insert  into `Knjiga`(`idKnjiga`,`format`,`brStranica`,`povez`,`cenaStranica`,`cenaPoveza`,`naziv`,`autor`) values 
-(1,'B5',374,'tvrd',5,1020,'Recenzije Poslednjih Obroka','Đorđe Skakavac');
+(1,'B5',374,'tvrd',5,1020,'Recenzije Poslednjih Obroka','Đorđe Skakavac'),
+(6,'A4',2034,'tvrd',8,1200,'Beskonacna Osveta II','Dvojko');
 
 /*Table structure for table `Kupac` */
 

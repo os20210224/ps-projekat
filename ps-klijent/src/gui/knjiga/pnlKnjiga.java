@@ -4,6 +4,7 @@ import domain.Knjiga;
 import domain.enums.Format;
 import domain.enums.Povez;
 import gui.KlijentPanel;
+import javax.swing.JOptionPane;
 import main.Klijent;
 
 public class pnlKnjiga extends KlijentPanel {
@@ -12,10 +13,66 @@ public class pnlKnjiga extends KlijentPanel {
 		super(title);
 		initComponents();
 		
+		resetComboBoxes();
+		
 		btnDodaj.addActionListener((e) -> {
-			Knjiga k = new Knjiga(Format.A4, 7, Povez.MEK, 6, 120, "test naslov", "test autor");
-			Klijent.KreirajKnjiga(k);
+			String naziv = txtNaziv.getText();
+			String autor = txtAutor.getText();
+			String br_str_str = txtBrStrana.getText();
+			String cena_str_str = txtCenaStrane.getText();
+			String cena_pov_str = txtCenaPoveza.getText();
+			
+			if ("".equals(naziv.trim())				||
+				"".equals(autor.trim())				||
+				"".equals(br_str_str.trim())		||
+				"".equals(cena_str_str.trim())		||
+				"".equals(cena_pov_str.trim())		||
+				cmbFormat.getSelectedIndex() == -1	||
+				cmbPovez.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			int br_str;
+			int cena_str;
+			int cena_pov;
+			
+			try {
+				br_str = Integer.valueOf(br_str_str);
+				cena_str = Integer.valueOf(cena_str_str);
+				cena_pov = Integer.valueOf(cena_pov_str);
+			} catch (NumberFormatException ne) {
+				JOptionPane.showMessageDialog(this, "Broj stranica i cene moraju biti brojevi", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Format format = (Format) cmbFormat.getSelectedItem();
+			Povez povez = (Povez) cmbPovez.getSelectedItem();
+			
+			String res = Klijent.KreirajKnjiga(new Knjiga(format, br_str, povez, cena_str, cena_pov, naziv, autor));
+			
+			if (res == null) {
+				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				updateTable();
+			} else {
+				JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
+			}
 		});
+	}
+	
+	private void resetComboBoxes() {
+		cmbFormat.removeAllItems();
+		for (Format f : Format.values()) {
+			cmbFormat.addItem(f);
+		}
+		cmbFormat.setSelectedIndex(-1);
+			
+		cmbPovez.removeAllItems();
+		for (Povez p : Povez.values()) {
+			cmbPovez.addItem(p);
+		}
+		cmbPovez.setSelectedIndex(-1);
 	}
 	
 	@Override
@@ -30,9 +87,9 @@ public class pnlKnjiga extends KlijentPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblKnjiga = new javax.swing.JTable();
         lblFormat = new javax.swing.JLabel();
-        cmbFormat = new javax.swing.JComboBox<>();
-        lblPovez = new javax.swing.JLabel();
         cmbPovez = new javax.swing.JComboBox<>();
+        lblPovez = new javax.swing.JLabel();
+        cmbFormat = new javax.swing.JComboBox<>();
         lblBrStrana = new javax.swing.JLabel();
         lblCenaStrane = new javax.swing.JLabel();
         lblCenaPoveza = new javax.swing.JLabel();
@@ -68,16 +125,14 @@ public class pnlKnjiga extends KlijentPanel {
         lblFormat.setMinimumSize(new java.awt.Dimension(100, 20));
         lblFormat.setPreferredSize(new java.awt.Dimension(100, 20));
 
-        cmbFormat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbFormat.setMaximumSize(new java.awt.Dimension(72, 23));
+        cmbPovez.setMaximumSize(new java.awt.Dimension(72, 23));
 
         lblPovez.setText("Povez:");
         lblPovez.setMaximumSize(new java.awt.Dimension(100, 20));
         lblPovez.setMinimumSize(new java.awt.Dimension(100, 20));
         lblPovez.setPreferredSize(new java.awt.Dimension(100, 20));
 
-        cmbPovez.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbPovez.setMaximumSize(new java.awt.Dimension(72, 23));
+        cmbFormat.setMaximumSize(new java.awt.Dimension(72, 23));
 
         lblBrStrana.setText("Br. strana:");
         lblBrStrana.setMaximumSize(new java.awt.Dimension(100, 20));
@@ -139,11 +194,11 @@ public class pnlKnjiga extends KlijentPanel {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(lblFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cmbPovez, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(lblPovez, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cmbFormat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(cmbPovez, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -185,9 +240,9 @@ public class pnlKnjiga extends KlijentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbPovez, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPovez, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPovez, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBrStrana, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,8 +267,8 @@ public class pnlKnjiga extends KlijentPanel {
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromeni;
     private javax.swing.JButton btnTrazi;
-    private javax.swing.JComboBox<String> cmbFormat;
-    private javax.swing.JComboBox<String> cmbPovez;
+    private javax.swing.JComboBox<Format> cmbFormat;
+    private javax.swing.JComboBox<Povez> cmbPovez;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAutor;
     private javax.swing.JLabel lblBrStrana;
