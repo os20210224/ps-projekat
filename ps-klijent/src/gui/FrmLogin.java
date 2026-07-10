@@ -3,6 +3,8 @@ package gui;
 import domain.Zaposleni;
 import javax.swing.JOptionPane;
 import main.Klijent;
+import transfer.Response;
+import transfer.enums.Status;
 
 public class FrmLogin extends javax.swing.JFrame {
 
@@ -42,16 +44,16 @@ public class FrmLogin extends javax.swing.JFrame {
 			return;
 		}
 		
-		Object res = klijent.connect(address, port);
+		String res = klijent.connect(address, port);
 		if (!res.equals("")) {
 			JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
-		res = Klijent.PrijaviZaposleni(new Zaposleni(username, password));
+		Response resp = Klijent.PrijaviZaposleni(new Zaposleni(username, password));
 		
-		if (res != null) {
-			JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
+		if (resp.getStatus() == Status.FAILURE) {
+			JOptionPane.showMessageDialog(this, resp.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		

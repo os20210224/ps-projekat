@@ -9,6 +9,8 @@ import lib.KlijentPanel;
 import javax.swing.JOptionPane;
 import lib.mouseClickListener;
 import main.Klijent;
+import transfer.Response;
+import transfer.enums.Status;
 
 public class pnlKnjiga extends KlijentPanel {
 	
@@ -60,13 +62,13 @@ public class pnlKnjiga extends KlijentPanel {
 			Format format = (Format) cmbFormat.getSelectedItem();
 			Povez povez = (Povez) cmbPovez.getSelectedItem();
 			
-			String res = Klijent.KreirajKnjiga(new Knjiga(format, br_str, povez, cena_str, cena_pov, naziv, autor));
+			Response res = Klijent.KreirajKnjiga(new Knjiga(format, br_str, povez, cena_str, cena_pov, naziv, autor));
 			
-			if (res == null) {
+			if (res.getStatus() == Status.SUCCESS) {
 				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 
@@ -110,8 +112,7 @@ public class pnlKnjiga extends KlijentPanel {
 				JOptionPane.showMessageDialog(this, "Mora se uneti kriterijum pretrage.", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-
-			List<Knjiga> knjige;
+			
 			Knjiga k = new Knjiga();
 			
 			if (!"".equals(naziv)) {
@@ -151,9 +152,13 @@ public class pnlKnjiga extends KlijentPanel {
 				k.setPovez((Povez) cmbPovez.getSelectedItem());
 			}
 			
-			knjige = (List<Knjiga>) Klijent.vratiListuKnjiga(k);
+			Response res = Klijent.vratiListuKnjiga(k);
+			if (res.getStatus() == Status.FAILURE) {
+				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			
-			tblKnjiga.setModel(new KnjigaTableModel(knjige));
+			tblKnjiga.setModel(new KnjigaTableModel((List<Knjiga>) res.getObject()));
 			
 			btnResetuj.setEnabled(true);
 		});
@@ -191,7 +196,12 @@ public class pnlKnjiga extends KlijentPanel {
 	
 	@Override
 	public void updateTable() {
-		tblKnjiga.setModel(new KnjigaTableModel(Klijent.vratiListuKnjiga(new Knjiga())));
+		Response res = Klijent.vratiListuKnjiga(new Knjiga());
+		if (res.getStatus() == Status.FAILURE) {
+			JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		tblKnjiga.setModel(new KnjigaTableModel((List<Knjiga>) res.getObject()));
 	}
 	
 	private void napuniFormu(Knjiga k) {
@@ -397,14 +407,15 @@ public class pnlKnjiga extends KlijentPanel {
                     .addComponent(txtCenaStrane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

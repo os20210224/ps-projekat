@@ -6,6 +6,7 @@ import thread.KlijentThread;
 import gui.FrmKlijent;
 import gui.FrmLogin;
 import java.util.List;
+import transfer.Response;
 import transfer.enums.Operation;
 
 
@@ -35,16 +36,18 @@ public class Klijent {
 		f.setVisible(true);
 	}
 	
-	public static String KreirajKnjiga(Knjiga k) {
-		return (String) kt.send(k, Operation.KREIRAJ_KNJIGA);
+	public static Response KreirajKnjiga(Knjiga k) {
+		return (Response) kt.send(k, Operation.KREIRAJ_KNJIGA);
 	}
 	
-	public static List<Knjiga> vratiListuKnjiga(Knjiga k) {
-		return (List<Knjiga>) kt.send(k, Operation.VRATI_LISTU_KNJIGA);
+	public static Response vratiListuKnjiga(Knjiga k) {
+		return (Response)kt.send(k, Operation.VRATI_LISTU_KNJIGA);
 	}
 	
-	public static String PrijaviZaposleni(Zaposleni z) {
-		return (String) kt.send(z, Operation.PRIJAVI_ZAPOSLENI);
+//	public static String 
+	
+	public static Response PrijaviZaposleni(Zaposleni z) {
+		return (Response) kt.send(z, Operation.PRIJAVI_ZAPOSLENI);
 	}
 	
 	public static void main(String[] args) {

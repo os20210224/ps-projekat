@@ -61,7 +61,7 @@ public class KlijentThread extends Thread {
 			System.out.println("zahtev poslat " +  operation);
 			res = (Response) rec.recieve();
 			System.out.println("odgovor primljen" + res.getStatus());
-			return res.getObject();
+			return res;
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
