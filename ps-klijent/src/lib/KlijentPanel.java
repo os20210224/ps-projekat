@@ -1,4 +1,4 @@
-package gui;
+package lib;
 
 import javax.swing.JPanel;
 
@@ -11,6 +11,6 @@ public abstract class KlijentPanel extends JPanel {
 		setMinimumSize(getPreferredSize());
 	}
 	
-	protected abstract void updateTable();
+	public abstract void updateTable();
 	
 }
