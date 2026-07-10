@@ -79,14 +79,15 @@ public class pnlKnjiga extends KlijentPanel {
 					selected = null;
 					napuniFormu(selected);
 					btnPromeni.setEnabled(false);
+					btnObrisi.setEnabled(false);
 				} else {
 					KnjigaTableModel model = (KnjigaTableModel) tblKnjiga.getModel();
 					selected = model.getKnjiga(tblKnjiga.getSelectedRow());
 					napuniFormu(selected);
 					btnPromeni.setEnabled(true);
+					btnObrisi.setEnabled(true);
 				}
 				btnDeselektuj.setEnabled(true);
-				btnObrisi.setEnabled(true);
 			}
 		});
 		
@@ -167,6 +168,18 @@ public class pnlKnjiga extends KlijentPanel {
 			deselect();
 			updateTable();
 			btnResetuj.setEnabled(false);
+		});
+		
+		btnObrisi.addActionListener((e) -> {
+			Response res = Klijent.obrisiKnjiga(selected);
+			if (res.getStatus() == Status.FAILURE) {
+				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise knjigu" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			JOptionPane.showMessageDialog(this, "Knjiga je uspesno obrisana.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+			btnObrisi.setEnabled(false);
+			deselect();
+			updateTable();
 		});
 		
 	}

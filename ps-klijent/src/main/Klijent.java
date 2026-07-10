@@ -44,7 +44,9 @@ public class Klijent {
 		return (Response)kt.send(k, Operation.VRATI_LISTU_KNJIGA);
 	}
 	
-//	public static String 
+	public static Response obrisiKnjiga(Knjiga k) {
+		return (Response) kt.send(k, Operation.OBRISI_KNJIGA);
+	}
 	
 	public static Response PrijaviZaposleni(Zaposleni z) {
 		return (Response) kt.send(z, Operation.PRIJAVI_ZAPOSLENI);

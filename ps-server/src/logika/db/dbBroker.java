@@ -1,5 +1,6 @@
 package logika.db;
 
+import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -107,7 +108,7 @@ public class dbBroker {
 		try {
 			String q =
 				"SELECT * FROM "	+ obj.getTableName() + 
-				" WHERE "			+ obj.getCondition();
+				" WHERE "			+ obj.getCondition() ;
 			srv.logDB("> Querry:\n\t" + q);
 			Statement s = conn.createStatement();
 			rs = s.executeQuery(q);
@@ -117,6 +118,26 @@ public class dbBroker {
 			throw e;
 		}
 		return rs;
+	}
+	
+	public static Void delete(OpstiDomenskiObjekat obj) throws Exception {
+		if (!connect()) {
+			throw new Exception("Greska pri konekciji sa bazom podataka");
+		}
+		ResultSet rs;
+		try {
+			String q =
+				"DELETE FROM "	+ obj.getTableName()		+ 
+				" WHERE "		+ obj.getDeleteCondition()	;
+			srv.logDB("> Querry:\n\t" + q);
+			Statement s = conn.createStatement();
+			s.executeUpdate(q);
+			srv.logDB("> slogovi selektovani");
+		} catch (SQLException e) {
+			srv.logDB("> greska pri selektovanju slogova" + e);
+			throw e;
+		}
+		return null;
 	}
     
 }

@@ -166,5 +166,10 @@ public class Knjiga extends OpstiDomenskiObjekat {
 		}
 		return condition;
 	}
+
+	@Override
+	public String getDeleteCondition() {
+		return "idKnjiga=" + idKnjiga;
+	}
     
 }
