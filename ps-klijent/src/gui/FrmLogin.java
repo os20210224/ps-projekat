@@ -21,16 +21,16 @@ public class FrmLogin extends javax.swing.JFrame {
 	}
 	
 	private void login() {
-		String address	= txtAddress.getText();
-		String port_str	= txtPort.getText();
-		String username = txtUsername.getText();
-		String password = String.valueOf(pswPassword.getPassword());
+		String address	= txtAddress.getText().trim();
+		String port_str	= txtPort.getText().trim();
+		String username = txtUsername.getText().trim();
+		String password = String.valueOf(pswPassword.getPassword()).trim();
 		int port;
 		
-		if ("".equals(address.trim())	||
-			"".equals(port_str.trim())	||
-			"".equals(username.trim())	||
-			"".equals(password.trim())) {
+		if ("".equals(address)	||
+			"".equals(port_str)	||
+			"".equals(username)	||
+			"".equals(password)) {
 			JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
