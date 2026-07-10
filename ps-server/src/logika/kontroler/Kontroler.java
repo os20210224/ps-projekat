@@ -8,6 +8,7 @@ import logika.so.OpstaSO;
 import logika.so.SOException;
 import logika.so.knjiga.KreirajKnjiga;
 import logika.so.knjiga.ObrisiKnjiga;
+import logika.so.knjiga.PromeniKnjiga;
 import logika.so.knjiga.vratiListuKnjiga;
 import logika.so.zaposleni.vratiListuZaposleni;
 
@@ -30,6 +31,11 @@ public class Kontroler {
 
 	public static Void ObrisiKnjiga(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new ObrisiKnjiga();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+	
+	public static Void PromeniKnjiga(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniKnjiga();
 		return (Void) so.izvrsiTransakciju(obj);
 	}
 	

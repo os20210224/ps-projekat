@@ -47,13 +47,13 @@ public class pnlKnjiga extends KlijentPanel {
 			}
 			
 			int br_str;
-			int cena_str;
-			int cena_pov;
+			double cena_str;
+			double cena_pov;
 			
 			try {
 				br_str = Integer.parseInt(br_str_str);
-				cena_str = Integer.parseInt(cena_str_str);
-				cena_pov = Integer.parseInt(cena_pov_str);
+				cena_str = Double.parseDouble(cena_str_str);
+				cena_pov = Double.parseDouble(cena_pov_str);
 			} catch (NumberFormatException ne) {
 				JOptionPane.showMessageDialog(this, "Broj stranica i cene moraju biti brojevi", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -132,17 +132,17 @@ public class pnlKnjiga extends KlijentPanel {
 			}
 			if (!"".equals(cena_str_str)) {
 				try {
-					k.setBrStranica(Integer.parseInt(cena_str_str));
+					k.setCenaStranica(Double.parseDouble(cena_str_str));
 				} catch (NumberFormatException ne) {
-					JOptionPane.showMessageDialog(this, "Broj strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Cena strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
 			if (!"".equals(cena_pov_str)) {
 				try {
-					k.setBrStranica(Integer.parseInt(cena_pov_str));
+					k.setCenaPoveza(Double.parseDouble(cena_pov_str));
 				} catch (NumberFormatException ne) {
-					JOptionPane.showMessageDialog(this, "Broj strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Cena poveza mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
@@ -180,6 +180,51 @@ public class pnlKnjiga extends KlijentPanel {
 			btnObrisi.setEnabled(false);
 			deselect();
 			updateTable();
+		});
+		
+		btnPromeni.addActionListener((e) -> {
+			String naziv = txtNaziv.getText().trim();
+			String autor = txtAutor.getText().trim();
+			String br_str_str = txtBrStrana.getText().trim();
+			String cena_str_str = txtCenaStrane.getText().trim();
+			String cena_pov_str = txtCenaPoveza.getText().trim();
+			
+			if ("".equals(naziv)					||
+				"".equals(autor)					||
+				"".equals(br_str_str)				||
+				"".equals(cena_str_str)				||
+				"".equals(cena_pov_str)				||
+				cmbFormat.getSelectedIndex() == -1	||
+				cmbPovez.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			int br_str;
+			double cena_str;
+			double cena_pov;
+			
+			try {
+				br_str = Integer.parseInt(br_str_str);
+				cena_str = Double.parseDouble(cena_str_str);
+				cena_pov = Double.parseDouble(cena_pov_str);
+			} catch (NumberFormatException ne) {
+				JOptionPane.showMessageDialog(this, "Broj stranica i cene moraju biti brojevi", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Format format = (Format) cmbFormat.getSelectedItem();
+			Povez povez = (Povez) cmbPovez.getSelectedItem();
+			
+			Response res = Klijent.PromeniKnjiga(new Knjiga(selected.getIdKnjiga(), format, br_str, povez, cena_str, cena_pov, naziv, autor));
+			
+			if (res.getStatus() == Status.SUCCESS) {
+				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				updateTable();
+			} else {
+				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
 	}

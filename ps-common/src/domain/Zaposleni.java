@@ -104,8 +104,17 @@ public class Zaposleni extends OpstiDomenskiObjekat {
 	}
 
 	@Override
-	public String getDeleteCondition() {
+	public String getIDCondition() {
 		return "idZaposleni=" + idZaposleni;
+	}
+
+	@Override
+	public String getUpdate() {
+		return
+			"ime="		+ "'" + ime		+ "'," +
+			"prezime="	+ "'" + prezime	+ "'," +
+			"username="	+ "'" + username+ "'," +
+			"password="	+ "'" + password+ "'," ;
 	}
     
 }

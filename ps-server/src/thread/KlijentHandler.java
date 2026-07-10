@@ -90,7 +90,17 @@ public class KlijentHandler extends Thread {
 							sender.send(new Response(e.getMessage(), Status.FAILURE));
 						}
 						break;
-						
+					case PROMENI_KNJIGA:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.PromeniKnjiga((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
 				}
 			} catch (Exception ex) {
 				if (ex.getMessage().equals("Socket closed")) {

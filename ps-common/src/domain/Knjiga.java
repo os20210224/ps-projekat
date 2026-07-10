@@ -40,6 +40,17 @@ public class Knjiga extends OpstiDomenskiObjekat {
 	public Knjiga() {
 	}
 
+	public Knjiga(long idKnjiga, Format format, int brStranica, Povez povez, double cenaStranica, double cenaPoveza, String naziv, String autor) {
+		this.idKnjiga = idKnjiga;
+		this.format = format;
+		this.brStranica = brStranica;
+		this.povez = povez;
+		this.cenaStranica = cenaStranica;
+		this.cenaPoveza = cenaPoveza;
+		this.naziv = naziv;
+		this.autor = autor;
+	}
+
     public String getAutor() {
         return autor;
     }
@@ -168,8 +179,20 @@ public class Knjiga extends OpstiDomenskiObjekat {
 	}
 
 	@Override
-	public String getDeleteCondition() {
+	public String getIDCondition() {
 		return "idKnjiga=" + idKnjiga;
+	}
+
+	@Override
+	public String getUpdate() {
+		return 
+			"format='"	 		+ format.toString() 	+ "'," 	+
+			"brStranica=" 		+ brStranica 			+ ","	+
+			"povez='" 			+ povez.toString() 		+ "',"	+
+			"cenaStranica=" 	+ cenaStranica 			+ ","	+
+			"cenaPoveza=" 		+ cenaPoveza 			+ ","	+
+			"naziv='" 			+ naziv 				+ "',"	+
+			"autor='" 			+ autor 				+ "'"	;
 	}
     
 }

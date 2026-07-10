@@ -5,7 +5,6 @@ import domain.Zaposleni;
 import thread.KlijentThread;
 import gui.FrmKlijent;
 import gui.FrmLogin;
-import java.util.List;
 import transfer.Response;
 import transfer.enums.Operation;
 
@@ -46,6 +45,10 @@ public class Klijent {
 	
 	public static Response obrisiKnjiga(Knjiga k) {
 		return (Response) kt.send(k, Operation.OBRISI_KNJIGA);
+	}
+	
+	public static Response PromeniKnjiga(Knjiga k) {
+		return (Response) kt.send(k, Operation.PROMENI_KNJIGA);
 	}
 	
 	public static Response PrijaviZaposleni(Zaposleni z) {
