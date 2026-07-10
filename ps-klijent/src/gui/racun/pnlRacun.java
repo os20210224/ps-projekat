@@ -1,6 +1,6 @@
 package gui.racun;
 
-import gui.KlijentPanel;
+import lib.KlijentPanel;
 
 public class pnlRacun extends KlijentPanel {
 
@@ -39,7 +39,7 @@ public class pnlRacun extends KlijentPanel {
     // End of variables declaration//GEN-END:variables
 
 	@Override
-	protected void updateTable() {
+	public void updateTable() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

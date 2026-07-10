@@ -3,11 +3,16 @@ package gui.knjiga;
 import domain.Knjiga;
 import domain.enums.Format;
 import domain.enums.Povez;
-import gui.KlijentPanel;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import lib.KlijentPanel;
 import javax.swing.JOptionPane;
+import lib.mouseClickListener;
 import main.Klijent;
 
 public class pnlKnjiga extends KlijentPanel {
+	
+	Knjiga selected = null;
 
 	public pnlKnjiga(String title) {
 		super(title);
@@ -15,18 +20,23 @@ public class pnlKnjiga extends KlijentPanel {
 		
 		resetComboBoxes();
 		
+		btnDeselektuj.setEnabled(false);
+		btnPromeni.setEnabled(false);
+		btnObrisi.setEnabled(false);
+		btnResetuj.setEnabled(false);
+		
 		btnDodaj.addActionListener((e) -> {
-			String naziv = txtNaziv.getText();
-			String autor = txtAutor.getText();
-			String br_str_str = txtBrStrana.getText();
-			String cena_str_str = txtCenaStrane.getText();
-			String cena_pov_str = txtCenaPoveza.getText();
+			String naziv = txtNaziv.getText().trim();
+			String autor = txtAutor.getText().trim();
+			String br_str_str = txtBrStrana.getText().trim();
+			String cena_str_str = txtCenaStrane.getText().trim();
+			String cena_pov_str = txtCenaPoveza.getText().trim();
 			
-			if ("".equals(naziv.trim())				||
-				"".equals(autor.trim())				||
-				"".equals(br_str_str.trim())		||
-				"".equals(cena_str_str.trim())		||
-				"".equals(cena_pov_str.trim())		||
+			if ("".equals(naziv)					||
+				"".equals(autor)					||
+				"".equals(br_str_str)				||
+				"".equals(cena_str_str)				||
+				"".equals(cena_pov_str)				||
 				cmbFormat.getSelectedIndex() == -1	||
 				cmbPovez.getSelectedIndex() == -1
 				) {
@@ -39,9 +49,9 @@ public class pnlKnjiga extends KlijentPanel {
 			int cena_pov;
 			
 			try {
-				br_str = Integer.valueOf(br_str_str);
-				cena_str = Integer.valueOf(cena_str_str);
-				cena_pov = Integer.valueOf(cena_pov_str);
+				br_str = Integer.parseInt(br_str_str);
+				cena_str = Integer.parseInt(cena_str_str);
+				cena_pov = Integer.parseInt(cena_pov_str);
 			} catch (NumberFormatException ne) {
 				JOptionPane.showMessageDialog(this, "Broj stranica i cene moraju biti brojevi", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -59,6 +69,110 @@ public class pnlKnjiga extends KlijentPanel {
 				JOptionPane.showMessageDialog(this, res, "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
+
+		tblKnjiga.addMouseListener(new mouseClickListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (tblKnjiga.getSelectedRows().length > 1) {
+					selected = null;
+					napuniFormu(selected);
+					btnPromeni.setEnabled(false);
+				} else {
+					KnjigaTableModel model = (KnjigaTableModel) tblKnjiga.getModel();
+					selected = model.getKnjiga(tblKnjiga.getSelectedRow());
+					napuniFormu(selected);
+					btnPromeni.setEnabled(true);
+				}
+				btnDeselektuj.setEnabled(true);
+				btnObrisi.setEnabled(true);
+			}
+		});
+		
+		btnDeselektuj.addActionListener((e) -> {
+			deselect();
+		});
+		
+		btnTrazi.addActionListener((e) -> {
+			String naziv = txtNaziv.getText().trim();
+			String autor = txtAutor.getText().trim();
+			String br_str_str = txtBrStrana.getText().trim();
+			String cena_str_str = txtCenaStrane.getText().trim();
+			String cena_pov_str = txtCenaPoveza.getText().trim();
+			
+			if ("".equals(naziv)					&&
+				"".equals(autor)					&&
+				"".equals(br_str_str)				&&
+				"".equals(cena_str_str)				&&
+				"".equals(cena_pov_str)				&&
+				cmbFormat.getSelectedIndex() == -1	&&
+				cmbPovez.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Mora se uneti kriterijum pretrage.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			List<Knjiga> knjige;
+			Knjiga k = new Knjiga();
+			
+			if (!"".equals(naziv)) {
+				k.setNaziv(naziv);
+			}
+			if (!"".equals(autor)) {
+				k.setAutor(autor);
+			}
+			if (!"".equals(br_str_str)) {
+				try {
+					k.setBrStranica(Integer.parseInt(br_str_str));
+				} catch (NumberFormatException ne) {
+					JOptionPane.showMessageDialog(this, "Broj strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			if (!"".equals(cena_str_str)) {
+				try {
+					k.setBrStranica(Integer.parseInt(cena_str_str));
+				} catch (NumberFormatException ne) {
+					JOptionPane.showMessageDialog(this, "Broj strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			if (!"".equals(cena_pov_str)) {
+				try {
+					k.setBrStranica(Integer.parseInt(cena_pov_str));
+				} catch (NumberFormatException ne) {
+					JOptionPane.showMessageDialog(this, "Broj strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			if (cmbFormat.getSelectedIndex() > -1) {
+				k.setFormat((Format) cmbFormat.getSelectedItem());
+			}
+			if(cmbPovez.getSelectedIndex() > -1) {
+				k.setPovez((Povez) cmbPovez.getSelectedItem());
+			}
+			
+			knjige = (List<Knjiga>) Klijent.vratiListuKnjiga(k);
+			
+			tblKnjiga.setModel(new KnjigaTableModel(knjige));
+			
+			btnResetuj.setEnabled(true);
+		});
+		
+		btnResetuj.addActionListener((e) -> {
+			deselect();
+			updateTable();
+			btnResetuj.setEnabled(false);
+		});
+		
+	}
+	
+	private void deselect() {
+		selected = null;
+		napuniFormu(selected);
+		tblKnjiga.clearSelection();
+		btnDeselektuj.setEnabled(false);
+		btnObrisi.setEnabled(false);
+		btnPromeni.setEnabled(false);
 	}
 	
 	private void resetComboBoxes() {
@@ -77,15 +191,33 @@ public class pnlKnjiga extends KlijentPanel {
 	
 	@Override
 	public void updateTable() {
-		tblKnjiga.setModel(new KnjigaTableModel(Klijent.vratiListuKnjiga()));
+		tblKnjiga.setModel(new KnjigaTableModel(Klijent.vratiListuKnjiga(new Knjiga())));
 	}
+	
+	private void napuniFormu(Knjiga k) {
+		if (k == null) {
+			txtNaziv.setText("");
+			txtAutor.setText("");
+			cmbFormat.setSelectedIndex(-1);
+			cmbPovez.setSelectedIndex(-1);
+			txtBrStrana.setText("");
+			txtCenaStrane.setText("");
+			txtCenaPoveza.setText("");
+			return;
+		}
+		txtNaziv.setText(k.getNaziv());
+		txtAutor.setText(k.getAutor());
+		cmbFormat.setSelectedIndex(k.getFormat().ordinal());
+		cmbPovez.setSelectedIndex(k.getPovez().ordinal());
+		txtBrStrana.setText("" + k.getBrStranica());
+		txtCenaStrane.setText("" + k.getCenaStranica());
+		txtCenaPoveza.setText("" + k.getCenaPoveza());
+}
 	
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblKnjiga = new javax.swing.JTable();
         lblFormat = new javax.swing.JLabel();
         cmbPovez = new javax.swing.JComboBox<>();
         lblPovez = new javax.swing.JLabel();
@@ -104,21 +236,12 @@ public class pnlKnjiga extends KlijentPanel {
         btnTrazi = new javax.swing.JButton();
         btnPromeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
+        btnDeselektuj = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblKnjiga = new javax.swing.JTable();
+        btnResetuj = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(717, 512));
-
-        tblKnjiga.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblKnjiga);
 
         lblFormat.setText("Format:");
         lblFormat.setMaximumSize(new java.awt.Dimension(100, 20));
@@ -171,6 +294,23 @@ public class pnlKnjiga extends KlijentPanel {
 
         btnObrisi.setText("Obrisi");
 
+        btnDeselektuj.setText("Deselektuj");
+
+        tblKnjiga.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblKnjiga);
+
+        btnResetuj.setText("Resetuj");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,8 +320,21 @@ public class pnlKnjiga extends KlijentPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnPromeni, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblCenaStrane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCenaStrane, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblBrStrana, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtBrStrana, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnPromeni, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,32 +348,22 @@ public class pnlKnjiga extends KlijentPanel {
                                     .addComponent(lblFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(cmbFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(lblPovez, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblPovez, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(cmbPovez, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblCenaStrane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCenaStrane, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblBrStrana, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtBrStrana, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
+                        .addComponent(lblCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -228,8 +371,8 @@ public class pnlKnjiga extends KlijentPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -258,14 +401,19 @@ public class pnlKnjiga extends KlijentPanel {
                     .addComponent(lblCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCenaPoveza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeselektuj;
     private javax.swing.JButton btnDodaj;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromeni;
+    private javax.swing.JButton btnResetuj;
     private javax.swing.JButton btnTrazi;
     private javax.swing.JComboBox<Format> cmbFormat;
     private javax.swing.JComboBox<Povez> cmbPovez;

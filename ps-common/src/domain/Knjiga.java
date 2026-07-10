@@ -156,10 +156,10 @@ public class Knjiga extends OpstiDomenskiObjekat {
 			condition += "AND cenaPoveza=" + cenaPoveza + " ";
 		}
 		if (naziv != null) {
-			condition += "AND naziv='" + naziv + "' ";
+			condition += "AND naziv LIKE '%" + naziv + "%' ";
 		}
 		if (autor != null) {
-			condition += "AND autor='" + autor + "' ";
+			condition += "AND autor LIKE '%" + autor + "%' ";
 		}
 		if (cena != 0) {
 			condition += "AND cena=" + cena + " ";

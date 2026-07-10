@@ -1,5 +1,6 @@
 package gui;
 
+import lib.KlijentPanel;
 import gui.knjiga.pnlKnjiga;
 import gui.racun.pnlRacun;
 import java.awt.Point;

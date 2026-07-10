@@ -39,8 +39,8 @@ public class Klijent {
 		return (String) kt.send(k, Operation.KREIRAJ_KNJIGA);
 	}
 	
-	public static List<Knjiga> vratiListuKnjiga() {
-		return (List<Knjiga>) kt.send(new Knjiga(), Operation.VRATI_LISTU_KNJIGA);
+	public static List<Knjiga> vratiListuKnjiga(Knjiga k) {
+		return (List<Knjiga>) kt.send(k, Operation.VRATI_LISTU_KNJIGA);
 	}
 	
 	public static String PrijaviZaposleni(Zaposleni z) {
