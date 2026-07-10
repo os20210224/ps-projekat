@@ -101,6 +101,50 @@ public class KlijentHandler extends Thread {
 							sender.send(new Response(e.getMessage(), Status.FAILURE));
 						}
 						break;
+					case KREIRAJ_ZAPOSLENI:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.kreirajZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case VRATI_LISTU_ZAPOSLENI:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<Zaposleni> zaposleni = Kontroler.vratiListuZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(zaposleni, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case OBRISI_ZAPOSLENI:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.ObrisiZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case PROMENI_ZAPOSLENI:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.PromeniZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
 				}
 			} catch (Exception ex) {
 				if (ex.getMessage().equals("Socket closed")) {

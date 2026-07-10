@@ -55,6 +55,22 @@ public class Klijent {
 		return (Response) kt.send(z, Operation.PRIJAVI_ZAPOSLENI);
 	}
 	
+	public static Response vratiListuZaposleni(Zaposleni z) {
+		return (Response) kt.send(z, Operation.VRATI_LISTU_ZAPOSLENI);
+	}
+	
+	public static Response KreirajZaposleni(Zaposleni z) {
+		return (Response) kt.send(z, Operation.KREIRAJ_ZAPOSLENI);
+	}
+	
+	public static Response obrisiZaposleni(Zaposleni z) {
+		return (Response) kt.send(z, Operation.OBRISI_ZAPOSLENI);
+	}
+	
+	public static Response PromeniZaposleni(Zaposleni z) {
+		return (Response) kt.send(z, Operation.PROMENI_ZAPOSLENI);
+	}
+	
 	public static void main(String[] args) {
 		new Klijent();
 	}

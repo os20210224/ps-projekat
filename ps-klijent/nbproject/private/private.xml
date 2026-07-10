@@ -5,6 +5,8 @@
         <group name="ps-projekat">
             <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/main/Klijent.java</file>
             <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/gui/knjiga/pnlKnjiga.java</file>
+            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/gui/FrmKlijent.java</file>
+            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-klijent/src/gui/zaposleni/pnlZaposleni.java</file>
         </group>
     </open-files>
 </project-private>

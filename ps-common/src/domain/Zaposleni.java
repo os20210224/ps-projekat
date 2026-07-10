@@ -16,6 +16,13 @@ public class Zaposleni extends OpstiDomenskiObjekat {
         this.password = password;
     }
 	
+	public Zaposleni(String ime, String prezime, String username, String password) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.username = username;
+        this.password = password;
+    }
+	
 	public Zaposleni(String username, String password) {
         this.username = username;
         this.password = password;
@@ -111,10 +118,10 @@ public class Zaposleni extends OpstiDomenskiObjekat {
 	@Override
 	public String getUpdate() {
 		return
-			"ime="		+ "'" + ime		+ "'," +
-			"prezime="	+ "'" + prezime	+ "'," +
-			"username="	+ "'" + username+ "'," +
-			"password="	+ "'" + password+ "'," ;
+			"ime="		+ "'" + ime		 + "'," +
+			"prezime="	+ "'" + prezime	 + "'," +
+			"username="	+ "'" + username + "'," +
+			"password="	+ "'" + password + "'"  ;
 	}
     
 }

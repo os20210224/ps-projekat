@@ -10,6 +10,9 @@ import logika.so.knjiga.KreirajKnjiga;
 import logika.so.knjiga.ObrisiKnjiga;
 import logika.so.knjiga.PromeniKnjiga;
 import logika.so.knjiga.vratiListuKnjiga;
+import logika.so.zaposleni.KreirajZaposleni;
+import logika.so.zaposleni.ObrisiZaposleni;
+import logika.so.zaposleni.PromeniZaposleni;
 import logika.so.zaposleni.vratiListuZaposleni;
 
 public class Kontroler {
@@ -36,6 +39,21 @@ public class Kontroler {
 	
 	public static Void PromeniKnjiga(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new PromeniKnjiga();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void kreirajZaposleni(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajZaposleni();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiZaposleni(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiZaposleni();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniZaposleni(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniZaposleni();
 		return (Void) so.izvrsiTransakciju(obj);
 	}
 	

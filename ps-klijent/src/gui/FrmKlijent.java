@@ -3,6 +3,7 @@ package gui;
 import lib.KlijentPanel;
 import gui.knjiga.pnlKnjiga;
 import gui.racun.pnlRacun;
+import gui.zaposleni.pnlZaposleni;
 import java.awt.Point;
 import java.awt.Rectangle;
 import javax.swing.event.MenuEvent;
@@ -30,7 +31,7 @@ public class FrmKlijent extends javax.swing.JFrame {
 		
 		racun = new pnlRacun("Racun");
 //		kupac;
-//		zaposleni;
+		zaposleni = new pnlZaposleni("Zaposleni");
 		knjiga = new pnlKnjiga("Knjiga");
 //		smena;
 		
@@ -65,7 +66,7 @@ public class FrmKlijent extends javax.swing.JFrame {
 		
 		menuZaposleni.addMenuListener(new MenuListener() {
 			public void menuSelected(MenuEvent e) {
-				//setPanel();
+				setPanel(zaposleni);
 			}
 			public void menuDeselected(MenuEvent e) {}
 			public void menuCanceled(MenuEvent e) {}
