@@ -1,7 +1,10 @@
 package logika.kontroler;
 
+import domain.FizickoLice;
 import domain.Knjiga;
+import domain.Kupac;
 import domain.OpstiDomenskiObjekat;
+import domain.PravnoLice;
 import domain.Zaposleni;
 import java.util.List;
 import logika.so.OpstaSO;
@@ -10,6 +13,18 @@ import logika.so.knjiga.KreirajKnjiga;
 import logika.so.knjiga.ObrisiKnjiga;
 import logika.so.knjiga.PromeniKnjiga;
 import logika.so.knjiga.vratiListuKnjiga;
+import logika.so.kupac.KreirajKupac;
+import logika.so.kupac.ObrisiKupac;
+import logika.so.kupac.PromeniKupac;
+import logika.so.kupac.fizicko_lice.KreirajFizickoLice;
+import logika.so.kupac.fizicko_lice.ObrisiFizickoLice;
+import logika.so.kupac.fizicko_lice.PromeniFizickoLice;
+import logika.so.kupac.fizicko_lice.vratiListuFizickoLice;
+import logika.so.kupac.pravno_lice.KreirajPravnoLice;
+import logika.so.kupac.pravno_lice.ObrisiPravnoLice;
+import logika.so.kupac.pravno_lice.PromeniPravnoLice;
+import logika.so.kupac.pravno_lice.vratiListuPravnoLice;
+import logika.so.kupac.vratiListuKupac;
 import logika.so.zaposleni.KreirajZaposleni;
 import logika.so.zaposleni.ObrisiZaposleni;
 import logika.so.zaposleni.PromeniZaposleni;
@@ -17,9 +32,9 @@ import logika.so.zaposleni.vratiListuZaposleni;
 
 public class Kontroler {
 
-	public static Void kreirajKnjiga(OpstiDomenskiObjekat obj) throws Exception {
+	public static Long kreirajKnjiga(OpstiDomenskiObjekat obj) throws Exception {
 		OpstaSO so = new KreirajKnjiga();
-		return (Void) so.izvrsiTransakciju(obj);
+		return (Long) so.izvrsiTransakciju(obj);
 	}
 
 	public static List<Knjiga> vratiListuKnjiga(OpstiDomenskiObjekat obj) throws Exception {
@@ -42,9 +57,9 @@ public class Kontroler {
 		return (Void) so.izvrsiTransakciju(obj);
 	}
 
-	public static Void kreirajZaposleni(OpstiDomenskiObjekat obj) throws SOException {
+	public static Long kreirajZaposleni(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new KreirajZaposleni();
-		return (Void) so.izvrsiTransakciju(obj);
+		return (Long) so.izvrsiTransakciju(obj);
 	}
 
 	public static Void ObrisiZaposleni(OpstiDomenskiObjekat obj) throws SOException {
@@ -57,4 +72,64 @@ public class Kontroler {
 		return (Void) so.izvrsiTransakciju(obj);
 	}
 	
+	public static Long kreirajKupac(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajKupac();
+		return (Long) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiKupac(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiKupac();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniKupac(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniKupac();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+	
+	public static List<Kupac> vratiListuKupac(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new vratiListuKupac();
+		return (List<Kupac>) so.izvrsiTransakciju(obj);
+	}
+	
+	public static Long kreirajFizickoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajFizickoLice();
+		return (Long) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiFizickoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiFizickoLice();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniFizickoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniFizickoLice();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+	
+	public static List<FizickoLice> vratiListuFizickoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new vratiListuFizickoLice();
+		return (List<FizickoLice>) so.izvrsiTransakciju(obj);
+	}
+
+	public static Long kreirajPravnoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajPravnoLice();
+		return (Long) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiPravnoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiPravnoLice();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniPravnoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniPravnoLice();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+	
+	public static List<PravnoLice> vratiListuPravnoLice(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new vratiListuPravnoLice();
+		return (List<PravnoLice>) so.izvrsiTransakciju(obj);
+	}
+
 }

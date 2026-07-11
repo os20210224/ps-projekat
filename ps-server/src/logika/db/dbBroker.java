@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import main.Server;
 
@@ -79,24 +80,32 @@ public class dbBroker {
 		}
 	}
 	
-	public static Void kreiraj(OpstiDomenskiObjekat obj) throws Exception {
+	public static long kreiraj(OpstiDomenskiObjekat obj) throws Exception {
 		if (!connect()) {
 			throw new Exception("Greska pri konekciji sa bazom podataka");
 		}
+		long id = 0;
 		try {
 			String q = 
 				"INSERT INTO "		+ obj.getTableName()	+
 				" "					+ obj.getColumns()		+
 				" "					+ obj.getValues()		;
 			srv.logDB("> Querry:\n\t" + q);
-			Statement s = conn.createStatement();
-			s.executeUpdate(q);
+			PreparedStatement s = conn.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
+			s.executeUpdate();
+			
+			ResultSet rs = s.getGeneratedKeys();
+			
+			if (rs.next()) {
+				id = rs.getLong(1);
+			}
+			
 			srv.logDB("> Objekat " + obj + "uspesno sacuvan");
 		} catch (SQLException e) {
 			srv.logDB("> greska pri kreiranju sloga" + e);
 			throw e;
 		}
-		return null;
+		return id;
 	}
 	
 	public static ResultSet select(OpstiDomenskiObjekat obj) throws Exception {
@@ -107,7 +116,7 @@ public class dbBroker {
 		try {
 			String q =
 				"SELECT * FROM "	+ obj.getTableName() + 
-				" WHERE "			+ obj.getCondition() ;
+				" "			+ obj.getCondition() ;
 			srv.logDB("> Querry:\n\t" + q);
 			Statement s = conn.createStatement();
 			rs = s.executeQuery(q);

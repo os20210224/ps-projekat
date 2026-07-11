@@ -20,7 +20,7 @@ public class vratiListuZaposleni extends OpstaSO<List>{
 	@Override
 	protected List<Zaposleni> transakcija(OpstiDomenskiObjekat obj) throws Exception {
 		ResultSet rs = dbBroker.select((Zaposleni)obj);
-		List<Zaposleni> list = new ArrayList<Zaposleni>();
+		List<Zaposleni> list = new ArrayList<>();
 		while (rs.next()) {
 			list.add(new Zaposleni(
 				rs.getLong(1),

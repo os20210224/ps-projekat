@@ -1,7 +1,9 @@
 package thread;
 
+import domain.FizickoLice;
 import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
+import domain.PravnoLice;
 import domain.Zaposleni;
 import java.net.Socket;
 import java.util.List;
@@ -138,6 +140,94 @@ public class KlijentHandler extends Thread {
 						srv.log("> Obrada zahteva " + op);
 						try {
 							Kontroler.PromeniZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case KREIRAJ_FIZICKO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.kreirajFizickoLice((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case VRATI_LISTU_FIZICKO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<FizickoLice> lica = Kontroler.vratiListuFizickoLice((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(lica, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case OBRISI_FIZICKO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.ObrisiFizickoLice((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case PROMENI_FIZICKO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.PromeniFizickoLice((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+						case KREIRAJ_PRAVNO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.kreirajPravnoLice((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case VRATI_LISTU_PRAVNO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<PravnoLice> lica = Kontroler.vratiListuPravnoLice((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(lica, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case OBRISI_PRAVNO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.ObrisiPravnoLice((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case PROMENI_PRAVNO_LICE:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.PromeniPravnoLice((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(null, Status.SUCCESS));
 							srv.log("> Odgovor poslat\n");
 						} catch (SOException e) {

@@ -2,12 +2,17 @@ package domain;
 
 public class Kupac extends OpstiDomenskiObjekat {
     
-    private long idKupac;
-    private String telefon;
-    private String email;
+    protected long idKupac = 0;
+    protected String telefon = null;
+    protected String email = null;
 
     public Kupac(long idKupac, String telefon, String email) {
         this.idKupac = idKupac;
+        this.telefon = telefon;
+        this.email = email;
+    }
+	
+	public Kupac(String telefon, String email) {
         this.telefon = telefon;
         this.email = email;
     }
@@ -35,5 +40,49 @@ public class Kupac extends OpstiDomenskiObjekat {
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
+
+	@Override
+	public String getTableName() {
+		return "Kupac";
+	}
+
+	@Override
+	public String getColumns() {
+		return "(telefon,email)";
+	}
+
+	@Override
+	public String getValues() {
+		return
+			"VALUES("	+ "'" +	telefon	+ "'"	+
+			","			+ "'" +	email	+ "'"	+ ")" ;
+	}
+
+	@Override
+	public String getCondition() {
+		String condition = "WHERE 1=1 ";
+		if (idKupac != 0) {
+			condition += "AND idKupac=" + idKupac + " ";
+		}
+		if (telefon != null) {
+			condition += "AND telefon LIKE '%" + telefon + "%' ";
+		}
+		if (email != null) {
+			condition += "AND email LIKE '%" + email + "%' ";
+		}
+		return condition;
+	}
+
+	@Override
+	public String getIDCondition() {
+		return "idKupac=" + idKupac;
+	}
+
+	@Override
+	public String getUpdate() {
+		return 
+			"telefon='"	 		+ telefon 	+ "'," 	+
+			"email='" 			+ email 	+ "'"	;
+	}
     
 }

@@ -147,7 +147,7 @@ public class Knjiga extends OpstiDomenskiObjekat {
 
 	@Override
 	public String getCondition() {
-		String condition = "1=1 ";
+		String condition = "WHERE 1=1 ";
 		if (idKnjiga != 0) {
 			condition += "AND idKnjiga=" + idKnjiga + " ";
 		}

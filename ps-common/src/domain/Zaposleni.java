@@ -91,7 +91,7 @@ public class Zaposleni extends OpstiDomenskiObjekat {
 
 	@Override
 	public String getCondition() {
-		String condition = "1=1 ";
+		String condition = "WHERE 1=1 ";
 		if (idZaposleni != 0) {
 			condition += "AND idZaposleni=" + idZaposleni + " ";
 		}

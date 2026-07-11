@@ -1,6 +1,8 @@
 package main;
 
+import domain.FizickoLice;
 import domain.Knjiga;
+import domain.PravnoLice;
 import domain.Zaposleni;
 import thread.KlijentThread;
 import gui.FrmKlijent;
@@ -69,6 +71,38 @@ public class Klijent {
 	
 	public static Response PromeniZaposleni(Zaposleni z) {
 		return (Response) kt.send(z, Operation.PROMENI_ZAPOSLENI);
+	}
+	
+	public static Response vratiListuFizickoLice(FizickoLice l) {
+		return (Response) kt.send(l, Operation.VRATI_LISTU_FIZICKO_LICE);
+	}
+	
+	public static Response KreirajFizickoLice(FizickoLice l) {
+		return (Response) kt.send(l, Operation.KREIRAJ_FIZICKO_LICE);
+	}
+	
+	public static Response obrisiFizickoLice(FizickoLice l) {
+		return (Response) kt.send(l, Operation.OBRISI_FIZICKO_LICE);
+	}
+	
+	public static Response PromeniFizickoLice(FizickoLice l) {
+		return (Response) kt.send(l, Operation.PROMENI_FIZICKO_LICE);
+	}
+	
+	public static Response vratiListuPravnoLice(PravnoLice l) {
+		return (Response) kt.send(l, Operation.VRATI_LISTU_PRAVNO_LICE);
+	}
+	
+	public static Response KreirajPravnoLice(PravnoLice l) {
+		return (Response) kt.send(l, Operation.KREIRAJ_PRAVNO_LICE);
+	}
+	
+	public static Response obrisiPravnoLice(PravnoLice l) {
+		return (Response) kt.send(l, Operation.OBRISI_PRAVNO_LICE);
+	}
+	
+	public static Response PromeniPravnoLice(PravnoLice l) {
+		return (Response) kt.send(l, Operation.PROMENI_PRAVNO_LICE);
 	}
 	
 	public static void main(String[] args) {
