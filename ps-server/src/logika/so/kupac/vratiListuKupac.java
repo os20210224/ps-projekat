@@ -22,6 +22,7 @@ public class vratiListuKupac  extends OpstaSO<List> {
 		ResultSet rs = dbBroker.select((Kupac)obj);
 		List<Kupac> list = new ArrayList<>();
 		while (rs.next()) {
+			// fizicko/pravno lice
 			list.add(new Kupac(
 				rs.getLong(1),
 				rs.getString(2),

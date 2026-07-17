@@ -36,6 +36,10 @@ public class Knjiga extends OpstiDomenskiObjekat {
 		this.autor = autor;
 		this.cena = cena;
 	}
+	
+	public Knjiga(long idKnjiga) {
+		this.idKnjiga = idKnjiga;
+	}
 
 	public Knjiga() {
 	}

@@ -3,6 +3,7 @@ package main;
 import domain.FizickoLice;
 import domain.Knjiga;
 import domain.PravnoLice;
+import domain.Racun;
 import domain.Zaposleni;
 import thread.KlijentThread;
 import gui.FrmKlijent;
@@ -103,6 +104,10 @@ public class Klijent {
 	
 	public static Response PromeniPravnoLice(PravnoLice l) {
 		return (Response) kt.send(l, Operation.PROMENI_PRAVNO_LICE);
+	}
+	
+	public static Response vratiListuRacuna(Racun r) {
+		return (Response)kt.send(r, Operation.VRATI_LISTU_RACUN);
 	}
 	
 	public static void main(String[] args) {

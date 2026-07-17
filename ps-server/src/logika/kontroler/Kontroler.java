@@ -5,6 +5,8 @@ import domain.Knjiga;
 import domain.Kupac;
 import domain.OpstiDomenskiObjekat;
 import domain.PravnoLice;
+import domain.Racun;
+import domain.StavkaRacuna;
 import domain.Zaposleni;
 import java.util.List;
 import logika.so.OpstaSO;
@@ -25,6 +27,8 @@ import logika.so.kupac.pravno_lice.ObrisiPravnoLice;
 import logika.so.kupac.pravno_lice.PromeniPravnoLice;
 import logika.so.kupac.pravno_lice.vratiListuPravnoLice;
 import logika.so.kupac.vratiListuKupac;
+import logika.so.racun.vratiListuRacun;
+import logika.so.stavka_racuna.vratiListuStavkaRacuna;
 import logika.so.zaposleni.KreirajZaposleni;
 import logika.so.zaposleni.ObrisiZaposleni;
 import logika.so.zaposleni.PromeniZaposleni;
@@ -130,6 +134,16 @@ public class Kontroler {
 	public static List<PravnoLice> vratiListuPravnoLice(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new vratiListuPravnoLice();
 		return (List<PravnoLice>) so.izvrsiTransakciju(obj);
+	}
+	
+	public static List<Racun> vratiListuRacun(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new vratiListuRacun();
+		return (List<Racun>) so.izvrsiTransakciju(obj);
+	}
+	
+	public static List<StavkaRacuna> vratiListuStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new vratiListuStavkaRacuna();
+		return (List<StavkaRacuna>) so.izvrsiTransakciju(obj);
 	}
 
 }

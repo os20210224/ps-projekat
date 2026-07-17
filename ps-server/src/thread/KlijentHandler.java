@@ -4,6 +4,7 @@ import domain.FizickoLice;
 import domain.Knjiga;
 import domain.OpstiDomenskiObjekat;
 import domain.PravnoLice;
+import domain.Racun;
 import domain.Zaposleni;
 import java.net.Socket;
 import java.util.List;
@@ -229,6 +230,17 @@ public class KlijentHandler extends Thread {
 						try {
 							Kontroler.PromeniPravnoLice((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case VRATI_LISTU_RACUN:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<Racun> racuni = Kontroler.vratiListuRacun((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(racuni, Status.SUCCESS));
 							srv.log("> Odgovor poslat\n");
 						} catch (SOException e) {
 							srv.log("> SOException: " + e);
