@@ -112,7 +112,7 @@ public class pnlZaposleni extends KlijentPanel {
 		});
 		
 		btnObrisi.addActionListener((e) -> {
-			Response res = Klijent.obrisiZaposleni(selected);
+			Response res = Klijent.ObrisiZaposleni(selected);
 			if (res.getStatus() == Status.FAILURE) {
 				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise zapsolenog" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 				return;

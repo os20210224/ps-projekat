@@ -171,7 +171,7 @@ public class pnlKnjiga extends KlijentPanel {
 		});
 		
 		btnObrisi.addActionListener((e) -> {
-			Response res = Klijent.obrisiKnjiga(selected);
+			Response res = Klijent.ObrisiKnjiga(selected);
 			if (res.getStatus() == Status.FAILURE) {
 				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise knjigu" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 				return;

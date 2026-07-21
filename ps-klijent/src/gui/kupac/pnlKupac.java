@@ -201,9 +201,9 @@ public class pnlKupac extends KlijentPanel {
 		btnObrisi.addActionListener((e) -> {
 			Response res;
 			if (radioFizickoLice.isSelected()) {
-				res = Klijent.obrisiFizickoLice((FizickoLice) selected);
+				res = Klijent.ObrisiFizickoLice((FizickoLice) selected);
 			} else {
-				res = Klijent.obrisiPravnoLice((PravnoLice) selected);
+				res = Klijent.ObrisiPravnoLice((PravnoLice) selected);
 			}
 			if (res.getStatus() == Status.FAILURE) {
 				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise kupca" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
