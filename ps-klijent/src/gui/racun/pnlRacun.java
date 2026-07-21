@@ -85,12 +85,15 @@ public class pnlRacun extends KlijentPanel {
 					napuniFormuRacun(selected_racun);
 					btnPromeni.setEnabled(false);
 					btnObrisi.setEnabled(false);
+					deselectStavkaRacuna();
+					updateTableStavka(true);
 				} else {
 					RacunTableModel model = (RacunTableModel) tblRacun.getModel();
 					selected_racun = model.getRacun(tblRacun.getSelectedRow());
 					napuniFormuRacun(selected_racun);
 					btnPromeni.setEnabled(true);
 					btnObrisi.setEnabled(true);
+					updateTableStavka(false);
 				}
 				btnDeselektuj.setEnabled(true);
 			}
@@ -115,6 +118,10 @@ public class pnlRacun extends KlijentPanel {
 		
 		btnDeselektuj.addActionListener((e) -> {
 			deselectRacun();
+		});
+		
+		btnDeselektujStavku.addActionListener((e) -> {
+			deselectStavkaRacuna();
 		});
 		
 		btnTrazi.addActionListener((e) -> {
@@ -257,10 +264,16 @@ public class pnlRacun extends KlijentPanel {
 		btnDeselektuj.setEnabled(false);
 		btnObrisi.setEnabled(false);
 		btnPromeni.setEnabled(false);
+		updateTableStavka(true);
 	}
 	
 	private void deselectStavkaRacuna() {
-		
+		selected_stavka = null;
+		napuniFormuStavkaRacuna(selected_stavka);
+		tblStavkaRacuna.clearSelection();
+		btnDeselektujStavku.setEnabled(false);
+		btnObrisiStavku.setEnabled(false);
+		//btnPromeniStavku.setEnabled(false);
 	}
 	
 	private void resetComboBox() {
@@ -273,40 +286,40 @@ public class pnlRacun extends KlijentPanel {
 	
 	@Override
 	public void updateTable() {
-		Response res = Klijent.vratiListuRacuna(new Racun());
+		Response res = Klijent.vratiListuRacun(new Racun());
 		if (res.getStatus() == Status.FAILURE) {
 			JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		tblRacun.setModel(new RacunTableModel((List<Racun>) res.getObject()));
-		updateTableStavka(null);
+		updateTableStavka(true);
 	}
 	
-	private void updateTableStavka(List<StavkaRacuna> stavke) {
-		if (stavke == null) {
-			stavke = new ArrayList<>();
+	private void updateTableStavka(boolean empty) {
+		if (empty) {
+			tblStavkaRacuna.setModel(new StavkaRacunaTableModel(new ArrayList<>()));
+			return;
 		}
-		tblStavkaRacuna.setModel(new StavkaRacunaTableModel(stavke));
+		Response res = Klijent.vratiListuStavkaRacuna(new StavkaRacuna(selected_racun.getIdRacun()));
+		if (res.getStatus() == Status.FAILURE) {
+			JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		tblStavkaRacuna.setModel(new StavkaRacunaTableModel((List<StavkaRacuna>) res.getObject()));
 	}
 	
 	private void napuniFormuRacun(Racun r) {
-//		if (k == null) {
-//			txtDatum.setText("");
-//			txtAutor.setText("");
-//			cmbMetodPlacanja.setSelectedIndex(-1);
-//			cmbPovez.setSelectedIndex(-1);
-//			txtBrStrana.setText("");
-//			txtCenaStrane.setText("");
-//			txtCenaPoveza.setText("");
-//			return;
-//		}
-//		txtDatum.setText(k.getNaziv());
-//		txtAutor.setText(k.getAutor());
-//		cmbMetodPlacanja.setSelectedIndex(k.getFormat().ordinal());
-//		cmbPovez.setSelectedIndex(k.getPovez().ordinal());
-//		txtBrStrana.setText("" + k.getBrStranica());
-//		txtCenaStrane.setText("" + k.getCenaStranica());
-//		txtCenaPoveza.setText("" + k.getCenaPoveza());
+		if (r == null) {
+			txtDatum.setText("");
+			cmbMetodPlacanja.setSelectedIndex(-1);
+			txtKupac.setText("");
+			txtZaposleni.setText("");
+			return;
+		}
+		txtDatum.setText(r.getDatum().toString());
+		cmbMetodPlacanja.setSelectedIndex(r.getMetodPlacanja().ordinal());
+		txtKupac.setText("" + r.getKupac().toString());
+		txtZaposleni.setText("" + r.getZaposleni().toString());
 	}
 	
 	private void napuniFormuStavkaRacuna(StavkaRacuna s) {
@@ -488,12 +501,12 @@ public class pnlRacun extends KlijentPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
