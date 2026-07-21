@@ -88,5 +88,10 @@ public class PravnoLice extends Kupac {
 			"naziv='"	 		+ naziv 	+ "'," 	+
 			"adresa='" 			+ adresa 	+ "'"	;
 	}
+
+	@Override
+	public String toString() {
+		return naziv;
+	}
     
 }

@@ -123,5 +123,10 @@ public class Zaposleni extends OpstiDomenskiObjekat {
 			"username="	+ "'" + username + "'," +
 			"password="	+ "'" + password + "'"  ;
 	}
-    
+
+	@Override
+	public String toString() {
+		return ime + " " + prezime;
+	}
+	
 }

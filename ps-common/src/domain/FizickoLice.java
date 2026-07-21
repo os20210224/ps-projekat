@@ -88,5 +88,10 @@ public class FizickoLice extends Kupac {
 			"ime='"	 		+ ime		+ "'," 	+
 			"prezime='" 	+ prezime 	+ "'"	;
 	}
+
+	@Override
+	public String toString() {
+		return ime + " " + prezime;
+	}
     
 }
