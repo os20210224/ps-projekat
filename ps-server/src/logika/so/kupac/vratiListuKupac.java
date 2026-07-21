@@ -1,12 +1,15 @@
 package logika.so.kupac;
 
+import domain.FizickoLice;
 import domain.Kupac;
 import domain.OpstiDomenskiObjekat;
+import domain.PravnoLice;
 import java.util.List;
 import logika.db.dbBroker;
 import logika.so.OpstaSO;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import logika.kontroler.Kontroler;
 
 public class vratiListuKupac  extends OpstaSO<List> {
 
@@ -22,12 +25,16 @@ public class vratiListuKupac  extends OpstaSO<List> {
 		ResultSet rs = dbBroker.select((Kupac)obj);
 		List<Kupac> list = new ArrayList<>();
 		while (rs.next()) {
-			// fizicko/pravno lice
-			list.add(new Kupac(
-				rs.getLong(1),
-				rs.getString(2),
-				rs.getString(3)
-			));
+			long idKupac = rs.getLong("idKupac");
+			List<PravnoLice> plica = Kontroler.vratiListuPravnoLice(new PravnoLice(idKupac));
+			if (!plica.isEmpty()) {
+				list.add(plica.get(0));
+				continue;
+			}
+			List<FizickoLice> flica = Kontroler.vratiListuFizickoLice(new FizickoLice(idKupac));
+			if (!flica.isEmpty()) {
+				list.add(flica.get(0));
+			}
 		}
 		return list;
 	}

@@ -8,6 +8,10 @@ public class FizickoLice extends Kupac {
 	public FizickoLice() {
 		super(0, null, null);
 	}
+	
+	public FizickoLice(long idKupac) {
+		super(idKupac, null, null);
+	}
 
     public FizickoLice(String ime, String prezime, long idKupac, String telefon, String email) {
         super(idKupac, telefon, email);
@@ -56,7 +60,7 @@ public class FizickoLice extends Kupac {
 	public String getCondition() {
 		String condition = "JOIN Kupac ON Kupac.idKupac=FizickoLice.idKupac WHERE 1=1 ";
 		if (idKupac != 0) {
-			condition += "AND idKupac=" + idKupac + " ";
+			condition += "AND Kupac.idKupac=" + idKupac + " ";
 		}
 		if (telefon != null) {
 			condition += "AND telefon LIKE '%" + telefon + "%' ";
