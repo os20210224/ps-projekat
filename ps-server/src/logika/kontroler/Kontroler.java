@@ -27,7 +27,13 @@ import logika.so.kupac.pravno_lice.ObrisiPravnoLice;
 import logika.so.kupac.pravno_lice.PromeniPravnoLice;
 import logika.so.kupac.pravno_lice.vratiListuPravnoLice;
 import logika.so.kupac.vratiListuKupac;
+import logika.so.racun.KreirajRacun;
+import logika.so.racun.ObrisiRacun;
+import logika.so.racun.PromeniRacun;
 import logika.so.racun.vratiListuRacun;
+import logika.so.stavka_racuna.KreirajStavkaRacuna;
+import logika.so.stavka_racuna.ObrisiStavkaRacuna;
+import logika.so.stavka_racuna.PromeniStavkaRacuna;
 import logika.so.stavka_racuna.vratiListuStavkaRacuna;
 import logika.so.zaposleni.KreirajZaposleni;
 import logika.so.zaposleni.ObrisiZaposleni;
@@ -136,11 +142,41 @@ public class Kontroler {
 		return (List<PravnoLice>) so.izvrsiTransakciju(obj);
 	}
 	
+	public static Long kreirajRacun(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajRacun();
+		return (Long) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiRacun(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiRacun();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniRacun(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniRacun();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
 	public static List<Racun> vratiListuRacun(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new vratiListuRacun();
 		return (List<Racun>) so.izvrsiTransakciju(obj);
 	}
 	
+	public static Long kreirajStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajStavkaRacuna();
+		return (Long) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiStavkaRacuna();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniStavkaRacuna();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
 	public static List<StavkaRacuna> vratiListuStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new vratiListuStavkaRacuna();
 		return (List<StavkaRacuna>) so.izvrsiTransakciju(obj);
