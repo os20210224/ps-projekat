@@ -76,14 +76,6 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="54" max="32767" attributes="0"/>
-                              <Component id="btnResetuj" min="-2" pref="143" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnDeselektuj" min="-2" pref="143" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnObrisi" min="-2" pref="143" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -92,7 +84,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnTraziKnjigu" min="-2" pref="143" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="btnObrisiStavku" alignment="1" min="-2" pref="143" max="-2" attributes="0"/>
                                           <Component id="btnDeselektujStavku" alignment="1" min="-2" pref="143" max="-2" attributes="0"/>
@@ -100,16 +92,29 @@
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblKnjiga" min="-2" pref="50" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cmbKnjiga" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblKolicina" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txtKolicina" min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblKnjiga" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <Component id="lblKolicina" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cmbKnjiga" max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="txtKolicina" min="-2" pref="40" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace pref="54" max="32767" attributes="0"/>
+                              <Component id="btnResetuj" min="-2" pref="143" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnDeselektuj" min="-2" pref="143" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnObrisi" min="-2" pref="143" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -143,26 +148,17 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblKnjiga" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="cmbKnjiga" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblKolicina" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtKolicina" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnTraziKnjigu" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="txtKnjiga" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtKolicina" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblKolicina" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnObrisiStavku" min="-2" pref="23" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnDeselektujStavku" min="-2" pref="23" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnDodajStavku" min="-2" pref="23" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblKupac" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="cmbKupac" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -177,12 +173,24 @@
                           <Component id="btnTraziKupca" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                           <Component id="txtKupac" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnTraziZaposlenog" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="txtZaposleni" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnTraziZaposlenog" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="txtZaposleni" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnTraziKnjigu" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="txtKnjiga" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnObrisiStavku" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnDeselektujStavku" min="-2" pref="23" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnDodajStavku" min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -389,7 +397,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;MetodPlacanja&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Knjiga&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="btnTraziKnjigu">
@@ -445,7 +453,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;MetodPlacanja&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Kupac&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbZaposleni">
@@ -458,7 +466,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;MetodPlacanja&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Zaposleni&gt;"/>
       </AuxValues>
     </Component>
   </SubComponents>
