@@ -5,6 +5,9 @@ public class Kupac extends OpstiDomenskiObjekat {
     protected long idKupac = 0;
     protected String telefon = null;
     protected String email = null;
+	
+	public Kupac() {
+    }
 
     public Kupac(long idKupac, String telefon, String email) {
         this.idKupac = idKupac;
