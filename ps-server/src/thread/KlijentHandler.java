@@ -2,6 +2,7 @@ package thread;
 
 import domain.FizickoLice;
 import domain.Knjiga;
+import domain.Kupac;
 import domain.OpstiDomenskiObjekat;
 import domain.PravnoLice;
 import domain.Racun;
@@ -323,9 +324,21 @@ public class KlijentHandler extends Thread {
 							sender.send(new Response(e.getMessage(), Status.FAILURE));
 						}
 						break;
+					case VRATI_LISTU_KUPAC:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<Kupac> kupci = Kontroler.vratiListuKupac((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(kupci, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+						
 				}
 			} catch (Exception ex) {
-				if (ex.getMessage().equals("Socket closed")) {
+				if (ex.getMessage() != null || ex.getMessage().equals("Socket closed")) {
 					return;
 				}
 				srv.log("> Reciever error: " + ex);

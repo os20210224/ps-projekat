@@ -2,6 +2,7 @@ package main;
 
 import domain.FizickoLice;
 import domain.Knjiga;
+import domain.Kupac;
 import domain.PravnoLice;
 import domain.Racun;
 import domain.StavkaRacuna;
@@ -105,6 +106,10 @@ public class Klijent {
 	
 	public static Response vratiListuPravnoLice(PravnoLice l) {
 		return (Response) kt.send(l, Operation.VRATI_LISTU_PRAVNO_LICE);
+	}
+	
+	public static Response vratiListuKupac(Kupac k) {
+		return (Response) kt.send(k, Operation.VRATI_LISTU_KUPAC);
 	}
 	
 	public static Response KreirajRacun(Racun r) {
