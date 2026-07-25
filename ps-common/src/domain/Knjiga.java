@@ -198,5 +198,10 @@ public class Knjiga extends OpstiDomenskiObjekat {
 			"naziv='" 			+ naziv 				+ "',"	+
 			"autor='" 			+ autor 				+ "'"	;
 	}
+
+	@Override
+	public String toString() {
+		return naziv + " " + format + " " + povez;
+	}
     
 }
