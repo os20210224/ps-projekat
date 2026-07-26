@@ -31,7 +31,8 @@ CREATE TABLE `FizickoLice` (
 /*Data for the table `FizickoLice` */
 
 insert  into `FizickoLice`(`idKupac`,`ime`,`prezime`) values 
-(1,'Jovan','Stojković');
+(1,'Jovan','Stojković'),
+(9,'Nikola','Pocinak');
 
 /*Table structure for table `Knjiga` */
 
@@ -48,13 +49,15 @@ CREATE TABLE `Knjiga` (
   `autor` varchar(255) NOT NULL,
   `cena` double GENERATED ALWAYS AS (`cenaPoveza` + `cenaStranica` * `brStranica`) STORED,
   PRIMARY KEY (`idKnjiga`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Knjiga` */
 
 insert  into `Knjiga`(`idKnjiga`,`format`,`brStranica`,`povez`,`cenaStranica`,`cenaPoveza`,`naziv`,`autor`) values 
 (1,'B5',374,'tvrd',5,1020,'Recenzije Poslednjih Obroka','Đorđe Skakavac'),
-(6,'A4',2034,'tvrd',8,1200,'Beskonacna Osveta II','Dvojko');
+(6,'A4',2034,'tvrd',8,1200,'Beskonacna Osveta II','Dvojko'),
+(7,'B5',374,'mek',5,200,'Recenzije Poslednjih Obroka','Đorđe Skakavac'),
+(9,'A5',100,'tvrd',2,110,'TEST','test');
 
 /*Table structure for table `Kupac` */
 
@@ -65,13 +68,15 @@ CREATE TABLE `Kupac` (
   `telefon` varchar(15) NOT NULL,
   `email` varchar(127) NOT NULL CHECK (`email` like '%@%'),
   PRIMARY KEY (`idKupac`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Kupac` */
 
 insert  into `Kupac`(`idKupac`,`telefon`,`email`) values 
 (1,'25261746','jovan@test'),
-(3,'7259574','poslednji.trzaj@test');
+(3,'7259574','poslednji.trzaj@test'),
+(9,'0654294385','nikola@pocinak.sto'),
+(10,'01133579','do_not_slay@thespire.please');
 
 /*Table structure for table `PravnoLice` */
 
@@ -88,7 +93,8 @@ CREATE TABLE `PravnoLice` (
 /*Data for the table `PravnoLice` */
 
 insert  into `PravnoLice`(`idKupac`,`naziv`,`adresa`) values 
-(3,'Starački Dom \"Poslednji Trzaj\"','Koralovo BB');
+(3,'Starački Dom \"Poslednji Trzaj\"','Koralovo BB'),
+(10,'The Spire','Preon NN');
 
 /*Table structure for table `Racun` */
 
@@ -154,7 +160,7 @@ DROP TABLE IF EXISTS `StavkaRacuna`;
 
 CREATE TABLE `StavkaRacuna` (
   `idRacun` bigint(20) NOT NULL,
-  `rb` bigint(20) NOT NULL AUTO_INCREMENT,
+  `rb` bigint(20) NOT NULL,
   `kolicina` int(11) NOT NULL,
   `cena` double DEFAULT NULL,
   `iznos` double GENERATED ALWAYS AS (`cena` * `kolicina`) STORED,
@@ -164,12 +170,12 @@ CREATE TABLE `StavkaRacuna` (
   KEY `stavka_racuna_fk_knjiga` (`idKnjiga`),
   CONSTRAINT `stavka_racun_fk_racun` FOREIGN KEY (`idRacun`) REFERENCES `Racun` (`idRacun`) ON UPDATE CASCADE,
   CONSTRAINT `stavka_racuna_fk_knjiga` FOREIGN KEY (`idKnjiga`) REFERENCES `Knjiga` (`idKnjiga`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `StavkaRacuna` */
 
 insert  into `StavkaRacuna`(`idRacun`,`rb`,`kolicina`,`cena`,`idKnjiga`) values 
-(2,2,100,2890,1);
+(2,1,100,2890,1);
 
 /*Table structure for table `Zaposleni` */
 
@@ -184,12 +190,13 @@ CREATE TABLE `Zaposleni` (
   PRIMARY KEY (`idZaposleni`),
   UNIQUE KEY `username_unique` (`username`),
   CONSTRAINT `password_length` CHECK (char_length(`password`) > 8)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Zaposleni` */
 
 insert  into `Zaposleni`(`idZaposleni`,`ime`,`prezime`,`username`,`password`) values 
-(1,'Joca','Kormilo','jk17','mornarmore');
+(1,'Joca','Kormilo','jk17','mornarmore'),
+(2,'Kaca Mau','Ulica Mau','mali mau','maumaumau');
 
 /* Trigger structure for table `StavkaRacuna` */
 
