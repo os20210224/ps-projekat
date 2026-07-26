@@ -18,6 +18,15 @@ public class StavkaRacuna extends OpstiDomenskiObjekat {
         this.knjiga = knjiga;
     }
 	
+	public StavkaRacuna(long idRacun, long rb, double cena, int kolicina, Knjiga knjiga) {
+		this.idRacun = idRacun;
+        this.rb = rb;
+        this.kolicina = kolicina;
+        this.cena = cena;
+        this.iznos = cena * kolicina;
+        this.knjiga = knjiga;
+    }
+	
 	public StavkaRacuna(long rb, int kolicina, double cena, double iznos, Knjiga knjiga) {
         this.rb = rb;
         this.kolicina = kolicina;

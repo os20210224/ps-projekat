@@ -52,4 +52,8 @@ public class RacunTableModel extends AbstractTableModel {
 		return racuni.get(row);
 	}
 	
+	public void updateRacun(Racun r, int index) {
+		racuni.set(index, r);
+	}
+	
 }

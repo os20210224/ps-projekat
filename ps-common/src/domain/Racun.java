@@ -2,6 +2,7 @@ package domain;
 
 import domain.enums.MetodPlacanja;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Racun extends OpstiDomenskiObjekat {
@@ -12,7 +13,7 @@ public class Racun extends OpstiDomenskiObjekat {
     private double ukupanIznos = 0;
     private Zaposleni zaposleni = null;
     private Kupac kupac = null;
-	private List<StavkaRacuna> stavkeRacuna = null;
+	private List<StavkaRacuna> stavkeRacuna = new ArrayList<>();
 
 	public Racun() {
 	}
@@ -147,6 +148,20 @@ public class Racun extends OpstiDomenskiObjekat {
 			"metodPlacanja='"	+ metodPlacanja.toString() 	+ "',"	+
 			"idZaposleni="		+ zaposleni.getIdZaposleni()+ ","	+
 			"idKupac="			+ kupac.getIdKupac()				;
+	}
+	
+	public void addStavka(StavkaRacuna stavka) {
+		ukupanIznos += stavka.getIznos();
+		for (StavkaRacuna s : stavkeRacuna) {
+			Knjiga k = s.getKnjiga();
+			if (k.toString().equals(stavka.getKnjiga().toString())) {
+				s.setKolicina(s.getKolicina() + stavka.getKolicina());
+				s.setIznos(s.getCena() + s.getKolicina());
+				return;
+			}
+		}
+		stavkeRacuna.add(stavka);
+		
 	}
 	
 }

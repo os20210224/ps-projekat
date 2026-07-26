@@ -34,6 +34,7 @@ public class pnlRacun extends KlijentPanel {
 		
 		btnDeselektujStavku.setEnabled(false);
 		btnObrisiStavku.setEnabled(false);
+		btnDodajStavku.setEnabled(false);
 		
 		btnDodaj.addActionListener((e) -> {
 //			String naziv = txtDatum.getText().trim();
@@ -79,6 +80,36 @@ public class pnlRacun extends KlijentPanel {
 //				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 //			}
 		});
+		
+		btnDodajStavku.addActionListener((e) -> {
+			String kolicina_str = txtKolicina.getText().trim();
+			
+			if ("".equals(kolicina_str)					||
+				cmbKnjiga.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			int kolicina;
+			try {
+				kolicina = Integer.parseInt(kolicina_str);
+			} catch (NumberFormatException ne) {
+				JOptionPane.showMessageDialog(this, "Kolicina mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Knjiga knjiga = (Knjiga) cmbKnjiga.getSelectedItem();
+			
+			List<StavkaRacuna> stavke = selected_racun.getStavkeRacuna();
+			long rb = (stavke.get(stavke.size() - 1).getRb() + 1);
+			
+			StavkaRacuna stavka = new StavkaRacuna(selected_racun.getIdRacun(), rb, knjiga.getCena(), kolicina, knjiga);
+			
+			selected_racun.addStavka(stavka);
+			
+			updateTableStavka(selected_racun.getStavkeRacuna());
+		});
 
 		tblRacun.addMouseListener(new mouseClickListener() {
 			@Override
@@ -88,6 +119,7 @@ public class pnlRacun extends KlijentPanel {
 					napuniFormuRacun(selected_racun);
 					btnPromeni.setEnabled(false);
 					btnObrisi.setEnabled(false);
+					btnDodajStavku.setEnabled(false);
 					deselectStavkaRacuna();
 					updateTableStavka(true);
 				} else {
@@ -96,6 +128,7 @@ public class pnlRacun extends KlijentPanel {
 					napuniFormuRacun(selected_racun);
 					btnPromeni.setEnabled(true);
 					btnObrisi.setEnabled(true);
+					btnDodajStavku.setEnabled(true);
 					updateTableStavka(false);
 				}
 				btnDeselektuj.setEnabled(true);
@@ -314,6 +347,10 @@ public class pnlRacun extends KlijentPanel {
 		tblStavkaRacuna.setModel(new StavkaRacunaTableModel((List<StavkaRacuna>) res.getObject()));
 	}
 	
+	private void updateTableStavka(List<StavkaRacuna> stavke) {
+		tblStavkaRacuna.setModel(new StavkaRacunaTableModel(stavke));
+	}
+	
 	private void napuniFormuRacun(Racun r) {
 		if (r == null) {
 			txtDatum.setText("");
@@ -340,7 +377,18 @@ public class pnlRacun extends KlijentPanel {
 	}
 	
 	private void napuniFormuStavkaRacuna(StavkaRacuna s) {
-		
+		if (s == null) {
+			cmbKnjiga.setSelectedIndex(-1);
+			txtKolicina.setText("");
+			return;
+		}
+		for (int i = 0; i < cmbKnjiga.getItemCount(); i++) {
+			if (selected_stavka.getKnjiga().toString().equals(cmbKnjiga.getItemAt(i).toString())) {
+				cmbKnjiga.setSelectedIndex(i);
+				break;
+			}
+		}
+		txtKolicina.setText("" + selected_stavka.getKolicina());
 	}
 	
 	private void updateComboKupac() {
