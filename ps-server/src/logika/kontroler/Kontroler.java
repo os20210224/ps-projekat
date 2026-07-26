@@ -6,6 +6,8 @@ import domain.Kupac;
 import domain.OpstiDomenskiObjekat;
 import domain.PravnoLice;
 import domain.Racun;
+import domain.Smena;
+import domain.SmenaZaposlenog;
 import domain.StavkaRacuna;
 import domain.Zaposleni;
 import java.util.List;
@@ -31,6 +33,14 @@ import logika.so.racun.KreirajRacun;
 import logika.so.racun.ObrisiRacun;
 import logika.so.racun.PromeniRacun;
 import logika.so.racun.vratiListuRacun;
+import logika.so.smena.KreirajSmena;
+import logika.so.smena.ObrisiSmena;
+import logika.so.smena.PromeniSmena;
+import logika.so.smena.vratiListuSmena;
+import logika.so.smena_zaposlenog.KreirajSmenaZaposlenog;
+import logika.so.smena_zaposlenog.ObrisiSmenaZaposlenog;
+import logika.so.smena_zaposlenog.PromeniSmenaZaposlenog;
+import logika.so.smena_zaposlenog.vratiListuSmenaZaposlenog;
 import logika.so.stavka_racuna.KreirajStavkaRacuna;
 import logika.so.stavka_racuna.ObrisiStavkaRacuna;
 import logika.so.stavka_racuna.PromeniStavkaRacuna;
@@ -180,6 +190,46 @@ public class Kontroler {
 	public static List<StavkaRacuna> vratiListuStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new vratiListuStavkaRacuna();
 		return (List<StavkaRacuna>) so.izvrsiTransakciju(obj);
+	}
+	
+	public static Long kreirajSmena(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajSmena();
+		return (Long) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiSmena(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiSmena();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniSmena(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniSmena();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static List<Smena> vratiListuSmena(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new vratiListuSmena();
+		return (List<Smena>) so.izvrsiTransakciju(obj);
+	}
+	
+	public static Long kreirajSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new KreirajSmenaZaposlenog();
+		return (Long) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void ObrisiSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new ObrisiSmenaZaposlenog();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static Void PromeniSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new PromeniSmenaZaposlenog();
+		return (Void) so.izvrsiTransakciju(obj);
+	}
+
+	public static List<SmenaZaposlenog> vratiListuSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
+		OpstaSO so = new vratiListuSmenaZaposlenog();
+		return (List<SmenaZaposlenog>) so.izvrsiTransakciju(obj);
 	}
 
 }

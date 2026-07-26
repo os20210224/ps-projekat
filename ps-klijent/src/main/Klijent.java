@@ -5,6 +5,7 @@ import domain.Knjiga;
 import domain.Kupac;
 import domain.PravnoLice;
 import domain.Racun;
+import domain.Smena;
 import domain.StavkaRacuna;
 import domain.Zaposleni;
 import thread.KlijentThread;
@@ -142,6 +143,22 @@ public class Klijent {
 	
 	public static Response vratiListuStavkaRacuna(StavkaRacuna s) {
 		return (Response)kt.send(s, Operation.VRATI_LISTU_STAVKA_RACUNA);
+	}
+	
+	public static Response KreirajSmena(Smena s) {
+		return (Response) kt.send(s, Operation.KREIRAJ_SMENA);
+	}
+	
+	public static Response ObrisiSmena(Smena s) {
+		return (Response) kt.send(s, Operation.OBRISI_SMENA);
+	}
+	
+	public static Response PromeniSmena(Smena s) {
+		return (Response) kt.send(s, Operation.PROMENI_SMENA);
+	}
+	
+	public static Response vratiListuSmena(Smena s) {
+		return (Response)kt.send(s, Operation.VRATI_LISTU_SMENA);
 	}
 	
 	public static void main(String[] args) {

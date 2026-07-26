@@ -6,6 +6,8 @@ import domain.Kupac;
 import domain.OpstiDomenskiObjekat;
 import domain.PravnoLice;
 import domain.Racun;
+import domain.Smena;
+import domain.SmenaZaposlenog;
 import domain.StavkaRacuna;
 import domain.Zaposleni;
 import java.net.Socket;
@@ -335,7 +337,94 @@ public class KlijentHandler extends Thread {
 							sender.send(new Response(e.getMessage(), Status.FAILURE));
 						}
 						break;
-						
+					case KREIRAJ_SMENA:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.kreirajSmena((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case OBRISI_SMENA:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.ObrisiSmena((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case PROMENI_SMENA:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.PromeniSmena((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case VRATI_LISTU_SMENA:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<Smena> smene = Kontroler.vratiListuSmena((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(smene, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case KREIRAJ_SMENA_ZAPOSLENOG:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.kreirajSmenaZaposlenog((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case OBRISI_SMENA_ZAPOSLENOG:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.ObrisiSmenaZaposlenog((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case PROMENI_SMENA_ZAPOSLENOG:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							Kontroler.PromeniSmenaZaposlenog((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
+					case VRATI_LISTU_SMENA_ZAPOSLENOG:
+						srv.log("> Obrada zahteva " + op);
+						try {
+							List<SmenaZaposlenog> smeneZaposlenih = Kontroler.vratiListuSmenaZaposlenog((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(smeneZaposlenih, Status.SUCCESS));
+							srv.log("> Odgovor poslat\n");
+						} catch (SOException e) {
+							srv.log("> SOException: " + e);
+							sender.send(new Response(e.getMessage(), Status.FAILURE));
+						}
+						break;
 				}
 			} catch (Exception ex) {
 				if (ex.getMessage() != null || ex.getMessage().equals("Socket closed")) {

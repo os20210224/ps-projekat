@@ -7,6 +7,10 @@ public class Zaposleni extends OpstiDomenskiObjekat {
     private String prezime = null;
     private String username = null;
     private String password = null;
+	
+	public Zaposleni(long idZaposleni) {
+        this.idZaposleni = idZaposleni;
+    }
 
     public Zaposleni(long idZaposleni, String ime, String prezime, String username, String password) {
         this.idZaposleni = idZaposleni;

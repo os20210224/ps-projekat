@@ -4,6 +4,7 @@ import lib.KlijentPanel;
 import gui.knjiga.pnlKnjiga;
 import gui.kupac.pnlKupac;
 import gui.racun.pnlRacun;
+import gui.smena.pnlSmena;
 import gui.zaposleni.pnlZaposleni;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -34,7 +35,7 @@ public class FrmKlijent extends javax.swing.JFrame {
 		kupac = new pnlKupac("Kupac");
 		zaposleni = new pnlZaposleni("Zaposleni");
 		knjiga = new pnlKnjiga("Knjiga");
-//		smena;
+		smena = new pnlSmena("Smena");
 		
 		setMenuListeners();
 	}
@@ -83,7 +84,7 @@ public class FrmKlijent extends javax.swing.JFrame {
 		
 		menuSmena.addMenuListener(new MenuListener() {
 			public void menuSelected(MenuEvent e) {
-				//setPanel();
+				setPanel(smena);
 			}
 			public void menuDeselected(MenuEvent e) {}
 			public void menuCanceled(MenuEvent e) {}
