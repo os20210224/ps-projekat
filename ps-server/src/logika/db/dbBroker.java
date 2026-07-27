@@ -100,7 +100,7 @@ public class dbBroker {
 				id = rs.getLong(1);
 			}
 			
-			srv.logDB("> Objekat " + obj + "uspesno sacuvan");
+			srv.logDB("> Objekat " + obj + " uspesno sacuvan");
 		} catch (SQLException e) {
 			srv.logDB("> greska pri kreiranju sloga" + e);
 			throw e;
@@ -139,9 +139,9 @@ public class dbBroker {
 			srv.logDB("> Querry:\n\t" + q);
 			Statement s = conn.createStatement();
 			s.executeUpdate(q);
-			srv.logDB("> slogovi selektovani");
+			srv.logDB("> slogovi obrisani");
 		} catch (SQLException e) {
-			srv.logDB("> greska pri selektovanju slogova" + e);
+			srv.logDB("> greska pri brisanju slogova" + e);
 			throw e;
 		}
 		return null;
@@ -159,9 +159,9 @@ public class dbBroker {
 			srv.logDB("> Querry:\n\t" + q);
 			Statement s = conn.createStatement();
 			s.executeUpdate(q);
-			srv.logDB("> slogovi selektovani");
+			srv.logDB("> slogovi promenjeni");
 		} catch (SQLException e) {
-			srv.logDB("> greska pri selektovanju slogova" + e);
+			srv.logDB("> greska pri promeni slogova" + e);
 			throw e;
 		}
 		return null;
