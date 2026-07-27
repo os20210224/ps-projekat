@@ -151,17 +151,53 @@ public class Racun extends OpstiDomenskiObjekat {
 	}
 	
 	public void addStavka(StavkaRacuna stavka) {
+		if (stavka == null) {
+			return;
+		}
 		ukupanIznos += stavka.getIznos();
+		stavka.setRb((long) stavkeRacuna.size() + 1);
 		for (StavkaRacuna s : stavkeRacuna) {
 			Knjiga k = s.getKnjiga();
 			if (k.toString().equals(stavka.getKnjiga().toString())) {
 				s.setKolicina(s.getKolicina() + stavka.getKolicina());
-				s.setIznos(s.getCena() + s.getKolicina());
+				s.setIznos(s.getIznos() + stavka.getIznos());
 				return;
 			}
 		}
 		stavkeRacuna.add(stavka);
-		
+	}
+	
+	public void removeStavka(StavkaRacuna stavka) {
+		if (stavka == null) {
+			return;
+		}
+		int delIndex = -1;
+		for (int i = 0; i < stavkeRacuna.size(); i++) {
+			if (stavkeRacuna.get(i).getRb() == stavka.getRb()) {
+				delIndex = i;
+				break;
+			}
+		}
+		if (delIndex == -1) {
+			return;
+		}
+		stavkeRacuna.remove(delIndex);
+		for (int i = delIndex; i < stavkeRacuna.size(); i++) {
+			stavkeRacuna.get(i).setRb(stavkeRacuna.get(i).getRb() - 1);
+		}
+	}
+	
+	public void updateStavka(StavkaRacuna stavka) {
+		if (stavka == null) {
+			return;
+		}
+		for (int i = 0; i < stavkeRacuna.size(); i++) {
+			if (stavkeRacuna.get(i).getRb() == stavka.getRb()) {
+				ukupanIznos -= stavkeRacuna.get(i).getIznos();
+				ukupanIznos += stavka.getIznos();
+				stavkeRacuna.set(i, stavka);
+			}
+		}
 	}
 	
 }

@@ -35,7 +35,7 @@ public class StavkaRacunaTableModel extends AbstractTableModel {
 		StavkaRacuna s = stavke.get(rowIndex);
 		return switch (columnIndex) {
 			case 0 -> s.getRb();
-			case 1 -> s.getKnjiga().getNaziv();
+			case 1 -> s.getKnjiga().toString();
 			case 2 -> s.getKolicina();
 			case 3 -> s.getCena();
 			case 4 -> s.getIznos();

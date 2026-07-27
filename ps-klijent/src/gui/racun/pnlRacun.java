@@ -35,6 +35,9 @@ public class pnlRacun extends KlijentPanel {
 		btnDeselektujStavku.setEnabled(false);
 		btnObrisiStavku.setEnabled(false);
 		btnDodajStavku.setEnabled(false);
+		btnPromeniStavku.setEnabled(false);
+		
+		enableFormStavka(false);
 		
 		btnDodaj.addActionListener((e) -> {
 //			String naziv = txtDatum.getText().trim();
@@ -80,36 +83,6 @@ public class pnlRacun extends KlijentPanel {
 //				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 //			}
 		});
-		
-		btnDodajStavku.addActionListener((e) -> {
-			String kolicina_str = txtKolicina.getText().trim();
-			
-			if ("".equals(kolicina_str)					||
-				cmbKnjiga.getSelectedIndex() == -1
-				) {
-				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			
-			int kolicina;
-			try {
-				kolicina = Integer.parseInt(kolicina_str);
-			} catch (NumberFormatException ne) {
-				JOptionPane.showMessageDialog(this, "Kolicina mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			
-			Knjiga knjiga = (Knjiga) cmbKnjiga.getSelectedItem();
-			
-			List<StavkaRacuna> stavke = selected_racun.getStavkeRacuna();
-			long rb = (stavke.get(stavke.size() - 1).getRb() + 1);
-			
-			StavkaRacuna stavka = new StavkaRacuna(selected_racun.getIdRacun(), rb, knjiga.getCena(), kolicina, knjiga);
-			
-			selected_racun.addStavka(stavka);
-			
-			updateTableStavka(selected_racun.getStavkeRacuna());
-		});
 
 		tblRacun.addMouseListener(new mouseClickListener() {
 			@Override
@@ -122,6 +95,7 @@ public class pnlRacun extends KlijentPanel {
 					btnDodajStavku.setEnabled(false);
 					deselectStavkaRacuna();
 					updateTableStavka(true);
+					enableFormStavka(false);
 				} else {
 					RacunTableModel model = (RacunTableModel) tblRacun.getModel();
 					selected_racun = model.getRacun(tblRacun.getSelectedRow());
@@ -130,6 +104,7 @@ public class pnlRacun extends KlijentPanel {
 					btnObrisi.setEnabled(true);
 					btnDodajStavku.setEnabled(true);
 					updateTableStavka(false);
+					enableFormStavka(true);
 				}
 				btnDeselektuj.setEnabled(true);
 			}
@@ -142,11 +117,13 @@ public class pnlRacun extends KlijentPanel {
 					selected_stavka = null;
 					napuniFormuStavkaRacuna(selected_stavka);
 					btnObrisiStavku.setEnabled(false);
+					btnPromeniStavku.setEnabled(false);
 				} else {
 					StavkaRacunaTableModel model = (StavkaRacunaTableModel) tblStavkaRacuna.getModel();
 					selected_stavka = model.getStavka(tblStavkaRacuna.getSelectedRow());
 					napuniFormuStavkaRacuna(selected_stavka);
 					btnObrisiStavku.setEnabled(true);
+					btnPromeniStavku.setEnabled(true);
 				}
 				btnDeselektujStavku.setEnabled(true);
 			}
@@ -291,6 +268,79 @@ public class pnlRacun extends KlijentPanel {
 //				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 //			}
 		});
+		
+		btnDodajStavku.addActionListener((e) -> {
+			String kolicina_str = txtKolicina.getText().trim();
+			
+			if ("".equals(kolicina_str)					||
+				cmbKnjiga.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			int kolicina;
+			try {
+				kolicina = Integer.parseInt(kolicina_str);
+			} catch (NumberFormatException ne) {
+				JOptionPane.showMessageDialog(this, "Kolicina mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Knjiga knjiga = (Knjiga) cmbKnjiga.getSelectedItem();
+			
+			StavkaRacuna stavka = new StavkaRacuna(selected_racun.getIdRacun(), 0l, knjiga.getCena(), kolicina, knjiga);
+			
+			selected_racun.addStavka(stavka);
+			updateTableStavka(selected_racun.getStavkeRacuna());
+			deselectStavkaRacuna();
+		});
+		
+		btnObrisiStavku.addActionListener((e) -> {
+			selected_racun.removeStavka(selected_stavka);
+			updateTableStavka(selected_racun.getStavkeRacuna());
+			deselectStavkaRacuna();
+		});
+		
+		btnPromeniStavku.addActionListener((e) -> {
+			String kolicina_str = txtKolicina.getText().trim();
+			
+			if ("".equals(kolicina_str)					||
+				cmbKnjiga.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			int kolicina;
+			try {
+				kolicina = Integer.parseInt(kolicina_str);
+			} catch (NumberFormatException ne) {
+				JOptionPane.showMessageDialog(this, "Kolicina mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Knjiga knjiga = (Knjiga) cmbKnjiga.getSelectedItem();
+			
+			StavkaRacuna stavka = new StavkaRacuna(
+				selected_stavka.getIdRacun(),
+				selected_stavka.getRb(),
+				knjiga.getCena(),
+				kolicina,
+				knjiga
+			);
+			
+			if (knjiga.getIdKnjiga() != selected_stavka.getKnjiga().getIdKnjiga()) {
+				selected_racun.removeStavka(selected_stavka);
+				selected_racun.addStavka(stavka);
+			} else {
+				selected_racun.updateStavka(stavka);
+			}
+			
+			updateTableStavka(selected_racun.getStavkeRacuna());
+			deselectStavkaRacuna();
+		});
+		
 	}
 	
 	private void deselectRacun() {
@@ -301,6 +351,9 @@ public class pnlRacun extends KlijentPanel {
 		btnObrisi.setEnabled(false);
 		btnPromeni.setEnabled(false);
 		updateTableStavka(true);
+		enableFormStavka(false);
+		btnDodajStavku.setEnabled(false);
+		deselectStavkaRacuna();
 	}
 	
 	private void deselectStavkaRacuna() {
@@ -309,7 +362,7 @@ public class pnlRacun extends KlijentPanel {
 		tblStavkaRacuna.clearSelection();
 		btnDeselektujStavku.setEnabled(false);
 		btnObrisiStavku.setEnabled(false);
-		//btnPromeniStavku.setEnabled(false);
+		btnPromeniStavku.setEnabled(false);
 	}
 	
 	private void resetComboBox() {
@@ -433,6 +486,13 @@ public class pnlRacun extends KlijentPanel {
 		cmbZaposleni.setSelectedIndex(-1);
 	}
 	
+	private void enableFormStavka(boolean enable) {
+		cmbKnjiga.setEnabled(enable);
+		txtKolicina.setEnabled(enable);
+		txtKnjiga.setEnabled(enable);
+		btnTraziKnjigu.setEnabled(enable);
+	}
+	
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -468,6 +528,7 @@ public class pnlRacun extends KlijentPanel {
         btnTraziZaposlenog = new javax.swing.JButton();
         cmbKupac = new javax.swing.JComboBox<>();
         cmbZaposleni = new javax.swing.JComboBox<>();
+        btnPromeniStavku = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(717, 512));
 
@@ -562,6 +623,8 @@ public class pnlRacun extends KlijentPanel {
 
         cmbZaposleni.setMaximumSize(new java.awt.Dimension(72, 23));
 
+        btnPromeniStavku.setText("Promeni Stavku");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -575,6 +638,12 @@ public class pnlRacun extends KlijentPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnPromeni, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lblKupac, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -599,12 +668,6 @@ public class pnlRacun extends KlijentPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnTraziKupca, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnPromeni, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtZaposleni, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnTraziZaposlenog, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -613,15 +676,9 @@ public class pnlRacun extends KlijentPanel {
                                 .addGap(117, 117, 117)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtKnjiga)
+                                        .addComponent(txtKnjiga, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnTraziKnjigu, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnObrisiStavku, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnDeselektujStavku, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnDodajStavku, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblKnjiga, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -631,9 +688,18 @@ public class pnlRacun extends KlijentPanel {
                                             .addComponent(cmbKnjiga, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(txtKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(btnObrisiStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnDodajStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnDeselektujStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnPromeniStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -689,11 +755,15 @@ public class pnlRacun extends KlijentPanel {
                             .addComponent(btnTraziKnjigu, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtKnjiga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnObrisiStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeselektujStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDodajStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnObrisiStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDeselektujStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnDodajStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnPromeniStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPromeni, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -701,13 +771,13 @@ public class pnlRacun extends KlijentPanel {
                         .addGap(29, 29, 29)
                         .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(9, Short.MAX_VALUE))
+                                .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -718,6 +788,7 @@ public class pnlRacun extends KlijentPanel {
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnObrisiStavku;
     private javax.swing.JButton btnPromeni;
+    private javax.swing.JButton btnPromeniStavku;
     private javax.swing.JButton btnResetuj;
     private javax.swing.JButton btnTrazi;
     private javax.swing.JButton btnTraziKnjigu;
