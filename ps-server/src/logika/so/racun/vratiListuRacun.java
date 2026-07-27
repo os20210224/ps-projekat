@@ -52,7 +52,7 @@ public class vratiListuRacun extends OpstaSO<List> {
 			
 			list.add(new Racun(
 				idRacun,
-				rs.getDate("datum").toLocalDate(),
+				rs.getTimestamp("datum").toLocalDateTime(),
 				MetodPlacanja.valueOf(rs.getString("metodPlacanja").toUpperCase()),
 				rs.getDouble("ukupanIznos"),
 				zaposleni,

@@ -94,13 +94,14 @@ public class StavkaRacuna extends OpstiDomenskiObjekat {
 
 	@Override
 	public String getColumns() {
-		return "(rb,kolicina,cena,idKnjiga)";
+		return "(idRacun,rb,kolicina,cena,idKnjiga)";
 	}
 
 	@Override
 	public String getValues() {
 		return 
-			"VALUES("	+ rb					+ 
+			"VALUES("	+ idRacun				+ 
+			","			+ rb					+
 			","			+ kolicina				+
 			","			+ cena					+ 
 			","			+ knjiga.getIdKnjiga()	+ ")" ;
@@ -132,7 +133,7 @@ public class StavkaRacuna extends OpstiDomenskiObjekat {
 
 	@Override
 	public String getIDCondition() {
-		return "idRacun=" + idRacun;
+		return "idRacun=" + idRacun + " AND rb=" + rb;
 	}
 
 	@Override

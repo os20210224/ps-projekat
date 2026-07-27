@@ -7,6 +7,8 @@ import domain.StavkaRacuna;
 import domain.Zaposleni;
 import domain.enums.MetodPlacanja;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -201,48 +203,46 @@ public class pnlRacun extends KlijentPanel {
 		});
 		
 		btnPromeni.addActionListener((e) -> {
-//			String datum = txtDatum.getText().trim();
-//			String autor = txtAutor.getText().trim();
-//			String br_str_str = txtBrStrana.getText().trim();
-//			String cena_str_str = txtCenaStrane.getText().trim();
-//			String cena_pov_str = txtCenaPoveza.getText().trim();
-//			
-//			if ("".equals(datum)					||
-//				"".equals(autor)					||
-//				"".equals(br_str_str)				||
-//				"".equals(cena_str_str)				||
-//				"".equals(cena_pov_str)				||
-//				cmbMetodPlacanja.getSelectedIndex() == -1	||
-//				cmbPovez.getSelectedIndex() == -1
-//				) {
-//				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
+			String datumStr = txtDatum.getText().trim();
 			
-//			int br_str;
-//			double cena_str;
-//			double cena_pov;
-//			
-//			try {
-//				br_str = Integer.parseInt(br_str_str);
-//				cena_str = Double.parseDouble(cena_str_str);
-//				cena_pov = Double.parseDouble(cena_pov_str);
-//			} catch (NumberFormatException ne) {
-//				JOptionPane.showMessageDialog(this, "Broj stranica i cene moraju biti brojevi", "Greska", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
+			if ("".equals(datumStr)							||
+				cmbMetodPlacanja.getSelectedIndex() == -1	||
+				cmbKupac.getSelectedIndex() == -1			||
+				cmbZaposleni.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+				
+			LocalDateTime datum;
 			
-//			Format format = (Format) cmbMetodPlacanja.getSelectedItem();
-//			Povez povez = (Povez) cmbPovez.getSelectedItem();
-//			
-//			Response res = Klijent.PromeniKnjiga(new Knjiga(selected_racun.getIdKnjiga(), format, br_str, povez, cena_str, cena_pov, datum, autor));
+			try {
+				datum = LocalDateTime.parse(datumStr);
+			} catch (DateTimeParseException dpe) {
+				JOptionPane.showMessageDialog(this, "Datum mora biti u formatu yyyy-MM-dd HH:mm:ss", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			
-//			if (res.getStatus() == Status.SUCCESS) {
-//				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-//				updateTable();
-//			} else {
-//				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-//			}
+			MetodPlacanja metodPlacanja = (MetodPlacanja) cmbMetodPlacanja.getSelectedItem();
+			Kupac kupac = (Kupac) cmbKupac.getSelectedItem();
+			Zaposleni zaposleni = (Zaposleni) cmbZaposleni.getSelectedItem();
+			
+			Response res = Klijent.PromeniRacun(new Racun(
+				selected_racun.getIdRacun(),
+				datum,
+				metodPlacanja,
+				0d,
+				zaposleni,
+				kupac,
+				selected_racun.getStavkeRacuna()
+			));
+			
+			if (res.getStatus() == Status.SUCCESS) {
+				JOptionPane.showMessageDialog(this, "Racun je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				updateTable();
+			} else {
+				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
 		btnDodajStavku.addActionListener((e) -> {
@@ -422,7 +422,7 @@ public class pnlRacun extends KlijentPanel {
 			return;
 		}
 		List<Kupac> kupci = (List<Kupac>) res.getObject();
-		cmbKnjiga.removeAllItems();
+		cmbKupac.removeAllItems();
 		for (Kupac k : kupci) {
 			cmbKupac.addItem(k);
 		}
