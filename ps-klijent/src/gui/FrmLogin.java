@@ -57,7 +57,7 @@ public class FrmLogin extends javax.swing.JFrame {
 			return;
 		}
 		
-		klijent.login();
+		klijent.login((Zaposleni) resp.getObject());
 		
 	}
 

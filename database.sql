@@ -112,12 +112,13 @@ CREATE TABLE `Racun` (
   KEY `racun_fk_kupac` (`idKupac`),
   CONSTRAINT `racun_fk_kupac` FOREIGN KEY (`idKupac`) REFERENCES `Kupac` (`idKupac`) ON UPDATE CASCADE,
   CONSTRAINT `racun_fk_zaposleni` FOREIGN KEY (`idZaposleni`) REFERENCES `Zaposleni` (`idZaposleni`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Racun` */
 
 insert  into `Racun`(`idRacun`,`datum`,`metodPlacanja`,`ukupanIznos`,`idZaposleni`,`idKupac`) values 
-(2,'2026-05-16 14:43:54','tekuci_racun',289000,1,3);
+(2,'2026-05-16 14:43:54','tekuci_racun',289000,1,3),
+(3,'2026-07-27 00:00:00','kes',0,1,9);
 
 /*Table structure for table `Smena` */
 
@@ -127,13 +128,15 @@ CREATE TABLE `Smena` (
   `idSmena` bigint(20) NOT NULL AUTO_INCREMENT,
   `vremePocetka` time NOT NULL CHECK (`vremePocetka` < `vremeKraja`),
   `vremeKraja` time NOT NULL CHECK (`vremeKraja` > `vremePocetka`),
+  `ime` varchar(100) NOT NULL,
   PRIMARY KEY (`idSmena`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Smena` */
 
-insert  into `Smena`(`idSmena`,`vremePocetka`,`vremeKraja`) values 
-(1,'08:00:00','16:00:00');
+insert  into `Smena`(`idSmena`,`vremePocetka`,`vremeKraja`,`ime`) values 
+(1,'08:00:00','14:00:00','prva'),
+(2,'14:00:00','20:00:00','druga');
 
 /*Table structure for table `SmenaZaposlenog` */
 

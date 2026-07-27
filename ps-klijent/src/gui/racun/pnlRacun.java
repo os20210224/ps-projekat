@@ -40,48 +40,24 @@ public class pnlRacun extends KlijentPanel {
 		enableFormStavka(false);
 		
 		btnDodaj.addActionListener((e) -> {
-//			String naziv = txtDatum.getText().trim();
-//			String autor = txtAutor.getText().trim();
-//			String br_str_str = txtBrStrana.getText().trim();
-//			String cena_str_str = txtCenaStrane.getText().trim();
-//			String cena_pov_str = txtCenaPoveza.getText().trim();
-//			
-//			if ("".equals(naziv)					||
-//				"".equals(autor)					||
-//				"".equals(br_str_str)				||
-//				"".equals(cena_str_str)				||
-//				"".equals(cena_pov_str)				||
-//				cmbMetodPlacanja.getSelectedIndex() == -1	||
-//				cmbPovez.getSelectedIndex() == -1
-//				) {
-//				JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena.", "Greska", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			
-//			int br_str;
-//			double cena_str;
-//			double cena_pov;
-//			
-//			try {
-//				br_str = Integer.parseInt(br_str_str);
-//				cena_str = Double.parseDouble(cena_str_str);
-//				cena_pov = Double.parseDouble(cena_pov_str);
-//			} catch (NumberFormatException ne) {
-//				JOptionPane.showMessageDialog(this, "Broj stranica i cene moraju biti brojevi", "Greska", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			
-//			Format format = (Format) cmbMetodPlacanja.getSelectedItem();
-//			Povez povez = (Povez) cmbPovez.getSelectedItem();
-//			
-//			Response res = Klijent.KreirajKnjiga(new Knjiga(format, br_str, povez, cena_str, cena_pov, naziv, autor));
-//			
-//			if (res.getStatus() == Status.SUCCESS) {
-//				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-//				updateTable();
-//			} else {
-//				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-//			}
+			if (cmbMetodPlacanja.getSelectedIndex() == -1	||
+				cmbKupac.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Metod placanja i kupac moraju biti odabrani", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			MetodPlacanja metodPlacanja = (MetodPlacanja) cmbMetodPlacanja.getSelectedItem();
+			Kupac kupac = (Kupac) cmbKupac.getSelectedItem();
+			
+			Response res = Klijent.KreirajRacun(new Racun(metodPlacanja, Klijent.ulogovaniZaposleni, kupac));
+			
+			if (res.getStatus() == Status.SUCCESS) {
+				JOptionPane.showMessageDialog(this, "Racun je uspesno kreiran", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				updateTable();
+			} else {
+				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 		tblRacun.addMouseListener(new mouseClickListener() {
@@ -138,13 +114,13 @@ public class pnlRacun extends KlijentPanel {
 		});
 		
 		btnTrazi.addActionListener((e) -> {
-//			String naziv = txtDatum.getText().trim();
+//			String datum = txtDatum.getText().trim();
 //			String autor = txtAutor.getText().trim();
 //			String br_str_str = txtBrStrana.getText().trim();
 //			String cena_str_str = txtCenaStrane.getText().trim();
 //			String cena_pov_str = txtCenaPoveza.getText().trim();
 //			
-//			if ("".equals(naziv)					&&
+//			if ("".equals(datum)					&&
 //				"".equals(autor)					&&
 //				"".equals(br_str_str)				&&
 //				"".equals(cena_str_str)				&&
@@ -158,8 +134,8 @@ public class pnlRacun extends KlijentPanel {
 //			
 //			Knjiga k = new Knjiga();
 //			
-//			if (!"".equals(naziv)) {
-//				k.setNaziv(naziv);
+//			if (!"".equals(datum)) {
+//				k.setNaziv(datum);
 //			}
 //			if (!"".equals(autor)) {
 //				k.setAutor(autor);
@@ -225,13 +201,13 @@ public class pnlRacun extends KlijentPanel {
 		});
 		
 		btnPromeni.addActionListener((e) -> {
-//			String naziv = txtDatum.getText().trim();
+//			String datum = txtDatum.getText().trim();
 //			String autor = txtAutor.getText().trim();
 //			String br_str_str = txtBrStrana.getText().trim();
 //			String cena_str_str = txtCenaStrane.getText().trim();
 //			String cena_pov_str = txtCenaPoveza.getText().trim();
 //			
-//			if ("".equals(naziv)					||
+//			if ("".equals(datum)					||
 //				"".equals(autor)					||
 //				"".equals(br_str_str)				||
 //				"".equals(cena_str_str)				||
@@ -259,7 +235,7 @@ public class pnlRacun extends KlijentPanel {
 //			Format format = (Format) cmbMetodPlacanja.getSelectedItem();
 //			Povez povez = (Povez) cmbPovez.getSelectedItem();
 //			
-//			Response res = Klijent.PromeniKnjiga(new Knjiga(selected_racun.getIdKnjiga(), format, br_str, povez, cena_str, cena_pov, naziv, autor));
+//			Response res = Klijent.PromeniKnjiga(new Knjiga(selected_racun.getIdKnjiga(), format, br_str, povez, cena_str, cena_pov, datum, autor));
 			
 //			if (res.getStatus() == Status.SUCCESS) {
 //				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);

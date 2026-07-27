@@ -18,6 +18,13 @@ public class Racun extends OpstiDomenskiObjekat {
 	public Racun() {
 	}
 	
+	public Racun(MetodPlacanja metodPlacanja, Zaposleni zaposleni, Kupac kupac) {
+		this.metodPlacanja = metodPlacanja;
+		this.zaposleni = zaposleni;
+		this.kupac = kupac;
+		datum = LocalDate.now();
+	}
+	
 	public Racun(LocalDate datum, MetodPlacanja metodPlacanja, double ukupanIznos, Zaposleni zaposleni, Kupac kupac, List<StavkaRacuna> stavkeRacuna) {
 		this.datum = datum;
 		this.metodPlacanja = metodPlacanja;

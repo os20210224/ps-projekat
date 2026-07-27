@@ -50,7 +50,7 @@ public class KlijentHandler extends Thread {
 						try {
 							List<Zaposleni> zaposleni = Kontroler.vratiListuZaposleni((OpstiDomenskiObjekat) req.getObject());
 							if (zaposleni.size() == 1) { 
-								sender.send(new Response(null, Status.SUCCESS));
+								sender.send(new Response(zaposleni.get(0), Status.SUCCESS));
 								srv.log("> Odgovor poslat\n");
 							} else {
 								sender.send(new Response("Pogresni podaci", Status.FAILURE));

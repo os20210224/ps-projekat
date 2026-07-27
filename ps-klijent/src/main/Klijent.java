@@ -19,6 +19,7 @@ public class Klijent {
 	static FrmKlijent f;
 	static FrmLogin fl;
 	static KlijentThread kt;
+	public static Zaposleni ulogovaniZaposleni;
 	
 	public Klijent() {
 		klijent = this;
@@ -35,7 +36,8 @@ public class Klijent {
 		return kt.connect(address, port);
 	}
 	
-	public void login() {
+	public void login(Zaposleni zaposleni) {
+		ulogovaniZaposleni = zaposleni;
 		fl.dispose();
 		f.setVisible(true);
 	}
