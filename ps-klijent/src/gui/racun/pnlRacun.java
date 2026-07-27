@@ -38,27 +38,6 @@ public class pnlRacun extends KlijentPanel {
 		btnPromeniStavku.setEnabled(false);
 		
 		enableFormStavka(false);
-		
-		btnDodaj.addActionListener((e) -> {
-			if (cmbMetodPlacanja.getSelectedIndex() == -1	||
-				cmbKupac.getSelectedIndex() == -1
-				) {
-				JOptionPane.showMessageDialog(this, "Metod placanja i kupac moraju biti odabrani", "Greska", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			
-			MetodPlacanja metodPlacanja = (MetodPlacanja) cmbMetodPlacanja.getSelectedItem();
-			Kupac kupac = (Kupac) cmbKupac.getSelectedItem();
-			
-			Response res = Klijent.KreirajRacun(new Racun(metodPlacanja, Klijent.ulogovaniZaposleni, kupac));
-			
-			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Racun je uspesno kreiran", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-				updateTable();
-			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-			}
-		});
 
 		tblRacun.addMouseListener(new mouseClickListener() {
 			@Override
@@ -111,6 +90,12 @@ public class pnlRacun extends KlijentPanel {
 		
 		btnDeselektujStavku.addActionListener((e) -> {
 			deselectStavkaRacuna();
+		});
+		
+		btnResetuj.addActionListener((e) -> {
+			deselectRacun();
+			updateTable();
+			btnResetuj.setEnabled(false);
 		});
 		
 		btnTrazi.addActionListener((e) -> {
@@ -182,22 +167,37 @@ public class pnlRacun extends KlijentPanel {
 //			btnResetuj.setEnabled(true);
 		});
 		
-		btnResetuj.addActionListener((e) -> {
-			deselectRacun();
-			updateTable();
-			btnResetuj.setEnabled(false);
+		btnDodaj.addActionListener((e) -> {
+			if (cmbMetodPlacanja.getSelectedIndex() == -1	||
+				cmbKupac.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Metod placanja i kupac moraju biti odabrani", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			MetodPlacanja metodPlacanja = (MetodPlacanja) cmbMetodPlacanja.getSelectedItem();
+			Kupac kupac = (Kupac) cmbKupac.getSelectedItem();
+			
+			Response res = Klijent.KreirajRacun(new Racun(metodPlacanja, Klijent.ulogovaniZaposleni, kupac));
+			
+			if (res.getStatus() == Status.SUCCESS) {
+				JOptionPane.showMessageDialog(this, "Racun je uspesno kreiran", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				updateTable();
+			} else {
+				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		
 		btnObrisi.addActionListener((e) -> {
-//			Response res = Klijent.obrisiKnjiga(selected_racun);
-//			if (res.getStatus() == Status.FAILURE) {
-//				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise knjigu" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			JOptionPane.showMessageDialog(this, "Knjiga je uspesno obrisana.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-//			btnObrisi.setEnabled(false);
-//			deselect();
-//			updateTable();
+			Response res = Klijent.ObrisiRacun(selected_racun);
+			if (res.getStatus() == Status.FAILURE) {
+				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise racun" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			JOptionPane.showMessageDialog(this, "Racn je uspesno obrisan.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+			btnObrisi.setEnabled(false);
+			deselectRacun();
+			updateTable();
 		});
 		
 		btnPromeni.addActionListener((e) -> {
