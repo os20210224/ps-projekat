@@ -26,36 +26,39 @@ public class dbBroker {
         user = username;
         pass = password;
         srv.logDB("> credentials set:\n      url: " + url + "\n      username: " + user + "\n");
-		if (!connect()) {
+		try {
+			connect();
+			disconnect();
+		} catch (Exception e) {
 			return false;
 		}
-		disconnect();
 		return true;
     }
     
-    private static boolean connect() {
+    public static void connect() throws Exception {
+		if (conn != null) {
+			return;
+		}
         try {
             conn = DriverManager.getConnection(url, user, pass);
 			conn.setAutoCommit(false);
             srv.logDB("> konekcija uspesna");
         } catch (SQLException e) {
             srv.logDB("> connection error" + e);
-			return false;
+			throw new Exception("Connection error " + e);
         }
-		return true;
     }
     
-    private static boolean disconnect() {
+    public static void disconnect() {
         try {
             if (conn != null && !conn.isClosed()) {
                 conn.close();
+				conn = null;
                 srv.logDB("> diskonekcija uspesna");
             }
         } catch (SQLException e) {
             srv.logDB("> disconnection error" + e);
-			return false;
         }
-		return true;
     }
 	
 	public static void commit() {
@@ -64,8 +67,6 @@ public class dbBroker {
 			srv.logDB("> commit uspesan");
 		} catch (SQLException e) {
 			srv.logDB("> commit error" + e);
-		} finally {
-			disconnect();
 		}
 	}
 	
@@ -75,15 +76,10 @@ public class dbBroker {
 			srv.logDB("> rollback uspesan");
 		} catch (SQLException e) {
 			srv.logDB("> rollback error" + e);
-		} finally {
-			disconnect();
 		}
 	}
 	
 	public static long kreiraj(OpstiDomenskiObjekat obj) throws Exception {
-		if (!connect()) {
-			throw new Exception("Greska pri konekciji sa bazom podataka");
-		}
 		long id = 0;
 		try {
 			String q = 
@@ -109,9 +105,6 @@ public class dbBroker {
 	}
 	
 	public static ResultSet select(OpstiDomenskiObjekat obj) throws Exception {
-		if (!connect()) {
-			throw new Exception("Greska pri konekciji sa bazom podataka");
-		}
 		ResultSet rs;
 		try {
 			String q =
@@ -129,9 +122,6 @@ public class dbBroker {
 	}
 	
 	public static Void delete(OpstiDomenskiObjekat obj) throws Exception {
-		if (!connect()) {
-			throw new Exception("Greska pri konekciji sa bazom podataka");
-		}
 		try {
 			String q =
 				"DELETE FROM "	+ obj.getTableName()	+ 
@@ -148,9 +138,6 @@ public class dbBroker {
 	}
 	
 	public static Void update(OpstiDomenskiObjekat obj) throws Exception {
-		if (!connect()) {
-			throw new Exception("Greska pri konekciji sa bazom podataka");
-		}
 		try {
 			String q =
 				"UPDATE "		+ obj.getTableName()	+

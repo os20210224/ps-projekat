@@ -45,10 +45,16 @@ public class Server {
     }
 
     public void start() {
+		try {
+			dbBroker.connect();
+		} catch (Exception ex) {
+			f.log(ex.getMessage());
+		}
 		lobby = new Lobby(srv);
     }
 	
 	public void stop() {
+		dbBroker.disconnect();
 		try {
             lobby.serverSocket.close();
 			for (KlijentHandler k : klijenti) {
