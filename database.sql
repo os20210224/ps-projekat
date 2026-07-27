@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `Racun`;
 
 CREATE TABLE `Racun` (
   `idRacun` bigint(20) NOT NULL AUTO_INCREMENT,
-  `datum` datetime NOT NULL,
+  `datum` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `metodPlacanja` enum('kes','kartica','tekuci_racun') NOT NULL,
   `ukupanIznos` double NOT NULL DEFAULT 0,
   `idZaposleni` bigint(20) NOT NULL,
@@ -112,13 +112,13 @@ CREATE TABLE `Racun` (
   KEY `racun_fk_kupac` (`idKupac`),
   CONSTRAINT `racun_fk_kupac` FOREIGN KEY (`idKupac`) REFERENCES `Kupac` (`idKupac`) ON UPDATE CASCADE,
   CONSTRAINT `racun_fk_zaposleni` FOREIGN KEY (`idZaposleni`) REFERENCES `Zaposleni` (`idZaposleni`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Racun` */
 
 insert  into `Racun`(`idRacun`,`datum`,`metodPlacanja`,`ukupanIznos`,`idZaposleni`,`idKupac`) values 
 (2,'2026-05-16 14:43:54','tekuci_racun',289000,1,3),
-(3,'2026-07-27 00:00:00','kes',0,1,9);
+(10,'2026-07-27 23:27:40','kes',17472,1,9);
 
 /*Table structure for table `Smena` */
 
@@ -130,7 +130,7 @@ CREATE TABLE `Smena` (
   `vremeKraja` time NOT NULL CHECK (`vremeKraja` > `vremePocetka`),
   `ime` varchar(100) NOT NULL,
   PRIMARY KEY (`idSmena`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Smena` */
 
@@ -178,7 +178,8 @@ CREATE TABLE `StavkaRacuna` (
 /*Data for the table `StavkaRacuna` */
 
 insert  into `StavkaRacuna`(`idRacun`,`rb`,`kolicina`,`cena`,`idKnjiga`) values 
-(2,1,100,2890,1);
+(2,1,100,2890,1),
+(10,1,1,17472,6);
 
 /*Table structure for table `Zaposleni` */
 

@@ -1,14 +1,14 @@
 package domain;
 
 import domain.enums.MetodPlacanja;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Racun extends OpstiDomenskiObjekat {
     
     private long idRacun = 0;
-    private LocalDate datum = null;
+    private LocalDateTime datum = null;
     private MetodPlacanja metodPlacanja = null;
     private double ukupanIznos = 0;
     private Zaposleni zaposleni = null;
@@ -22,10 +22,10 @@ public class Racun extends OpstiDomenskiObjekat {
 		this.metodPlacanja = metodPlacanja;
 		this.zaposleni = zaposleni;
 		this.kupac = kupac;
-		datum = LocalDate.now();
+		datum = LocalDateTime.now();
 	}
 	
-	public Racun(LocalDate datum, MetodPlacanja metodPlacanja, double ukupanIznos, Zaposleni zaposleni, Kupac kupac, List<StavkaRacuna> stavkeRacuna) {
+	public Racun(LocalDateTime datum, MetodPlacanja metodPlacanja, double ukupanIznos, Zaposleni zaposleni, Kupac kupac, List<StavkaRacuna> stavkeRacuna) {
 		this.datum = datum;
 		this.metodPlacanja = metodPlacanja;
 		this.ukupanIznos = ukupanIznos;
@@ -34,7 +34,7 @@ public class Racun extends OpstiDomenskiObjekat {
 		this.stavkeRacuna = stavkeRacuna;
 	}
 	
-	public Racun(long idRacun, LocalDate datum, MetodPlacanja metodPlacanja, double ukupanIznos, Zaposleni zaposleni, Kupac kupac, List<StavkaRacuna> stavkeRacuna) {
+	public Racun(long idRacun, LocalDateTime datum, MetodPlacanja metodPlacanja, double ukupanIznos, Zaposleni zaposleni, Kupac kupac, List<StavkaRacuna> stavkeRacuna) {
 		this.idRacun = idRacun;
 		this.datum = datum;
 		this.metodPlacanja = metodPlacanja;
@@ -52,11 +52,11 @@ public class Racun extends OpstiDomenskiObjekat {
 		this.idRacun = idRacun;
 	}
 
-	public LocalDate getDatum() {
+	public LocalDateTime getDatum() {
 		return datum;
 	}
 
-	public void setDatum(LocalDate datum) {
+	public void setDatum(LocalDateTime datum) {
 		this.datum = datum;
 	}
 
