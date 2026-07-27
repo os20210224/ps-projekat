@@ -2,6 +2,7 @@ package logika.so.racun;
 
 import domain.OpstiDomenskiObjekat;
 import domain.Racun;
+import domain.StavkaRacuna;
 import logika.db.dbBroker;
 import logika.so.OpstaSO;
 
@@ -16,7 +17,11 @@ public class ObrisiRacun extends OpstaSO<Void> {
 
 	@Override
 	protected Void transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		return dbBroker.delete((Racun) obj);
+		Racun racun = (Racun) obj;
+		for (StavkaRacuna s : racun.getStavkeRacuna()) {
+			dbBroker.delete(s);
+		}
+		return dbBroker.delete(racun);
 	}
 	
 }

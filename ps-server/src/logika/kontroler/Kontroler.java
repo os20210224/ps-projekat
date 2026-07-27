@@ -7,8 +7,6 @@ import domain.OpstiDomenskiObjekat;
 import domain.PravnoLice;
 import domain.Racun;
 import domain.Smena;
-import domain.SmenaZaposlenog;
-import domain.StavkaRacuna;
 import domain.Zaposleni;
 import java.util.List;
 import logika.so.OpstaSO;
@@ -37,14 +35,6 @@ import logika.so.smena.KreirajSmena;
 import logika.so.smena.ObrisiSmena;
 import logika.so.smena.PromeniSmena;
 import logika.so.smena.vratiListuSmena;
-import logika.so.smena_zaposlenog.KreirajSmenaZaposlenog;
-import logika.so.smena_zaposlenog.ObrisiSmenaZaposlenog;
-import logika.so.smena_zaposlenog.PromeniSmenaZaposlenog;
-import logika.so.smena_zaposlenog.vratiListuSmenaZaposlenog;
-import logika.so.stavka_racuna.KreirajStavkaRacuna;
-import logika.so.stavka_racuna.ObrisiStavkaRacuna;
-import logika.so.stavka_racuna.PromeniStavkaRacuna;
-import logika.so.stavka_racuna.vratiListuStavkaRacuna;
 import logika.so.zaposleni.KreirajZaposleni;
 import logika.so.zaposleni.ObrisiZaposleni;
 import logika.so.zaposleni.PromeniZaposleni;
@@ -172,26 +162,6 @@ public class Kontroler {
 		return (List<Racun>) so.izvrsiTransakciju(obj);
 	}
 	
-	public static Long kreirajStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new KreirajStavkaRacuna();
-		return (Long) so.izvrsiTransakciju(obj);
-	}
-
-	public static Void ObrisiStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new ObrisiStavkaRacuna();
-		return (Void) so.izvrsiTransakciju(obj);
-	}
-
-	public static Void PromeniStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new PromeniStavkaRacuna();
-		return (Void) so.izvrsiTransakciju(obj);
-	}
-
-	public static List<StavkaRacuna> vratiListuStavkaRacuna(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new vratiListuStavkaRacuna();
-		return (List<StavkaRacuna>) so.izvrsiTransakciju(obj);
-	}
-	
 	public static Long kreirajSmena(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new KreirajSmena();
 		return (Long) so.izvrsiTransakciju(obj);
@@ -210,26 +180,6 @@ public class Kontroler {
 	public static List<Smena> vratiListuSmena(OpstiDomenskiObjekat obj) throws SOException {
 		OpstaSO so = new vratiListuSmena();
 		return (List<Smena>) so.izvrsiTransakciju(obj);
-	}
-	
-	public static Long kreirajSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new KreirajSmenaZaposlenog();
-		return (Long) so.izvrsiTransakciju(obj);
-	}
-
-	public static Void ObrisiSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new ObrisiSmenaZaposlenog();
-		return (Void) so.izvrsiTransakciju(obj);
-	}
-
-	public static Void PromeniSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new PromeniSmenaZaposlenog();
-		return (Void) so.izvrsiTransakciju(obj);
-	}
-
-	public static List<SmenaZaposlenog> vratiListuSmenaZaposlenog(OpstiDomenskiObjekat obj) throws SOException {
-		OpstaSO so = new vratiListuSmenaZaposlenog();
-		return (List<SmenaZaposlenog>) so.izvrsiTransakciju(obj);
 	}
 
 }

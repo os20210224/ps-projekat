@@ -6,7 +6,6 @@ import domain.Kupac;
 import domain.PravnoLice;
 import domain.Racun;
 import domain.Smena;
-import domain.StavkaRacuna;
 import domain.Zaposleni;
 import thread.KlijentThread;
 import gui.FrmKlijent;
@@ -127,22 +126,6 @@ public class Klijent {
 	
 	public static Response vratiListuRacun(Racun r) {
 		return (Response)kt.send(r, Operation.VRATI_LISTU_RACUN);
-	}
-	
-	public static Response KreirajStavkaRacuna(StavkaRacuna s) {
-		return (Response) kt.send(s, Operation.KREIRAJ_STAVKA_RACUNA);
-	}
-	
-	public static Response ObrisiStavkaRacuna(StavkaRacuna s) {
-		return (Response) kt.send(s, Operation.OBRISI_STAVKA_RACUNA);
-	}
-	
-	public static Response PromeniStavkaRacuna(StavkaRacuna s) {
-		return (Response) kt.send(s, Operation.PROMENI_STAVKA_RACUNA);
-	}
-	
-	public static Response vratiListuStavkaRacuna(StavkaRacuna s) {
-		return (Response)kt.send(s, Operation.VRATI_LISTU_STAVKA_RACUNA);
 	}
 	
 	public static Response KreirajSmena(Smena s) {

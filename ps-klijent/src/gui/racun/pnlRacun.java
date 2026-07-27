@@ -390,14 +390,9 @@ public class pnlRacun extends KlijentPanel {
 	private void updateTableStavka(boolean empty) {
 		if (empty) {
 			tblStavkaRacuna.setModel(new StavkaRacunaTableModel(new ArrayList<>()));
-			return;
+		} else {
+			tblStavkaRacuna.setModel(new StavkaRacunaTableModel(selected_racun.getStavkeRacuna()));
 		}
-		Response res = Klijent.vratiListuStavkaRacuna(new StavkaRacuna(selected_racun.getIdRacun()));
-		if (res.getStatus() == Status.FAILURE) {
-			JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		tblStavkaRacuna.setModel(new StavkaRacunaTableModel((List<StavkaRacuna>) res.getObject()));
 	}
 	
 	private void updateTableStavka(List<StavkaRacuna> stavke) {

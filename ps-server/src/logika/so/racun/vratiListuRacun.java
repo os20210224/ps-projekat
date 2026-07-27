@@ -1,5 +1,6 @@
 package logika.so.racun;
 
+import domain.Knjiga;
 import domain.Kupac;
 import domain.OpstiDomenskiObjekat;
 import domain.Racun;
@@ -10,7 +11,6 @@ import java.util.List;
 import logika.db.dbBroker;
 import logika.so.OpstaSO;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import logika.kontroler.Kontroler;
 
@@ -35,7 +35,20 @@ public class vratiListuRacun extends OpstaSO<List> {
 			Zaposleni zaposleni = Kontroler.vratiListuZaposleni(new Zaposleni(idZaposleni, null, null, null, null)).get(0);
 			
 			long idRacun = rs.getLong("idRacun");
-			List<StavkaRacuna> stavke = Kontroler.vratiListuStavkaRacuna(new StavkaRacuna(idRacun));
+			List<StavkaRacuna> stavke = new ArrayList<>();
+			ResultSet srrs = dbBroker.select(new StavkaRacuna(idRacun));
+			while (srrs.next()) {
+				long idKnjiga = srrs.getLong("idKnjiga");
+				Knjiga knjiga = Kontroler.vratiListuKnjiga(new Knjiga(idKnjiga)).get(0);
+				stavke.add(new StavkaRacuna(
+					idRacun,
+					srrs.getLong("rb"),
+					srrs.getInt("kolicina"),
+					srrs.getDouble("cena"),
+					srrs.getDouble("iznos"),
+					knjiga
+				));
+			}
 			
 			list.add(new Racun(
 				idRacun,
