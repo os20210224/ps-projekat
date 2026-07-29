@@ -1,7 +1,9 @@
 package gui.racun;
 
+import domain.FizickoLice;
 import domain.Knjiga;
 import domain.Kupac;
+import domain.PravnoLice;
 import domain.Racun;
 import domain.StavkaRacuna;
 import domain.Zaposleni;
@@ -317,6 +319,36 @@ public class pnlRacun extends KlijentPanel {
 			deselectStavkaRacuna();
 		});
 		
+		btnTraziKupca.addActionListener((e) -> {
+			String kupac = txtKupac.getText().trim();
+			if ("".equals(kupac)) {
+				JOptionPane.showMessageDialog(this, "Polje mora biti popunjeno", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			updateComboKupac(kupac);
+			btnResetuj.setEnabled(true);
+		});
+		
+		btnTraziZaposlenog.addActionListener((e) -> {
+			String zaposleni = txtZaposleni.getText().trim();
+			if ("".equals(zaposleni)) {
+				JOptionPane.showMessageDialog(this, "Polje mora biti popunjeno", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			updateComboZaposleni(zaposleni);
+			btnResetuj.setEnabled(true);
+		});
+		
+		btnTraziKnjigu.addActionListener((e) -> {
+			String knjiga = txtKnjiga.getText().trim();
+			if ("".equals(knjiga)) {
+				JOptionPane.showMessageDialog(this, "Polje mora biti popunjeno", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			updateComboKnjiga(knjiga);
+			btnResetuj.setEnabled(true);
+		});
+		
 	}
 	
 	private void deselectRacun() {
@@ -330,6 +362,8 @@ public class pnlRacun extends KlijentPanel {
 		enableFormStavka(false);
 		btnDodajStavku.setEnabled(false);
 		deselectStavkaRacuna();
+		txtKupac.setText("");
+		txtZaposleni.setText("");
 	}
 	
 	private void deselectStavkaRacuna() {
@@ -339,6 +373,7 @@ public class pnlRacun extends KlijentPanel {
 		btnDeselektujStavku.setEnabled(false);
 		btnObrisiStavku.setEnabled(false);
 		btnPromeniStavku.setEnabled(false);
+		txtKnjiga.setText("");
 	}
 	
 	private void resetComboBox() {
@@ -358,9 +393,9 @@ public class pnlRacun extends KlijentPanel {
 		}
 		tblRacun.setModel(new RacunTableModel((List<Racun>) res.getObject()));
 		updateTableStavka(true);
-		updateComboKupac();
-		updateComboKnjiga();
-		updateComboZaposleni();
+		updateComboKupac(null);
+		updateComboKnjiga(null);
+		updateComboZaposleni(null);
 	}
 	
 	private void updateTableStavka(boolean empty) {
@@ -415,13 +450,42 @@ public class pnlRacun extends KlijentPanel {
 		txtKolicina.setText("" + selected_stavka.getKolicina());
 	}
 	
-	private void updateComboKupac() {
-		Response res = Klijent.vratiListuKupac(new Kupac());
-		if (res.getStatus() == Status.FAILURE) {
-			// handle
-			return;
+	private void updateComboKupac(String naziv) {
+		Response res;
+		List<Kupac> kupci;
+		if (naziv == null) {
+			res = Klijent.vratiListuKupac(new Kupac());
+			kupci = (List<Kupac>) res.getObject();
+		} else {
+			PravnoLice p = new PravnoLice();
+			p.setNaziv(naziv);
+			res = Klijent.vratiListuKupac(p);
+			if (res.getStatus() == Status.FAILURE) {
+				// handle
+				return;
+			}
+			kupci = (List<Kupac>) res.getObject();
+			if (kupci.isEmpty()) {
+				FizickoLice f = new FizickoLice();
+				f.setIme(naziv);
+				res = Klijent.vratiListuKupac(f);
+				if (res.getStatus() == Status.FAILURE) {
+					// handle
+					return;
+				}
+				kupci = (List<Kupac>) res.getObject();
+				if (kupci.isEmpty()) {
+					f = new FizickoLice();
+					f.setPrezime(naziv);
+					res = Klijent.vratiListuKupac(f);
+					if (res.getStatus() == Status.FAILURE) {
+						// handle
+						return;
+					}
+					kupci = (List<Kupac>) res.getObject();
+				}
+			}
 		}
-		List<Kupac> kupci = (List<Kupac>) res.getObject();
 		cmbKupac.removeAllItems();
 		for (Kupac k : kupci) {
 			cmbKupac.addItem(k);
@@ -429,8 +493,15 @@ public class pnlRacun extends KlijentPanel {
 		cmbKupac.setSelectedIndex(-1);
 	}
 	
-	private void updateComboKnjiga() {
-		Response res = Klijent.vratiListuKnjiga(new Knjiga());
+	private void updateComboKnjiga(String naziv) {
+		Response res;
+		if (naziv == null) {
+			res = Klijent.vratiListuKnjiga(new Knjiga());
+		} else {
+			Knjiga k = new Knjiga();
+			k.setNaziv(naziv);
+			res = Klijent.vratiListuKnjiga(k);
+		}
 		if (res.getStatus() == Status.FAILURE) {
 			// handle
 			return;
@@ -443,13 +514,33 @@ public class pnlRacun extends KlijentPanel {
 		cmbKnjiga.setSelectedIndex(-1);
 	}
 	
-	private void updateComboZaposleni() {
-		Response res = Klijent.vratiListuZaposleni(new Zaposleni());
-		if (res.getStatus() == Status.FAILURE) {
-			// handle
-			return;
+	private void updateComboZaposleni(String naziv) {
+		Response res;
+		List<Zaposleni> zaposleni;
+		if (naziv == null) {
+			res = Klijent.vratiListuZaposleni(new Zaposleni());
+			zaposleni = (List<Zaposleni>) res.getObject();
+		} else {
+			Zaposleni z = new Zaposleni();
+			z.setIme(naziv);
+			res = Klijent.vratiListuZaposleni(z);
+			if (res.getStatus() == Status.FAILURE) {
+				// handle
+				return;
+			}
+			zaposleni = (List<Zaposleni>) res.getObject();
+			if (zaposleni.isEmpty()) {
+				z = new Zaposleni();
+				z.setPrezime(naziv);
+				res = Klijent.vratiListuZaposleni(z);
+				if (res.getStatus() == Status.FAILURE) {
+					// handle
+					return;
+				}
+				zaposleni = (List<Zaposleni>) res.getObject();
+			}
 		}
-		List<Zaposleni> zaposleni = (List<Zaposleni>) res.getObject();
+		
 		cmbZaposleni.removeAllItems();
 		for (Zaposleni z : zaposleni) {
 			cmbZaposleni.addItem(z);
@@ -725,7 +816,6 @@ public class pnlRacun extends KlijentPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTraziKnjigu, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtKnjiga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnObrisiStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -742,12 +832,12 @@ public class pnlRacun extends KlijentPanel {
                         .addGap(29, 29, 29)
                         .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
