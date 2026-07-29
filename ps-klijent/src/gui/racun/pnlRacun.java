@@ -103,72 +103,47 @@ public class pnlRacun extends KlijentPanel {
 		});
 		
 		btnTrazi.addActionListener((e) -> {
-//			String datum = txtDatum.getText().trim();
-//			String autor = txtAutor.getText().trim();
-//			String br_str_str = txtBrStrana.getText().trim();
-//			String cena_str_str = txtCenaStrane.getText().trim();
-//			String cena_pov_str = txtCenaPoveza.getText().trim();
-//			
-//			if ("".equals(datum)					&&
-//				"".equals(autor)					&&
-//				"".equals(br_str_str)				&&
-//				"".equals(cena_str_str)				&&
-//				"".equals(cena_pov_str)				&&
-//				cmbMetodPlacanja.getSelectedIndex() == -1	&&
-//				cmbPovez.getSelectedIndex() == -1
-//				) {
-//				JOptionPane.showMessageDialog(this, "Mora se uneti kriterijum pretrage.", "Greska", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			
-//			Knjiga k = new Knjiga();
-//			
-//			if (!"".equals(datum)) {
-//				k.setNaziv(datum);
-//			}
-//			if (!"".equals(autor)) {
-//				k.setAutor(autor);
-//			}
-//			if (!"".equals(br_str_str)) {
-//				try {
-//					k.setBrStranica(Integer.parseInt(br_str_str));
-//				} catch (NumberFormatException ne) {
-//					JOptionPane.showMessageDialog(this, "Broj strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//			}
-//			if (!"".equals(cena_str_str)) {
-//				try {
-//					k.setCenaStranica(Double.parseDouble(cena_str_str));
-//				} catch (NumberFormatException ne) {
-//					JOptionPane.showMessageDialog(this, "Cena strana mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//			}
-//			if (!"".equals(cena_pov_str)) {
-//				try {
-//					k.setCenaPoveza(Double.parseDouble(cena_pov_str));
-//				} catch (NumberFormatException ne) {
-//					JOptionPane.showMessageDialog(this, "Cena poveza mora biti broj.", "Greska", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//			}
-//			if (cmbMetodPlacanja.getSelectedIndex() > -1) {
-//				k.setFormat((Format) cmbMetodPlacanja.getSelectedItem());
-//			}
-//			if(cmbPovez.getSelectedIndex() > -1) {
-//				k.setPovez((Povez) cmbPovez.getSelectedItem());
-//			}
-//			
-//			Response res = Klijent.vratiListuKnjiga(k);
-//			if (res.getStatus() == Status.FAILURE) {
-//				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			
-//			tblRacun.setModel(new KnjigaTableModel((List<Knjiga>) res.getObject()));
-//			
-//			btnResetuj.setEnabled(true);
+			String datumStr = txtDatum.getText().trim();
+			
+			if ("".equals(datumStr)							&&
+				cmbMetodPlacanja.getSelectedIndex() == -1	&&
+				cmbKupac.getSelectedIndex() == -1			&&
+				cmbZaposleni.getSelectedIndex() == -1
+				) {
+				JOptionPane.showMessageDialog(this, "Kriterijum pretrage mora biti odabran", "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			Racun r = new Racun();
+			
+			if (!"".equals(datumStr)) {
+				try {
+					LocalDateTime datum = LocalDateTime.parse(datumStr);
+					r.setDatum(datum);
+				} catch (DateTimeParseException dpe) {
+					JOptionPane.showMessageDialog(this, "Datum mora biti u formatu yyyy-MM-dd HH:mm:ss", "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			if (cmbMetodPlacanja.getSelectedIndex() > -1) {
+				r.setMetodPlacanja((MetodPlacanja) cmbMetodPlacanja.getSelectedItem());
+			}
+			if (cmbKupac.getSelectedIndex() > -1) {
+				r.setKupac((Kupac) cmbKupac.getSelectedItem());
+			}
+			if (cmbZaposleni.getSelectedIndex() > -1) {
+				r.setZaposleni((Zaposleni) cmbZaposleni.getSelectedItem());
+			}
+			
+			Response res = Klijent.vratiListuRacun(r);
+			if (res.getStatus() == Status.FAILURE) {
+				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			tblRacun.setModel(new RacunTableModel((List<Racun>) res.getObject()));
+			
+			btnResetuj.setEnabled(true);
 		});
 		
 		btnDodaj.addActionListener((e) -> {
@@ -816,6 +791,7 @@ public class pnlRacun extends KlijentPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTraziKnjigu, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtKnjiga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnObrisiStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
