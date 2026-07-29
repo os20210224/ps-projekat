@@ -461,7 +461,7 @@ public class pnlRacun extends KlijentPanel {
 			p.setNaziv(naziv);
 			res = Klijent.vratiListuKupac(p);
 			if (res.getStatus() == Status.FAILURE) {
-				// handle
+				JOptionPane.showMessageDialog(this, "Sistem ne moze da pretrazi kupce", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			kupci = (List<Kupac>) res.getObject();
@@ -470,7 +470,7 @@ public class pnlRacun extends KlijentPanel {
 				f.setIme(naziv);
 				res = Klijent.vratiListuKupac(f);
 				if (res.getStatus() == Status.FAILURE) {
-					// handle
+					JOptionPane.showMessageDialog(this, "Sistem ne moze da pretrazi kupce", "Greska", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				kupci = (List<Kupac>) res.getObject();
@@ -479,7 +479,7 @@ public class pnlRacun extends KlijentPanel {
 					f.setPrezime(naziv);
 					res = Klijent.vratiListuKupac(f);
 					if (res.getStatus() == Status.FAILURE) {
-						// handle
+						JOptionPane.showMessageDialog(this, "Sistem ne moze da pretrazi kupce", "Greska", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					kupci = (List<Kupac>) res.getObject();
@@ -503,7 +503,7 @@ public class pnlRacun extends KlijentPanel {
 			res = Klijent.vratiListuKnjiga(k);
 		}
 		if (res.getStatus() == Status.FAILURE) {
-			// handle
+			JOptionPane.showMessageDialog(this, "Sistem ne moze da pretrazi knjige", "Greska", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		List<Knjiga> knjige = (List<Knjiga>) res.getObject();
@@ -525,7 +525,7 @@ public class pnlRacun extends KlijentPanel {
 			z.setIme(naziv);
 			res = Klijent.vratiListuZaposleni(z);
 			if (res.getStatus() == Status.FAILURE) {
-				// handle
+				JOptionPane.showMessageDialog(this, "Sistem ne moze da pretrazi zaposlene", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			zaposleni = (List<Zaposleni>) res.getObject();
@@ -534,7 +534,7 @@ public class pnlRacun extends KlijentPanel {
 				z.setPrezime(naziv);
 				res = Klijent.vratiListuZaposleni(z);
 				if (res.getStatus() == Status.FAILURE) {
-					// handle
+					JOptionPane.showMessageDialog(this, "Sistem ne moze da pretrazi zaposlene", "Greska", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				zaposleni = (List<Zaposleni>) res.getObject();
