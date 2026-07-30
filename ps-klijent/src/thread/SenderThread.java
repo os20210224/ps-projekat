@@ -6,21 +6,22 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.concurrent.CompletableFuture;
 import main.Klijent;
-import transfer.Reciever;
 import transfer.Request;
 import transfer.Response;
 import transfer.Sender;
 import transfer.enums.Operation;
 
-public class KlijentThread extends Thread {
+public class SenderThread extends Thread {
 	Klijent klijent;
     Socket soket = null;
 	
 	Sender sender;
-	Reciever rec;
-
-    public KlijentThread(Klijent klijent) {
+	
+	CompletableFuture<Response> response;
+	
+    public SenderThread(Klijent klijent) {
 		this.klijent = klijent;
 		start();
     }
@@ -49,22 +50,31 @@ public class KlijentThread extends Thread {
 		}
 		
 		sender = new Sender(soket);
-		rec = new Reciever(soket);
+		new RecieverThread(klijent, soket, this);
 		
 		return "";
 	}
 	
 	public Object send(OpstiDomenskiObjekat obj, Operation operation) {
-		Response res;
+		response = new CompletableFuture<>();
 		try {
 			sender.send(new Request(obj, operation));
 			System.out.println("zahtev poslat " +  operation);
-			res = (Response) rec.recieve();
-			System.out.println("odgovor primljen" + res.getStatus());
+			Response res = response.get();
+			System.out.println("Odgovor primljen " + res.getStatus());
 			return res;
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
 		return "";
 	}
+	
+	public void close() {
+		try {
+			soket.close();
+		} catch (IOException ex) {
+			System.out.println("Socket closure error " + ex);
+		}
+	}
+
 }

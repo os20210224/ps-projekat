@@ -8,6 +8,8 @@ import gui.smena.pnlSmena;
 import gui.zaposleni.pnlZaposleni;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import main.Klijent;
@@ -38,6 +40,14 @@ public class FrmKlijent extends javax.swing.JFrame {
 		smena = new pnlSmena("Smena");
 		
 		setMenuListeners();
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				klijent.terminiraj();
+				super.windowClosing(e);
+			}
+		});
 	}
 	
 	private void removeCurrent() {

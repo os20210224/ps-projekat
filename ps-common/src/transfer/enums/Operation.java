@@ -38,4 +38,5 @@ public enum Operation {
 	PROMENI_SMENA,
 	VRATI_LISTU_SMENA,
 	
+	TERMINIRAJ,
 }

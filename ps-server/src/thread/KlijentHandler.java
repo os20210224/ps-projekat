@@ -206,6 +206,13 @@ public class KlijentHandler extends Thread {
 							List<Smena> smene = Kontroler.vratiListuSmena((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(smene, Status.SUCCESS));
 						}
+						case TERMINIRAJ -> {
+							srv.log("> Obrada zahteva " + op);
+							sender.send(new Response(null, Status.SUCCESS));
+							s.close();
+							srv.log("> Thread ugasen");
+							return;
+						}
 					} 
 					srv.log("> Odgovor poslat\n");
 				} catch (SOException e) {
@@ -223,6 +230,7 @@ public class KlijentHandler extends Thread {
 	
 	public void likvidiraj() {
 		try {
+			sender.send(new Request(null, Operation.TERMINIRAJ));
             s.close();
 			srv.log("> Thread ugasen");
         } catch (Exception e) {
