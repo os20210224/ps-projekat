@@ -223,6 +223,7 @@ public class KlijentHandler extends Thread {
 							sender.send(new Response(null, Status.SUCCESS));
 							s.close();
 							srv.log("> Thread ugasen");
+							srv.removeKlijent(this);
 							return;
 						}
 					} 
