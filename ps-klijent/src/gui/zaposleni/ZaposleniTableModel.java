@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 public class ZaposleniTableModel extends AbstractTableModel {
 
 	String[] columns = {
-		"ID",
 		"Ime",
 		"Prezime",
 		"Username"
@@ -33,10 +32,9 @@ public class ZaposleniTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Zaposleni z = zaposleni.get(rowIndex);
 		return switch (columnIndex) {
-			case 0 -> z.getIdZaposleni();
-			case 1 -> z.getIme();
-			case 2 -> z.getPrezime();
-			case 3 -> z.getUsername();
+			case 0 -> z.getIme();
+			case 1 -> z.getPrezime();
+			case 2 -> z.getUsername();
 			default -> "";
 		};
 	}

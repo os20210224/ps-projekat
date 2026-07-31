@@ -25,7 +25,7 @@ public class pnlSmena extends KlijentPanel {
 		btnObrisi.setEnabled(false);
 		btnResetuj.setEnabled(false);
 		
-		btnDodaj.addActionListener((e) -> {
+		btnUbaci.addActionListener((e) -> {
 			String ime = txtIme.getText().trim();
 			String vremePocetkaStr = txtVremePocetka.getText().trim();
 			String vremeKrajaStr = txtVremeKraja.getText().trim();
@@ -47,7 +47,7 @@ public class pnlSmena extends KlijentPanel {
 				return;
 			}
 			
-			Response res = Klijent.KreirajSmena(new Smena(0, vremePocetka, vremeKraja, ime));
+			Response res = Klijent.UbaciSmena(new Smena(0, vremePocetka, vremeKraja, ime));
 			
 			if (res.getStatus() == Status.SUCCESS) {
 				JOptionPane.showMessageDialog(this, "Smena je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
@@ -208,7 +208,7 @@ public class pnlSmena extends KlijentPanel {
 		txtIme.setText(s.getIme());
 		txtVremePocetka.setText(s.getVremePocetka().toString());
 		txtVremeKraja.setText(s.getVremeKraja().toString());
-}
+	}
 	
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -218,7 +218,7 @@ public class pnlSmena extends KlijentPanel {
         lvlVremePocetka = new javax.swing.JLabel();
         txtIme = new javax.swing.JTextField();
         txtVremePocetka = new javax.swing.JTextField();
-        btnDodaj = new javax.swing.JButton();
+        btnUbaci = new javax.swing.JButton();
         btnTrazi = new javax.swing.JButton();
         btnPromeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
@@ -245,7 +245,7 @@ public class pnlSmena extends KlijentPanel {
 
         txtVremePocetka.setMaximumSize(new java.awt.Dimension(64, 23));
 
-        btnDodaj.setText("Dodaj");
+        btnUbaci.setText("Ubaci");
 
         btnTrazi.setText("Trazi");
 
@@ -288,7 +288,7 @@ public class pnlSmena extends KlijentPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUbaci, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnPromeni, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -336,17 +336,17 @@ public class pnlSmena extends KlijentPanel {
                         .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnUbaci, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeselektuj;
-    private javax.swing.JButton btnDodaj;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromeni;
     private javax.swing.JButton btnResetuj;
     private javax.swing.JButton btnTrazi;
+    private javax.swing.JButton btnUbaci;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblIme;
     private javax.swing.JLabel lblVremeKraja;

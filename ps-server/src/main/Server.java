@@ -1,6 +1,7 @@
 package main;
 
 import gui.FrmServer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import logika.db.dbBroker;
@@ -62,7 +63,7 @@ public class Server {
 			}
 			klijenti = new ArrayList<>();
             log("> Server offline.");
-        } catch (Exception e) {
+        } catch (IOException e) {
             log("> Server stop error:\n" + e);
         }
 	}

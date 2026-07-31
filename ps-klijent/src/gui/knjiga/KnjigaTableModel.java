@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 public class KnjigaTableModel extends AbstractTableModel {
 
 	String[] columns = {
-		"ID",
 		"Format",
 		"Br. strana",
 		"Povez",
@@ -38,15 +37,14 @@ public class KnjigaTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Knjiga k = knjige.get(rowIndex);
 		return switch (columnIndex) {
-			case 0 -> k.getIdKnjiga();
-			case 1 -> k.getFormat();
-			case 2 -> k.getBrStranica();
-			case 3 -> k.getPovez();
-			case 4 -> k.getCenaStranica();
-			case 5 -> k.getCenaPoveza();
-			case 6 -> k.getNaziv();
-			case 7 -> k.getAutor();
-			case 8 -> k.getCena();
+			case 0 -> k.getFormat();
+			case 1 -> k.getBrStranica();
+			case 2 -> k.getPovez();
+			case 3 -> k.getCenaStranica();
+			case 4 -> k.getCenaPoveza();
+			case 5 -> k.getNaziv();
+			case 6 -> k.getAutor();
+			case 7 -> k.getCena();
 			default -> "";
 		};
 	}

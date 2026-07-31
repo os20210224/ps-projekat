@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 public class FizickoLiceTableModel extends AbstractTableModel {
 	
 	String[] columns = {
-		"ID",
 		"Telefon",
 		"Email",
 		"Ime",
@@ -34,11 +33,10 @@ public class FizickoLiceTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		FizickoLice l = lica.get(rowIndex);
 		return switch (columnIndex) {
-			case 0 -> l.getIdKupac();
-			case 1 -> l.getTelefon();
-			case 2 -> l.getEmail();
-			case 3 -> l.getIme();
-			case 4 -> l.getPrezime();
+			case 0 -> l.getTelefon();
+			case 1 -> l.getEmail();
+			case 2 -> l.getIme();
+			case 3 -> l.getPrezime();
 			default -> "";
 		};
 	}

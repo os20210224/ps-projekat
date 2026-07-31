@@ -5,7 +5,7 @@ import domain.Smena;
 import logika.db.dbBroker;
 import logika.so.OpstaSO;
 
-public class KreirajSmena extends OpstaSO<Long> {
+public class UbaciSmena extends OpstaSO<Long> {
 
 	@Override
 	protected void preduslov(OpstiDomenskiObjekat obj) throws Exception {

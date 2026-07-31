@@ -8,6 +8,7 @@ import domain.PravnoLice;
 import domain.Racun;
 import domain.Smena;
 import domain.Zaposleni;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
 import logika.so.SOException;
@@ -46,6 +47,7 @@ public class KlijentHandler extends Thread {
 				srv.log("> zahtev primljen " + op);
 				try {
 					switch (op) {
+						// Prijava
 						case PRIJAVI_ZAPOSLENI -> {
 							srv.log("> Obrada zahteva " + op);
 							srv.logDB("\n> Obrada zahteva " + op);
@@ -56,10 +58,12 @@ public class KlijentHandler extends Thread {
 								sender.send(new Response("Pogresni podaci", Status.FAILURE));
 							}
 						}
+						
+						// Knjiga
 						case KREIRAJ_KNJIGA -> {
 							srv.log("> Obrada zahteva " + op);
 							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.kreirajKnjiga((OpstiDomenskiObjekat) req.getObject());
+							Kontroler.KreirajKnjiga((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(null, Status.SUCCESS));
 						}
 						case OBRISI_KNJIGA -> {
@@ -80,34 +84,20 @@ public class KlijentHandler extends Thread {
 							List<Knjiga> knjige = Kontroler.vratiListuKnjiga((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(knjige, Status.SUCCESS));
 						}
-						case KREIRAJ_ZAPOSLENI -> {
+						
+						// Kupac
+						case VRATI_LISTU_KUPAC -> {
 							srv.log("> Obrada zahteva " + op);
 							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.kreirajZaposleni((OpstiDomenskiObjekat) req.getObject());
-							sender.send(new Response(null, Status.SUCCESS));
+							List<Kupac> kupci = Kontroler.vratiListuKupac((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(kupci, Status.SUCCESS));
 						}
-						case OBRISI_ZAPOSLENI -> {
-							srv.log("> Obrada zahteva " + op);
-							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.ObrisiZaposleni((OpstiDomenskiObjekat) req.getObject());
-							sender.send(new Response(null, Status.SUCCESS));
-						}
-						case PROMENI_ZAPOSLENI -> {
-							srv.log("> Obrada zahteva " + op);
-							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.PromeniZaposleni((OpstiDomenskiObjekat) req.getObject());
-							sender.send(new Response(null, Status.SUCCESS));
-						}
-						case VRATI_LISTU_ZAPOSLENI -> {
-							srv.log("> Obrada zahteva " + op);
-							srv.logDB("\n> Obrada zahteva " + op);
-							List<Zaposleni> zaposleni = Kontroler.vratiListuZaposleni((OpstiDomenskiObjekat) req.getObject());
-							sender.send(new Response(zaposleni, Status.SUCCESS));
-						}
+						
+						// FizickoLice
 						case KREIRAJ_FIZICKO_LICE -> {
 							srv.log("> Obrada zahteva " + op);
 							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.kreirajFizickoLice((OpstiDomenskiObjekat) req.getObject());
+							Kontroler.KreirajFizickoLice((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(null, Status.SUCCESS));
 						}
 						case OBRISI_FIZICKO_LICE -> {
@@ -128,10 +118,12 @@ public class KlijentHandler extends Thread {
 							List<FizickoLice> lica = Kontroler.vratiListuFizickoLice((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(lica, Status.SUCCESS));
 						}
+						
+						// PravnoLice
 						case KREIRAJ_PRAVNO_LICE -> {
 							srv.log("> Obrada zahteva " + op);
 							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.kreirajPravnoLice((OpstiDomenskiObjekat) req.getObject());
+							Kontroler.KreirajPravnoLice((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(null, Status.SUCCESS));
 						}
 						case OBRISI_PRAVNO_LICE -> {
@@ -152,16 +144,12 @@ public class KlijentHandler extends Thread {
 							List<PravnoLice> lica = Kontroler.vratiListuPravnoLice((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(lica, Status.SUCCESS));
 						}
+						
+						// Racun
 						case KREIRAJ_RACUN -> {
 							srv.log("> Obrada zahteva " + op);
 							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.kreirajRacun((OpstiDomenskiObjekat) req.getObject());
-							sender.send(new Response(null, Status.SUCCESS));
-						}
-						case OBRISI_RACUN -> {
-							srv.log("> Obrada zahteva " + op);
-							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.ObrisiRacun((OpstiDomenskiObjekat) req.getObject());
+							Kontroler.KreirajRacun((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(null, Status.SUCCESS));
 						}
 						case PROMENI_RACUN -> {
@@ -176,16 +164,12 @@ public class KlijentHandler extends Thread {
 							List<Racun> racuni = Kontroler.vratiListuRacun((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(racuni, Status.SUCCESS));
 						}
-						case VRATI_LISTU_KUPAC -> {
+						
+						// Smena
+						case UBACI_SMENA -> {
 							srv.log("> Obrada zahteva " + op);
 							srv.logDB("\n> Obrada zahteva " + op);
-							List<Kupac> kupci = Kontroler.vratiListuKupac((OpstiDomenskiObjekat) req.getObject());
-							sender.send(new Response(kupci, Status.SUCCESS));
-						}
-						case KREIRAJ_SMENA -> {
-							srv.log("> Obrada zahteva " + op);
-							srv.logDB("\n> Obrada zahteva " + op);
-							Kontroler.kreirajSmena((OpstiDomenskiObjekat) req.getObject());
+							Kontroler.UbaciSmena((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(null, Status.SUCCESS));
 						}
 						case OBRISI_SMENA -> {
@@ -206,6 +190,34 @@ public class KlijentHandler extends Thread {
 							List<Smena> smene = Kontroler.vratiListuSmena((OpstiDomenskiObjekat) req.getObject());
 							sender.send(new Response(smene, Status.SUCCESS));
 						}
+						
+						// Zaposleni
+						case KREIRAJ_ZAPOSLENI -> {
+							srv.log("> Obrada zahteva " + op);
+							srv.logDB("\n> Obrada zahteva " + op);
+							Kontroler.KreirajZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+						}
+						case OBRISI_ZAPOSLENI -> {
+							srv.log("> Obrada zahteva " + op);
+							srv.logDB("\n> Obrada zahteva " + op);
+							Kontroler.ObrisiZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+						}
+						case PROMENI_ZAPOSLENI -> {
+							srv.log("> Obrada zahteva " + op);
+							srv.logDB("\n> Obrada zahteva " + op);
+							Kontroler.PromeniZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(null, Status.SUCCESS));
+						}
+						case VRATI_LISTU_ZAPOSLENI -> {
+							srv.log("> Obrada zahteva " + op);
+							srv.logDB("\n> Obrada zahteva " + op);
+							List<Zaposleni> zaposleni = Kontroler.vratiListuZaposleni((OpstiDomenskiObjekat) req.getObject());
+							sender.send(new Response(zaposleni, Status.SUCCESS));
+						}
+						
+						// Terminacija
 						case TERMINIRAJ -> {
 							srv.log("> Obrada zahteva " + op);
 							sender.send(new Response(null, Status.SUCCESS));
@@ -233,7 +245,7 @@ public class KlijentHandler extends Thread {
 			sender.send(new Request(null, Operation.TERMINIRAJ));
             s.close();
 			srv.log("> Thread ugasen");
-        } catch (Exception e) {
+        } catch (IOException e) {
             if (e.getMessage().equals("Socket closed")){
                 return;
             }

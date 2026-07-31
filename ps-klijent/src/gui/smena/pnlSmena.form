@@ -28,7 +28,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnDodaj" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
+                              <Component id="btnUbaci" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
                               <Component id="btnTrazi" min="-2" pref="143" max="-2" attributes="0"/>
                               <Component id="btnPromeni" min="-2" pref="143" max="-2" attributes="0"/>
                           </Group>
@@ -89,7 +89,7 @@
                       <Component id="btnDeselektuj" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="btnResetuj" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btnDodaj" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="btnUbaci" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="8" max="32767" attributes="0"/>
           </Group>
@@ -139,9 +139,9 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnDodaj">
+    <Component class="javax.swing.JButton" name="btnUbaci">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Dodaj"/>
+        <Property name="text" type="java.lang.String" value="Ubaci"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnTrazi">

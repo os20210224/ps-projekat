@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 public class PravnoLiceTableModel extends AbstractTableModel {
 	
 	String[] columns = {
-		"ID",
 		"Telefon",
 		"Email",
 		"Naziv",
@@ -34,11 +33,10 @@ public class PravnoLiceTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		PravnoLice l = lica.get(rowIndex);
 		return switch (columnIndex) {
-			case 0 -> l.getIdKupac();
-			case 1 -> l.getTelefon();
-			case 2 -> l.getEmail();
-			case 3 -> l.getNaziv();
-			case 4 -> l.getAdresa();
+			case 0 -> l.getTelefon();
+			case 1 -> l.getEmail();
+			case 2 -> l.getNaziv();
+			case 3 -> l.getAdresa();
 			default -> "";
 		};
 	}

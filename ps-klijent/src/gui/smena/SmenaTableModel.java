@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 public class SmenaTableModel extends AbstractTableModel {
 
 	String[] columns = {
-		"ID",
 		"vremePocetka",
 		"vremeKraja",
 		"ime"
@@ -33,10 +32,9 @@ public class SmenaTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Smena s = smene.get(rowIndex);
 		return switch (columnIndex) {
-			case 0 -> s.getIdSmena();
-			case 1 -> s.getVremePocetka();
-			case 2 -> s.getVremeKraja();
-			case 3 -> s.getIme();
+			case 0 -> s.getVremePocetka();
+			case 1 -> s.getVremeKraja();
+			case 2 -> s.getIme();
 			default -> "";
 		};
 	}

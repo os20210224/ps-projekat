@@ -33,7 +33,6 @@ public class pnlRacun extends KlijentPanel {
 		
 		btnDeselektuj.setEnabled(false);
 		btnPromeni.setEnabled(false);
-		btnObrisi.setEnabled(false);
 		btnResetuj.setEnabled(false);
 		
 		btnDeselektujStavku.setEnabled(false);
@@ -50,7 +49,6 @@ public class pnlRacun extends KlijentPanel {
 					selected_racun = null;
 					napuniFormuRacun(selected_racun);
 					btnPromeni.setEnabled(false);
-					btnObrisi.setEnabled(false);
 					btnDodajStavku.setEnabled(false);
 					deselectStavkaRacuna();
 					updateTableStavka(true);
@@ -60,7 +58,6 @@ public class pnlRacun extends KlijentPanel {
 					selected_racun = model.getRacun(tblRacun.getSelectedRow());
 					napuniFormuRacun(selected_racun);
 					btnPromeni.setEnabled(true);
-					btnObrisi.setEnabled(true);
 					btnDodajStavku.setEnabled(true);
 					updateTableStavka(false);
 					enableFormStavka(true);
@@ -165,18 +162,6 @@ public class pnlRacun extends KlijentPanel {
 			} else {
 				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 			}
-		});
-		
-		btnObrisi.addActionListener((e) -> {
-			Response res = Klijent.ObrisiRacun(selected_racun);
-			if (res.getStatus() == Status.FAILURE) {
-				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise racun" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			JOptionPane.showMessageDialog(this, "Racn je uspesno obrisan.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-			btnObrisi.setEnabled(false);
-			deselectRacun();
-			updateTable();
 		});
 		
 		btnPromeni.addActionListener((e) -> {
@@ -331,7 +316,6 @@ public class pnlRacun extends KlijentPanel {
 		napuniFormuRacun(selected_racun);
 		tblRacun.clearSelection();
 		btnDeselektuj.setEnabled(false);
-		btnObrisi.setEnabled(false);
 		btnPromeni.setEnabled(false);
 		updateTableStavka(true);
 		enableFormStavka(false);
@@ -541,7 +525,6 @@ public class pnlRacun extends KlijentPanel {
         btnDodaj = new javax.swing.JButton();
         btnTrazi = new javax.swing.JButton();
         btnPromeni = new javax.swing.JButton();
-        btnObrisi = new javax.swing.JButton();
         btnDeselektuj = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRacun = new javax.swing.JTable();
@@ -588,8 +571,6 @@ public class pnlRacun extends KlijentPanel {
         btnTrazi.setText("Trazi");
 
         btnPromeni.setText("Promeni");
-
-        btnObrisi.setText("Obrisi");
 
         btnDeselektuj.setText("Deselektuj");
 
@@ -739,9 +720,7 @@ public class pnlRacun extends KlijentPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -808,12 +787,10 @@ public class pnlRacun extends KlijentPanel {
                         .addGap(29, 29, 29)
                         .addComponent(btnTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDeselektuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnResetuj, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -822,7 +799,6 @@ public class pnlRacun extends KlijentPanel {
     private javax.swing.JButton btnDeselektujStavku;
     private javax.swing.JButton btnDodaj;
     private javax.swing.JButton btnDodajStavku;
-    private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnObrisiStavku;
     private javax.swing.JButton btnPromeni;
     private javax.swing.JButton btnPromeniStavku;
