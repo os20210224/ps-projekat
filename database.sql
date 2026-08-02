@@ -68,7 +68,7 @@ CREATE TABLE `Kupac` (
   `telefon` varchar(15) NOT NULL,
   `email` varchar(127) NOT NULL CHECK (`email` like '%@%'),
   PRIMARY KEY (`idKupac`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Kupac` */
 
@@ -130,7 +130,7 @@ CREATE TABLE `Smena` (
   `vremeKraja` time NOT NULL CHECK (`vremeKraja` > `vremePocetka`),
   `ime` varchar(100) NOT NULL,
   PRIMARY KEY (`idSmena`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `Smena` */
 
