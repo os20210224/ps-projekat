@@ -134,7 +134,7 @@ public class pnlRacun extends KlijentPanel {
 			
 			Response res = Klijent.vratiListuRacun(r);
 			if (res.getStatus() == Status.FAILURE) {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da nađe račune po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			
@@ -157,10 +157,10 @@ public class pnlRacun extends KlijentPanel {
 			Response res = Klijent.KreirajRacun(new Racun(metodPlacanja, Klijent.ulogovaniZaposleni, kupac));
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Racun je uspesno kreiran", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je kreirao račun", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da kreira račun", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -200,10 +200,10 @@ public class pnlRacun extends KlijentPanel {
 			));
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Racun je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je promenio račun", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da promeni račun", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		

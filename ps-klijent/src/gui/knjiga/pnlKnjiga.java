@@ -65,10 +65,10 @@ public class pnlKnjiga extends KlijentPanel {
 			Response res = Klijent.KreirajKnjiga(new Knjiga(format, br_str, povez, cena_str, cena_pov, naziv, autor));
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je kreirao knjigu", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da kreira knjigu", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 
@@ -154,14 +154,18 @@ public class pnlKnjiga extends KlijentPanel {
 			}
 			
 			Response res = Klijent.vratiListuKnjiga(k);
-			if (res.getStatus() == Status.FAILURE) {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			if (res.getStatus() == Status.SUCCESS) {
+				List<Knjiga> knjige = (List<Knjiga>) res.getObject();
+				if (knjige.isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Sistem ne može da pronađe knjigu po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				tblKnjiga.setModel(new KnjigaTableModel(knjige));
+				btnResetuj.setEnabled(true);
+			} else {
+				JOptionPane.showMessageDialog(this, "Sistem ne može da pronađe knjigu po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			
-			tblKnjiga.setModel(new KnjigaTableModel((List<Knjiga>) res.getObject()));
-			
-			btnResetuj.setEnabled(true);
 		});
 		
 		btnResetuj.addActionListener((e) -> {
@@ -176,7 +180,7 @@ public class pnlKnjiga extends KlijentPanel {
 				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise knjigu" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			JOptionPane.showMessageDialog(this, "Knjiga je uspesno obrisana.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Sistem je obrisao knjigu", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 			btnObrisi.setEnabled(false);
 			deselect();
 			updateTable();
@@ -220,10 +224,10 @@ public class pnlKnjiga extends KlijentPanel {
 			Response res = Klijent.PromeniKnjiga(new Knjiga(selected.getIdKnjiga(), format, br_str, povez, cena_str, cena_pov, naziv, autor));
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Knjiga je uspesno sacuvana", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je promenio knjigu", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da promeni knjigu", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		

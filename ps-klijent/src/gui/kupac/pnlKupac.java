@@ -26,6 +26,8 @@ public class pnlKupac extends KlijentPanel {
 		btnResetuj.setEnabled(false);
 		
 		radioFizickoLice.setSelected(true);
+		txtNaziv.setEditable(false);
+		txtAdresa.setEditable(false);
 		
 		radioFizickoLice.addActionListener((e) -> {
 			radioPravnoLice.setSelected(false);
@@ -78,10 +80,11 @@ public class pnlKupac extends KlijentPanel {
 			}
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Kupac je uspesno sacuvan", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je kreirao kupca", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				deselect();
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da kreira kupca", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 
@@ -149,12 +152,17 @@ public class pnlKupac extends KlijentPanel {
 				
 				res = Klijent.vratiListuFizickoLice(l);
 				
-				if (res.getStatus() == Status.FAILURE) {
-					JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				if (res.getStatus() == Status.SUCCESS) {
+					List<FizickoLice> kupci = (List<FizickoLice>) res.getObject();
+					if (kupci.isEmpty()) {
+						JOptionPane.showMessageDialog(this, "Sistem ne može da nađe kupce po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					tblKupac.setModel(new FizickoLiceTableModel((List<FizickoLice>) res.getObject()));
+				} else {
+					JOptionPane.showMessageDialog(this, "Sistem ne može da nađe kupce po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
-				tblKupac.setModel(new FizickoLiceTableModel((List<FizickoLice>) res.getObject()));
 			} else {
 				if ("".equals(telefon)	&&
 					"".equals(email)	&&
@@ -181,12 +189,17 @@ public class pnlKupac extends KlijentPanel {
 				
 				res = Klijent.vratiListuPravnoLice(l);
 				
-				if (res.getStatus() == Status.FAILURE) {
-					JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
-					return;
+				if (res.getStatus() == Status.SUCCESS) {
+					List<PravnoLice> kupci = (List<PravnoLice>) res.getObject();
+					if (kupci.isEmpty()) {
+						JOptionPane.showMessageDialog(this, "Sistem ne može da nađe kupce po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					tblKupac.setModel(new PravnoLiceTableModel((List<PravnoLice>) res.getObject()));
+				} else {
+					JOptionPane.showMessageDialog(this, "Sistem ne može da nađe kupce po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
+						return;
 				}
-				
-				tblKupac.setModel(new PravnoLiceTableModel((List<PravnoLice>) res.getObject()));
 			}
 			
 			btnResetuj.setEnabled(true);
@@ -206,10 +219,10 @@ public class pnlKupac extends KlijentPanel {
 				res = Klijent.ObrisiPravnoLice((PravnoLice) selected);
 			}
 			if (res.getStatus() == Status.FAILURE) {
-				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise kupca" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da obriše kupca" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			JOptionPane.showMessageDialog(this, "kupac je uspesno obrisan.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Sistem je obrisao kupca", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 			btnObrisi.setEnabled(false);
 			deselect();
 			updateTable();
@@ -246,10 +259,10 @@ public class pnlKupac extends KlijentPanel {
 			}
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Kupac je uspesno sacuvan", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je promenio kupca", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da promeni kupca", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		

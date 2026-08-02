@@ -55,7 +55,7 @@ public class KlijentHandler extends Thread {
 							if (zaposleni.size() == 1) { 
 								sender.send(new Response(zaposleni.get(0), Status.SUCCESS));
 							} else {
-								sender.send(new Response("Pogresni podaci", Status.FAILURE));
+								sender.send(new Response("Korisničko ime i šifra nisu ispravni.", Status.FAILURE));
 							}
 						}
 						

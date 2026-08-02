@@ -40,10 +40,10 @@ public class pnlZaposleni extends KlijentPanel {
 			Response res = Klijent.KreirajZaposleni(new Zaposleni(ime, prezime, username, password));
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Zaposleni je uspesno sacuvan", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je kreirao zaposlenog", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da kreira zaposlenog", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 
@@ -95,14 +95,18 @@ public class pnlZaposleni extends KlijentPanel {
 			}
 			
 			Response res = Klijent.vratiListuZaposleni(z);
-			if (res.getStatus() == Status.FAILURE) {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+			if (res.getStatus() == Status.SUCCESS) {
+				List<Zaposleni> zaposleni = (List<Zaposleni>) res.getObject();
+				if (zaposleni.isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Sistem ne može da pronađe zaposlene po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				tblZaposleni.setModel(new ZaposleniTableModel((List<Zaposleni>) res.getObject()));
+				btnResetuj.setEnabled(true);
+			} else {
+				JOptionPane.showMessageDialog(this, "Sistem ne može da pronađe zaposlene po zadatim kriterijumima", "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			
-			tblZaposleni.setModel(new ZaposleniTableModel((List<Zaposleni>) res.getObject()));
-			
-			btnResetuj.setEnabled(true);
 		});
 		
 		btnResetuj.addActionListener((e) -> {
@@ -114,10 +118,10 @@ public class pnlZaposleni extends KlijentPanel {
 		btnObrisi.addActionListener((e) -> {
 			Response res = Klijent.ObrisiZaposleni(selected);
 			if (res.getStatus() == Status.FAILURE) {
-				JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise zapsolenog" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da obriše zapsolenog" + res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			JOptionPane.showMessageDialog(this, "Zaposleni je uspesno obrisan.", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Sistem je obrisao zaposlenog", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 			btnObrisi.setEnabled(false);
 			deselect();
 			updateTable();
@@ -147,10 +151,10 @@ public class pnlZaposleni extends KlijentPanel {
 			Response res = Klijent.PromeniZaposleni(z);
 			
 			if (res.getStatus() == Status.SUCCESS) {
-				JOptionPane.showMessageDialog(this, "Zaposleni je uspesno sacuvan", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem je promenio zaposlenog", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
 				updateTable();
 			} else {
-				JOptionPane.showMessageDialog(this, res.getObject(), "Greska", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sistem ne može da promeni zaposlenog", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
