@@ -107,6 +107,7 @@ public class FrmServer extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         logServer = new javax.swing.JTextArea();
+        srvNaslov = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
@@ -156,7 +157,7 @@ public class FrmServer extends javax.swing.JFrame {
             .addGroup(pnlDatabaseLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
                     .addGroup(pnlDatabaseLayout.createSequentialGroup()
                         .addGroup(pnlDatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -214,7 +215,7 @@ public class FrmServer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDbLog)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -244,6 +245,9 @@ public class FrmServer extends javax.swing.JFrame {
         logServer.setRows(5);
         jScrollPane1.setViewportView(logServer);
 
+        srvNaslov.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        srvNaslov.setText("Server");
+
         javax.swing.GroupLayout pnlServerLayout = new javax.swing.GroupLayout(pnlServer);
         pnlServer.setLayout(pnlServerLayout);
         pnlServerLayout.setHorizontalGroup(
@@ -255,8 +259,10 @@ public class FrmServer extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(pnlServerLayout.createSequentialGroup()
-                        .addComponent(Naslov, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(1025, 1025, 1025))
+                        .addComponent(Naslov, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(srvNaslov, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(939, 939, 939))
                     .addGroup(pnlServerLayout.createSequentialGroup()
                         .addGroup(pnlServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlServerLayout.createSequentialGroup()
@@ -274,7 +280,9 @@ public class FrmServer extends javax.swing.JFrame {
             pnlServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlServerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Naslov)
+                .addGroup(pnlServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Naslov)
+                    .addComponent(srvNaslov))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlServerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart)
@@ -314,6 +322,7 @@ public class FrmServer extends javax.swing.JFrame {
     private javax.swing.JPanel pnlServer;
     private javax.swing.JLabel port;
     private javax.swing.JPasswordField pswDbPassword;
+    private javax.swing.JLabel srvNaslov;
     private javax.swing.JLabel status;
     private javax.swing.JTextField txtDbAdress;
     private javax.swing.JTextField txtDbName;
