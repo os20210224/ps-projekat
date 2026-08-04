@@ -2,10 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="ps-projekat">
-            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-common/src/domain/Knjiga.java</file>
-            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-common/src/domain/Smena.java</file>
-            <file>file:/mnt/sdc2/projekti/code/NetBeans/ps-projekat/ps-common/src/domain/StavkaRacuna.java</file>
-        </group>
+        <group name="ps-projekat"/>
     </open-files>
 </project-private>

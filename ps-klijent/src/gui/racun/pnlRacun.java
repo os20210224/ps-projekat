@@ -328,6 +328,7 @@ public class pnlRacun extends KlijentPanel {
 		deselectStavkaRacuna();
 		txtKupac.setText("");
 		txtZaposleni.setText("");
+		txtDatum.setText("");
 	}
 	
 	private void deselectStavkaRacuna() {
