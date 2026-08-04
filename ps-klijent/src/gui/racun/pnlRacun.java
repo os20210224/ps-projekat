@@ -22,7 +22,7 @@ import transfer.enums.Status;
 
 public class pnlRacun extends KlijentPanel {
 	
-	Racun selected_racun = null;
+	Racun selected_racun = new Racun();
 	StavkaRacuna selected_stavka = null;
 
 	public pnlRacun(String title) {
@@ -37,16 +37,15 @@ public class pnlRacun extends KlijentPanel {
 		
 		btnDeselektujStavku.setEnabled(false);
 		btnObrisiStavku.setEnabled(false);
-		btnDodajStavku.setEnabled(false);
 		btnPromeniStavku.setEnabled(false);
 		
-		enableFormStavka(false);
+		enableFormStavka(true);
 
 		tblRacun.addMouseListener(new mouseClickListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (tblRacun.getSelectedRows().length > 1) {
-					selected_racun = null;
+					selected_racun = new Racun();
 					napuniFormuRacun(selected_racun);
 					btnPromeni.setEnabled(false);
 					btnDodajStavku.setEnabled(false);
@@ -154,7 +153,13 @@ public class pnlRacun extends KlijentPanel {
 			MetodPlacanja metodPlacanja = (MetodPlacanja) cmbMetodPlacanja.getSelectedItem();
 			Kupac kupac = (Kupac) cmbKupac.getSelectedItem();
 			
-			Response res = Klijent.KreirajRacun(new Racun(metodPlacanja, Klijent.ulogovaniZaposleni, kupac));
+			Racun r = new Racun(metodPlacanja, Klijent.ulogovaniZaposleni, kupac);
+			
+			for (StavkaRacuna s : selected_racun.getStavkeRacuna()) {
+				r.addStavka(s);
+			}
+			
+			Response res = Klijent.KreirajRacun(r);
 			
 			if (res.getStatus() == Status.SUCCESS) {
 				JOptionPane.showMessageDialog(this, "Sistem je kreirao račun", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
@@ -312,7 +317,7 @@ public class pnlRacun extends KlijentPanel {
 	}
 	
 	private void deselectRacun() {
-		selected_racun = null;
+		selected_racun = new Racun();
 		napuniFormuRacun(selected_racun);
 		tblRacun.clearSelection();
 		btnDeselektuj.setEnabled(false);
