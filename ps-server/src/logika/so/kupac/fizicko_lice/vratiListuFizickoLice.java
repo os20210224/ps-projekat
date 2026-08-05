@@ -20,11 +20,11 @@ public class vratiListuFizickoLice extends OpstaSO<List> {
 
 	@Override
 	protected List transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		ResultSet rs = dbBroker.select((FizickoLice) obj);
+		ResultSet rs = dbBroker.read((FizickoLice) obj);
 		List<Kupac> list = new ArrayList<>();
 		while (rs.next()) {
 			long id = rs.getLong("idKupac");
-			ResultSet krs = dbBroker.select(new Kupac(id, null, null));
+			ResultSet krs = dbBroker.read(new Kupac(id, null, null));
 			
 			String telefon = null;
 			String email = null;

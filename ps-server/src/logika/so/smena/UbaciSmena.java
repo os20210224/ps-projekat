@@ -16,7 +16,7 @@ public class UbaciSmena extends OpstaSO<Long> {
 
 	@Override
 	protected Long transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		return dbBroker.kreiraj((Smena)obj);
+		return dbBroker.create((Smena)obj);
 	}
 	
 }

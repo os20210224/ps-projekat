@@ -25,7 +25,7 @@ public class vratiListuRacun extends OpstaSO<List> {
 
 	@Override
 	protected List transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		ResultSet rs = dbBroker.select((Racun)obj);
+		ResultSet rs = dbBroker.read((Racun)obj);
 		List<Racun> list = new ArrayList<>();
 		while (rs.next()) {
 			long idKupac = rs.getLong("idKupac");
@@ -36,7 +36,7 @@ public class vratiListuRacun extends OpstaSO<List> {
 			
 			long idRacun = rs.getLong("idRacun");
 			List<StavkaRacuna> stavke = new ArrayList<>();
-			ResultSet srrs = dbBroker.select(new StavkaRacuna(idRacun));
+			ResultSet srrs = dbBroker.read(new StavkaRacuna(idRacun));
 			while (srrs.next()) {
 				long idKnjiga = srrs.getLong("idKnjiga");
 				Knjiga knjiga = Kontroler.vratiListuKnjiga(new Knjiga(idKnjiga)).get(0);

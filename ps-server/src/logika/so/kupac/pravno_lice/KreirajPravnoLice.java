@@ -25,7 +25,7 @@ public class KreirajPravnoLice extends OpstaSO<Long> {
 			throw new Exception("Greska pri cuvanju kupca");
 		}
 		l.setIdKupac(id);
-		return dbBroker.kreiraj(l);
+		return dbBroker.create(l);
 	}
 	
 }

@@ -22,7 +22,7 @@ public class PromeniRacun extends OpstaSO<Void> {
 	protected Void transakcija(OpstiDomenskiObjekat obj) throws Exception {
 		Racun racun = (Racun) obj;
 		List<StavkaRacuna> stavke = new ArrayList<>();
-		ResultSet srrs = dbBroker.select(new StavkaRacuna(racun.getIdRacun()));
+		ResultSet srrs = dbBroker.read(new StavkaRacuna(racun.getIdRacun()));
 		while (srrs.next()) {
 			stavke.add(new StavkaRacuna(srrs.getLong("idRacun"), srrs.getLong("rb"), 0, 0, null));
 		}
@@ -30,7 +30,7 @@ public class PromeniRacun extends OpstaSO<Void> {
 			dbBroker.delete(s);
 		}
 		for (StavkaRacuna s : racun.getStavkeRacuna()) {
-			dbBroker.kreiraj(s);
+			dbBroker.create(s);
 		}
 		return dbBroker.update(racun);
 	}

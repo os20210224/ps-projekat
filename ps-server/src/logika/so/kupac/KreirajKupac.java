@@ -16,7 +16,7 @@ public class KreirajKupac extends OpstaSO<Long> {
 
 	@Override
 	protected Long transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		return dbBroker.kreiraj(obj);
+		return dbBroker.create(obj);
 	}
 	
 }

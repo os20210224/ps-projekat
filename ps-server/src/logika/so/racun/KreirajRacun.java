@@ -18,10 +18,10 @@ public class KreirajRacun extends OpstaSO<Long> {
 	@Override
 	protected Long transakcija(OpstiDomenskiObjekat obj) throws Exception {
 		Racun r = (Racun)obj;
-		Long idRacun = dbBroker.kreiraj(r);
+		Long idRacun = dbBroker.create(r);
 		for (StavkaRacuna s : r.getStavkeRacuna()) {
 			s.setIdRacun(idRacun);
-			dbBroker.kreiraj(s);
+			dbBroker.create(s);
 		}
 		return idRacun;
 	}

@@ -22,7 +22,7 @@ public class vratiListuKupac  extends OpstaSO<List> {
 
 	@Override
 	protected List transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		ResultSet rs = dbBroker.select((Kupac)obj);
+		ResultSet rs = dbBroker.read((Kupac)obj);
 		List<Kupac> list = new ArrayList<>();
 		while (rs.next()) {
 			long idKupac = rs.getLong("idKupac");

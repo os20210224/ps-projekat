@@ -21,7 +21,7 @@ public class vratiListuKnjiga extends OpstaSO<List> {
 
 	@Override
 	protected List<Knjiga> transakcija(OpstiDomenskiObjekat obj) throws Exception {
-		ResultSet rs = dbBroker.select((Knjiga)obj);
+		ResultSet rs = dbBroker.read((Knjiga)obj);
 		List<Knjiga> list = new ArrayList<>();
 		while (rs.next()) {
 			list.add(new Knjiga(

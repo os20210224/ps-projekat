@@ -79,7 +79,7 @@ public class dbBroker {
 		}
 	}
 	
-	public static long kreiraj(OpstiDomenskiObjekat obj) throws Exception {
+	public static long create(OpstiDomenskiObjekat obj) throws Exception {
 		long id = 0;
 		try {
 			String q = 
@@ -104,7 +104,7 @@ public class dbBroker {
 		return id;
 	}
 	
-	public static ResultSet select(OpstiDomenskiObjekat obj) throws Exception {
+	public static ResultSet read(OpstiDomenskiObjekat obj) throws Exception {
 		ResultSet rs;
 		try {
 			String q =
@@ -121,22 +121,6 @@ public class dbBroker {
 		return rs;
 	}
 	
-	public static Void delete(OpstiDomenskiObjekat obj) throws Exception {
-		try {
-			String q =
-				"DELETE FROM "	+ obj.getTableName()	+ 
-				" WHERE "		+ obj.getIDCondition()	;
-			srv.logDB("> Querry:\n\t" + q);
-			Statement s = conn.createStatement();
-			s.executeUpdate(q);
-			srv.logDB("> slogovi obrisani");
-		} catch (SQLException e) {
-			srv.logDB("> greska pri brisanju slogova" + e);
-			throw e;
-		}
-		return null;
-	}
-	
 	public static Void update(OpstiDomenskiObjekat obj) throws Exception {
 		try {
 			String q =
@@ -149,6 +133,22 @@ public class dbBroker {
 			srv.logDB("> slogovi promenjeni");
 		} catch (SQLException e) {
 			srv.logDB("> greska pri promeni slogova" + e);
+			throw e;
+		}
+		return null;
+	}
+	
+	public static Void delete(OpstiDomenskiObjekat obj) throws Exception {
+		try {
+			String q =
+				"DELETE FROM "	+ obj.getTableName()	+ 
+				" WHERE "		+ obj.getIDCondition()	;
+			srv.logDB("> Querry:\n\t" + q);
+			Statement s = conn.createStatement();
+			s.executeUpdate(q);
+			srv.logDB("> slogovi obrisani");
+		} catch (SQLException e) {
+			srv.logDB("> greska pri brisanju slogova" + e);
 			throw e;
 		}
 		return null;
