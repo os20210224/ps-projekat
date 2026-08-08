@@ -7,12 +7,12 @@ import java.util.List;
 
 public class Racun extends OpstiDomenskiObjekat {
     
-    private long idRacun = 0;
-    private LocalDateTime datum = null;
-    private MetodPlacanja metodPlacanja = null;
-    private double ukupanIznos = 0;
-    private Zaposleni zaposleni = null;
-    private Kupac kupac = null;
+    private long idRacun;
+    private LocalDateTime datum;
+    private MetodPlacanja metodPlacanja;
+    private double ukupanIznos;
+    private Zaposleni zaposleni;
+    private Kupac kupac;
 	private List<StavkaRacuna> stavkeRacuna = new ArrayList<>();
 
 	public Racun() {

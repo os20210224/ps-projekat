@@ -2,8 +2,8 @@ package domain;
 
 public class FizickoLice extends Kupac {
     
-    private String ime = null;
-    private String prezime = null;
+    private String ime;
+    private String prezime;
 
 	public FizickoLice() {
 		super(0, null, null);

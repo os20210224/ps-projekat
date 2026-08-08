@@ -2,11 +2,11 @@ package domain;
 
 public class Zaposleni extends OpstiDomenskiObjekat {
     
-    private long idZaposleni = 0;
-    private String ime = null;
-    private String prezime = null;
-    private String username = null;
-    private String password = null;
+    private long idZaposleni;
+    private String ime;
+    private String prezime;
+    private String username;
+    private String password;
 	
 	public Zaposleni(long idZaposleni) {
         this.idZaposleni = idZaposleni;

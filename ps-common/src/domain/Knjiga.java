@@ -5,15 +5,15 @@ import domain.enums.Povez;
 
 public class Knjiga extends OpstiDomenskiObjekat {
     
-    private long idKnjiga = 0;
-    private Format format = null;
-    private int brStranica = 0;
-    private Povez povez = null;
-    private double cenaStranica = 0;
-    private double cenaPoveza = 0;
-    private String naziv = null;
-    private String autor = null;
-    private double cena = 0;
+    private long idKnjiga;
+    private Format format;
+    private int brStranica;
+    private Povez povez;
+    private double cenaStranica;
+    private double cenaPoveza;
+    private String naziv;
+    private String autor;
+    private double cena;
 	
 	public Knjiga(Format format, int brStranica, Povez povez, double cenaStranica, double cenaPoveza, String naziv, String autor) {
         this.format = format;

@@ -2,8 +2,8 @@ package domain;
 
 public class PravnoLice extends Kupac {
     
-    private String naziv = null;
-    private String adresa = null;
+    private String naziv;
+    private String adresa;
 
 	public PravnoLice() {
 		super(0, null, null);

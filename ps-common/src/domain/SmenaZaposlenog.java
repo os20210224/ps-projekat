@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class SmenaZaposlenog extends OpstiDomenskiObjekat {
     
-    private Zaposleni zaposleni = null;
-    private Smena smena = null;
-    private LocalDate datum = null;
+    private Zaposleni zaposleni;
+    private Smena smena;
+    private LocalDate datum;
 
     public SmenaZaposlenog(Zaposleni zaposleni, Smena smena, LocalDate datum) {
         this.zaposleni = zaposleni;

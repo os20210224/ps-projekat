@@ -4,10 +4,10 @@ import java.time.LocalTime;
 
 public class Smena extends OpstiDomenskiObjekat {
     
-    private long idSmena = 0;
-    private LocalTime vremePocetka = null;
-    private LocalTime vremeKraja = null;
-	private String ime = null;
+    private long idSmena;
+    private LocalTime vremePocetka;
+    private LocalTime vremeKraja;
+	private String ime;
 
 	public Smena(long idSmena) {
         this.idSmena = idSmena;

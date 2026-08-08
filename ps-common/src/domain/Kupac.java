@@ -2,9 +2,9 @@ package domain;
 
 public class Kupac extends OpstiDomenskiObjekat {
     
-    protected long idKupac = 0;
-    protected String telefon = null;
-    protected String email = null;
+    protected long idKupac;
+    protected String telefon;
+    protected String email;
 	
 	public Kupac() {
     }
