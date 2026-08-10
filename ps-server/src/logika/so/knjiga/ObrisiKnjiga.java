@@ -18,5 +18,5 @@ public class ObrisiKnjiga extends OpstaSO<Void> {
 	protected Void transakcija(OpstiDomenskiObjekat obj) throws Exception {
 		return dbBroker.delete((Knjiga)obj);
 	}
-	
+
 }
