@@ -5,35 +5,19 @@ import domain.OpstiDomenskiObjekat;
 import domain.Zaposleni;
 import domain.enums.Format;
 import domain.enums.Povez;
-import main.Server;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.OrderWith;
+import org.junit.runner.manipulation.Alphanumeric;
 
+@OrderWith(Alphanumeric.class)
 public class KreirajKnjigaTest {
-	
-	static Server server;
-	
-	@BeforeClass
-	public static void init() {
-		server = new Server();
-		if (!server.setDbCredentials("localhost", 3306, "ps-projekat", "root", "")) {
-			fail("KONEKCIJA NE RADI");
-		}
-		server.start();
-	}
-	
-	@AfterClass
-	public static void deinit() {
-		server.stop();
-	}
 
 	/**
 	 * Test of preduslov method, of class KreirajKnjiga.
 	 */
 	@Test
-	public void testPreduslovNull() throws Exception {
+	public void testAPreduslovNull() throws Exception {
 		System.out.println("KreirajKnjiga - preduslov - null");
 		KreirajKnjiga so = new KreirajKnjiga();
 		try {
@@ -46,7 +30,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testPreduslovNeKnjiga() throws Exception {
+	public void testBPreduslovNeKnjiga() throws Exception {
 		System.out.println("KreirajKnjiga - preduslov - ne knjiga");
 		KreirajKnjiga so = new KreirajKnjiga();
 		try {
@@ -61,7 +45,7 @@ public class KreirajKnjigaTest {
 	 * Test of transakcija method, of class KreirajKnjiga.
 	 */
 	@Test
-	public void testTransakcijaNedostajuciFormat() throws Exception {
+	public void testCTransakcijaNedostajuciFormat() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija - nedostajuci format");
 		OpstiDomenskiObjekat obj = new Knjiga(null, 42, Povez.MEK, 5, 100, "TEST KNJIGA", "AUTOMATSKI TEST");
 		KreirajKnjiga so = new KreirajKnjiga();
@@ -73,7 +57,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testTransakcijaBrStrana0() throws Exception {
+	public void testDTransakcijaBrStrana0() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija - broj strana 0");
 		OpstiDomenskiObjekat obj = new Knjiga(Format.A4, 0, Povez.MEK, 5, 100, "TEST KNJIGA", "AUTOMATSKI TEST");
 		KreirajKnjiga so = new KreirajKnjiga();
@@ -85,7 +69,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testTransakcijaNedostajuciPovez() throws Exception {
+	public void testETransakcijaNedostajuciPovez() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija - nedostajuci povez");
 		OpstiDomenskiObjekat obj = new Knjiga(Format.A4, 42, null, 5, 100, "TEST KNJIGA", "AUTOMATSKI TEST");
 		KreirajKnjiga so = new KreirajKnjiga();
@@ -97,7 +81,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testTransakcijaCenaStrana0() throws Exception {
+	public void testFTransakcijaCenaStrana0() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija - cena strana 0");
 		OpstiDomenskiObjekat obj = new Knjiga(Format.A4, 42, Povez.MEK, 0, 100, "TEST KNJIGA", "AUTOMATSKI TEST");
 		KreirajKnjiga so = new KreirajKnjiga();
@@ -109,7 +93,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testTransakcijaCenaPoveza0() throws Exception {
+	public void testGTransakcijaCenaPoveza0() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija - cena poveza 0");
 		OpstiDomenskiObjekat obj = new Knjiga(Format.A4, 42, Povez.MEK, 5, 0, "TEST KNJIGA", "AUTOMATSKI TEST");
 		KreirajKnjiga so = new KreirajKnjiga();
@@ -121,7 +105,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testTransakcijaNedostajuciNaziv() throws Exception {
+	public void testHTransakcijaNedostajuciNaziv() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija - nedostajuci naziv");
 		OpstiDomenskiObjekat obj = new Knjiga(Format.A4, 42, Povez.MEK, 5, 100, null, "AUTOMATSKI TEST");
 		KreirajKnjiga so = new KreirajKnjiga();
@@ -133,7 +117,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testTransakcijaNedostajuciAutor() throws Exception {
+	public void testITransakcijaNedostajuciAutor() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija - nedostajuci autor");
 		OpstiDomenskiObjekat obj = new Knjiga(Format.A4, 42, Povez.MEK, 5, 100, "TEST KNJIGA", null);
 		KreirajKnjiga so = new KreirajKnjiga();
@@ -145,7 +129,7 @@ public class KreirajKnjigaTest {
 		}
 	}
 	@Test
-	public void testTransakcijaKreirajKnjiga() throws Exception {
+	public void testJTransakcijaKreirajKnjiga() throws Exception {
 		System.out.println("KreirajKnjiga - transakcija");
 		OpstiDomenskiObjekat obj = new Knjiga(Format.A4, 42, Povez.MEK, 5, 100, "TEST KNJIGA", "AUTOMATSKI TEST");
 		KreirajKnjiga so = new KreirajKnjiga();

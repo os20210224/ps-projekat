@@ -6,35 +6,19 @@ import domain.Zaposleni;
 import domain.enums.Format;
 import domain.enums.Povez;
 import java.util.List;
-import main.Server;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.OrderWith;
+import org.junit.runner.manipulation.Alphanumeric;
 
+@OrderWith(Alphanumeric.class)
 public class vratiListuKnjigaTest {
-	
-	static Server server;
-	
-	@BeforeClass
-	public static void init() {
-		server = new Server();
-		if (!server.setDbCredentials("localhost", 3306, "ps-projekat", "root", "")) {
-			fail("KONEKCIJA NE RADI");
-		}
-		server.start();
-	}
-	
-	@AfterClass
-	public static void deinit() {
-		server.stop();
-	}
 
 	/**
 	 * Test of preduslov method, of class KreirajKnjiga.
 	 */
 	@Test
-	public void testPreduslovNull() throws Exception {
+	public void testAPreduslovNull() throws Exception {
 		System.out.println("vratiListuKnjiga - preduslov - null");
 		KreirajKnjiga so = new KreirajKnjiga();
 		try {
@@ -47,7 +31,7 @@ public class vratiListuKnjigaTest {
 		}
 	}
 	@Test
-	public void testPreduslovNeKnjiga() throws Exception {
+	public void testBPreduslovNeKnjiga() throws Exception {
 		System.out.println("vratiListuKnjiga - preduslov - ne knjiga");
 		KreirajKnjiga so = new KreirajKnjiga();
 		try {
@@ -62,8 +46,8 @@ public class vratiListuKnjigaTest {
 	 * Test of transakcija method, of class vratiListuKnjiga.
 	 */
 	@Test
-	public void testTransakcija() throws Exception {
-		System.out.println("Promeni - transakcija");
+	public void testCTransakcija() throws Exception {
+		System.out.println("vratiListuKnjiga - transakcija");
 		(new KreirajKnjiga()).izvrsiTransakciju(new Knjiga(Format.A4, 42, Povez.MEK, 5, 100, "TEST KNJIGA VRATI KNJIGU", "AUTOMATSKI TEST"));
 		OpstiDomenskiObjekat obj = (OpstiDomenskiObjekat) (new vratiListuKnjiga()).izvrsiTransakciju(
 			new Knjiga(Format.A4, 42, Povez.MEK, 5, 100, "TEST KNJIGA VRATI KNJIGU", "AUTOMATSKI TEST")
