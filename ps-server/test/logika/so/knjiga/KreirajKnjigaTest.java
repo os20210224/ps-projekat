@@ -6,27 +6,26 @@ import domain.Zaposleni;
 import domain.enums.Format;
 import domain.enums.Povez;
 import main.Server;
-import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class KreirajKnjigaTest {
+	
 	static Server server;
 	
-	@Before
-	public void init() {
+	@BeforeClass
+	public static void init() {
 		server = new Server();
-		try {
-			server.setDbCredentials("localhost", 7259, "ps-projekat", "root", "");
-			server.start();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (!server.setDbCredentials("localhost", 3306, "ps-projekat", "root", "")) {
+			fail("KONEKCIJA NE RADI");
 		}
+		server.start();
 	}
 	
-	@After
-	public void deinit() {
+	@AfterClass
+	public static void deinit() {
 		server.stop();
 	}
 
@@ -41,7 +40,9 @@ public class KreirajKnjigaTest {
 			so.preduslov(null);
 			fail("Ocekivani izuzetak nije bacen");
 		} catch (Exception e) {
-			assertNotNull(e);
+			if (!e.getMessage().equals("Prosledjeni objekat nije Knjiga")) {
+				fail("Pogresan izuzetak je bacen");
+			}
 		}
 	}
 	@Test

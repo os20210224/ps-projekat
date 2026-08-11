@@ -139,6 +139,9 @@ public class Knjiga extends OpstiDomenskiObjekat {
 
 	@Override
 	public String getValues() {
+		if (naziv == null || autor == null) {
+			return "";
+		}
 		return 
 			"VALUES("	+ "'" + format.toString()	+ "'"	+ 
 			","			+		brStranica					+ 
