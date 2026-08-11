@@ -151,6 +151,11 @@ public class KreirajKnjigaTest {
 		KreirajKnjiga so = new KreirajKnjiga();
 		try {
 			so.izvrsiTransakciju(obj);
+			(new ObrisiKnjiga()).izvrsiTransakciju(
+				(OpstiDomenskiObjekat)(new vratiListuKnjiga()).izvrsiTransakciju(
+					new Knjiga(Format.A4, 42, Povez.MEK, 5, 100, "TEST KNJIGA", "AUTOMATSKI TEST")
+				).get(0)
+			);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Neocekivani izuzetak bacen");
