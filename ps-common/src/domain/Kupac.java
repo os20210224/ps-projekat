@@ -56,6 +56,9 @@ public class Kupac extends OpstiDomenskiObjekat {
 
 	@Override
 	public String getValues() {
+		if (telefon == null || email == null) {
+			return "";
+		}
 		return
 			"VALUES("	+ "'" +	telefon	+ "'"	+
 			","			+ "'" +	email	+ "'"	+ ")" ;

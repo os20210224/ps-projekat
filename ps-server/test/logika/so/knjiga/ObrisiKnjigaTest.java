@@ -19,7 +19,7 @@ public class ObrisiKnjigaTest {
 	@Test
 	public void testAPreduslovNull() throws Exception {
 		System.out.println("ObrisiKnjiga - preduslov - null");
-		KreirajKnjiga so = new KreirajKnjiga();
+		ObrisiKnjiga so = new ObrisiKnjiga();
 		try {
 			so.preduslov(null);
 			fail("Ocekivani izuzetak nije bacen");
@@ -30,7 +30,7 @@ public class ObrisiKnjigaTest {
 	@Test
 	public void testBPreduslovNeKnjiga() throws Exception {
 		System.out.println("ObrisiKnjiga - preduslov - ne knjiga");
-		KreirajKnjiga so = new KreirajKnjiga();
+		ObrisiKnjiga so = new ObrisiKnjiga();
 		try {
 			so.preduslov(new Zaposleni());
 			fail("Ocekivani izuzetak nije bacen");

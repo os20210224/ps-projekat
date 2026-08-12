@@ -14,12 +14,12 @@ import org.junit.runner.manipulation.Alphanumeric;
 public class PromeniKnjigaTest {
 	
 	/**
-	 * Test of preduslov method, of class KreirajKnjiga.
+	 * Test of preduslov method, of class PromeniKnjiga.
 	 */
 	@Test
 	public void testAPreduslovNull() throws Exception {
 		System.out.println("PromeniKnjiga - preduslov - null");
-		KreirajKnjiga so = new KreirajKnjiga();
+		PromeniKnjiga so = new PromeniKnjiga();
 		try {
 			so.preduslov(null);
 			fail("Ocekivani izuzetak nije bacen");
@@ -32,7 +32,7 @@ public class PromeniKnjigaTest {
 	@Test
 	public void testBPreduslovNeKnjiga() throws Exception {
 		System.out.println("PromeniKnjiga - preduslov - ne knjiga");
-		KreirajKnjiga so = new KreirajKnjiga();
+		PromeniKnjiga so = new PromeniKnjiga();
 		try {
 			so.preduslov(new Zaposleni());
 			fail("Ocekivani izuzetak nije bacen");
