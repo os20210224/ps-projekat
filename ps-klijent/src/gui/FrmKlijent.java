@@ -113,7 +113,6 @@ public class FrmKlijent extends javax.swing.JFrame {
 		setTitle(current.title);
 		add(current);
 		current.updateTable();
-                pack();
 	}
 
 	@SuppressWarnings("unchecked")
