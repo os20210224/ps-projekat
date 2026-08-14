@@ -318,7 +318,7 @@ public class pnlRacun extends KlijentPanel {
 	
 	private void deselectRacun() {
 		selected_racun = new Racun();
-		napuniFormuRacun(selected_racun);
+		napuniFormuRacun(null);
 		tblRacun.clearSelection();
 		btnDeselektuj.setEnabled(false);
 		btnPromeni.setEnabled(false);
