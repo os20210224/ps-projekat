@@ -57,6 +57,10 @@ public class pnlKupac extends KlijentPanel {
 			String naziv = txtNaziv.getText().trim();
 			String adresa = txtAdresa.getText().trim();
 			
+			if (!validateEmail(email)) {
+				return;
+			}
+			
 			Response res;
 			
 			if (radioFizickoLice.isSelected()) {
@@ -236,6 +240,10 @@ public class pnlKupac extends KlijentPanel {
 			String naziv = txtNaziv.getText().trim();
 			String adresa = txtAdresa.getText().trim();
 			
+			if (!validateEmail(email)) {
+				return;
+			}
+			
 			Response res;
 			
 			if (radioFizickoLice.isSelected()) {
@@ -319,6 +327,14 @@ public class pnlKupac extends KlijentPanel {
 			radioFizickoLice.setSelected(false);
 			radioPravnoLice.setSelected(true);
 		}
+	}
+	
+	private boolean validateEmail(String string) {
+		if (!string.matches("^(.+)@(.+)$")) {
+			JOptionPane.showMessageDialog(this, string + " nije validna E-mail adresa", "Greska", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 	
 	@SuppressWarnings("unchecked")
