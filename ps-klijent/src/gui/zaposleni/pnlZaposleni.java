@@ -29,6 +29,10 @@ public class pnlZaposleni extends KlijentPanel {
 			String username = txtUsername.getText().trim();
 			String password = String.valueOf(pswPassword.getPassword()).trim();
 			
+			if (!validatePassword(password)) {
+				return;
+			}
+			
 			if ("".equals(ime)		||
 				"".equals(prezime)	||
 				"".equals(username)	||
@@ -133,6 +137,10 @@ public class pnlZaposleni extends KlijentPanel {
 			String username = txtUsername.getText().trim();
 			String password = String.valueOf(pswPassword.getPassword()).trim();
 			
+			if (!validatePassword(password)) {
+				return;
+			}
+			
 			if ("".equals(ime)		||
 				"".equals(prezime)	||
 				"".equals(username)) {
@@ -190,7 +198,15 @@ public class pnlZaposleni extends KlijentPanel {
 		txtIme.setText(z.getIme());
 		txtPrezime.setText(z.getPrezime());
 		txtUsername.setText(z.getUsername());
-}
+	}
+	
+	private boolean validatePassword(String string) {
+		if (string.length() < 9) {
+			JOptionPane.showMessageDialog(this, "Sifra mora biti duza od 8 karaktera", "Greska", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
 	
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
